@@ -1,0 +1,15 @@
+{
+  "name": "estela",
+  "version": "0.0.1",
+  "description": "Estela Design System - Angular Material Theme",
+  "peerDependencies": {
+    "@angular/common": "^19.2.0",
+    "@angular/core": "^19.2.0",
+    "@angular/material": "^19.2.0",
+    "@angular/cdk": "^19.2.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}

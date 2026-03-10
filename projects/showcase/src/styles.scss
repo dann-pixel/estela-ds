@@ -1,0 +1,156 @@
+// =============================================================
+// Showcase — Global Styles
+// =============================================================
+// Import and apply the Estela design system theme.
+// The 'index' path resolves to projects/estela/src/index.scss
+// via stylePreprocessorOptions.includePaths in angular.json.
+// =============================================================
+
+@use 'index' as estela;
+
+// Apply light theme globally.
+// light-theme-setup() emite dos bloques de selector separados para garantizar
+// que los brand color overrides (#00b5cc, #4255ff) aparezcan DESPUÉS del
+// output diferido de mat.theme() y así prevalezcan en el CSS final.
+@include estela.light-theme-setup();
+
+// Base reset
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+// Aplica tipografía base a elementos HTML nativos.
+// Angular Material v19 M3 solo aplica fuentes a sus propias clases;
+// los elementos nativos deben heredarlas explícitamente vía tokens.
+body {
+  font-family: var(--mat-sys-body-large-font), sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--mat-sys-headline-large-font), sans-serif;
+}
+
+// ── Shared page layout ──────────────────────────────────────────
+.showcase-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 32px;
+}
+
+.page-header {
+  margin-bottom: 40px;
+
+  h1 {
+    margin: 0 0 8px;
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--mat-sys-on-surface);
+  }
+
+  p {
+    margin: 0 0 16px;
+    font-size: 16px;
+    color: var(--mat-sys-on-surface-variant);
+  }
+}
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.section-card {
+  mat-card-header { padding-bottom: 0; }
+  mat-card-content { padding-top: 16px; }
+}
+
+.demo-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.demo-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.demo-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--mat-sys-on-surface-variant);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+// Toolbar spacer
+.spacer { flex: 1; }
+
+// Form field layout helper
+.form-row {
+  align-items: flex-start;
+  mat-form-field { min-width: 200px; }
+}
+
+// Tab icon spacing
+.tab-icon { margin-right: 4px; }
+
+// ── Alerts ─────────────────────────────────────────────────────
+// Componente visual de alerta usando los colores semánticos de Estela.
+// Uso: <div class="estela-alert estela-alert--success">...</div>
+.estela-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+
+  mat-icon {
+    flex-shrink: 0;
+    font-size: 20px;
+    height: 20px;
+    width: 20px;
+    margin-top: 1px;
+  }
+
+  .alert-body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    strong { font-weight: 600; }
+    span   { opacity: 0.9; }
+  }
+
+  &--info {
+    background-color: var(--estela-info-container);
+    color: var(--estela-on-info-container);
+    mat-icon { color: var(--estela-info); }
+  }
+
+  &--success {
+    background-color: var(--estela-success-container);
+    color: var(--estela-on-success-container);
+    mat-icon { color: var(--estela-success); }
+  }
+
+  &--warning {
+    background-color: var(--estela-warning-container);
+    color: var(--estela-on-warning-container);
+    mat-icon { color: var(--estela-warning); }
+  }
+
+  &--error {
+    background-color: var(--mat-sys-error-container);
+    color: var(--mat-sys-on-error-container);
+    mat-icon { color: var(--mat-sys-error); }
+  }
+}

@@ -1,0 +1,16 @@
+// =============================================================
+// Estela Design System — Typography
+// =============================================================
+// Usa dos familias de fuentes:
+// - brand-family: Outfit (headings h1-h6)
+// - plain-family: Instrument Sans (body, labels)
+//
+// Todos los interletrados (letter-spacing) están en 0 (default)
+//
+// Google Fonts requeridas:
+// <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+// <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+// =============================================================
+
+$estela-brand-family: Outfit;
+$estela-plain-family: 'Instrument Sans';

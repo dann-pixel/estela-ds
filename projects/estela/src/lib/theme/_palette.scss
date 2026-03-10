@@ -1,0 +1,99 @@
+// =============================================================
+// Estela Design System — Palette
+// =============================================================
+// Angular Material M3 requiere sus paletas tonales predefinidas
+// para generar correctamente todos los roles de color (superficies,
+// neutrals, etc.). Por eso se usan paletas base de AM y luego
+// se sobreescriben los tokens --mat-sys-* con los colores exactos
+// de la marca en los mixins de _theme.scss.
+//
+// _palette.scss:  define las variables (sin hex sueltos)
+// _theme.scss:    aplica mat.theme() + emite los CSS overrides
+// =============================================================
+
+@use '@angular/material' as mat;
+
+// --- Paletas base para M3 (generan neutrals, superficies, etc.) ---
+// Se usan las paletas predefinidas de AM v19 más cercanas a la marca.
+// Los tokens --mat-sys-primary/tertiary se sobreescriben en _theme.scss
+// con los colores exactos del DS Estela React.
+$estela-primary:  mat.$cyan-palette;
+$estela-tertiary: mat.$violet-palette;
+
+// =============================================================
+// Brand color tokens — Primary (#00b5cc)
+// Derivados de la escala del DS Estela React
+// =============================================================
+
+// Light mode
+$brand-primary:                 #00b5cc;   // React 500
+$brand-on-primary:              #ffffff;
+$brand-primary-container:       #bfecf2;   // React 100
+$brand-on-primary-container:    #001e26;   // derivado de React 900
+
+// Dark mode (tone 80 → React 200, tone 20 → derivado oscuro)
+$brand-primary-dark:                #99e1ea;   // React 200
+$brand-on-primary-dark:             #003040;   // derivado oscuro
+$brand-primary-container-dark:      #004659;   // derivado tono 30
+$brand-on-primary-container-dark:   #bfecf2;   // React 100
+
+// =============================================================
+// Brand color tokens — Tertiary (#4255ff)
+// Derivados de la escala del DS Estela React
+// =============================================================
+
+// Light mode
+$brand-tertiary:                #4255ff;   // React 500
+$brand-on-tertiary:             #ffffff;
+$brand-tertiary-container:      #cfceff;   // React 100
+$brand-on-tertiary-container:   #06107a;   // derivado de React 900
+
+// Dark mode
+$brand-tertiary-dark:                #b3bbff;   // React 200
+$brand-on-tertiary-dark:             #1a2266;   // React 900
+$brand-tertiary-container-dark:      #252e8c;   // React 800
+$brand-on-tertiary-container-dark:   #cfceff;   // React 100
+
+// =============================================================
+// Colores semánticos — Warning, Success, Info
+// =============================================================
+// M3 no define roles warning/success/info nativos.
+// Se emiten como CSS custom properties desde los mixins del tema.
+// Uso: var(--estela-warning), var(--estela-success), var(--estela-info)
+// Error lo maneja M3 nativamente (--mat-sys-error-*).
+//
+// Valores derivados del DS Estela React.
+// =============================================================
+
+// --- Warning — React warning scale ---
+$warning:              #f97316;   // React warning 500
+$warning-container:    #fef1e7;   // React warning 50
+$on-warning:           #ffffff;
+$on-warning-container: #632e08;   // React warning 900
+
+$warning-dark:              #fbb27e;   // React warning 300
+$warning-container-dark:    #883f0c;   // React warning 800
+$on-warning-dark:           #000000;
+$on-warning-container-dark: #fef1e7;   // React warning 50
+
+// --- Success — React success scale ---
+$success:              #22c55e;   // React success 500
+$success-container:    #e8f9ee;   // React success 50
+$on-success:           #ffffff;
+$on-success-container: #0d4e25;   // React success 900
+
+$success-dark:              #85dfa6;   // React success 300
+$success-container-dark:    #126c33;   // React success 800
+$on-success-dark:           #000000;
+$on-success-container-dark: #e8f9ee;   // React success 50
+
+// --- Info — React info scale ---
+$info:              #0ea5e9;   // React info 500
+$info-container:    #e6f6fc;   // React info 50
+$on-info:           #ffffff;
+$on-info-container: #05425d;   // React info 900
+
+$info-dark:              #7acdf2;   // React info 300
+$info-container-dark:    #075a80;   // React info 800
+$on-info-dark:           #000000;
+$on-info-container-dark: #e6f6fc;   // React info 50

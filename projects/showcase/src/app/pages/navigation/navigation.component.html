@@ -1,0 +1,172 @@
+<div class="showcase-page">
+
+  <div class="page-header">
+    <h1>Navigation</h1>
+    <p>Components that help users navigate and filter content.</p>
+    <a mat-stroked-button href="https://v19.material.angular.dev/components/tabs/overview" target="_blank">
+      <mat-icon>open_in_new</mat-icon> Angular Material Docs
+    </a>
+  </div>
+
+  <div class="sections">
+
+    <!-- Toolbar -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Toolbar</mat-card-title>
+        <mat-card-subtitle>mat-toolbar — contextual header bar with actions</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="demo-label">Basic</p>
+        <mat-toolbar>
+          <button mat-icon-button><mat-icon>menu</mat-icon></button>
+          <span>Application Title</span>
+          <span class="spacer"></span>
+          <button mat-icon-button><mat-icon>search</mat-icon></button>
+          <button mat-icon-button><mat-icon>more_vert</mat-icon></button>
+        </mat-toolbar>
+
+        <mat-divider style="margin: 16px 0;" />
+
+        <p class="demo-label">Primary color</p>
+        <mat-toolbar color="primary">
+          <button mat-icon-button><mat-icon>arrow_back</mat-icon></button>
+          <span>Page Title</span>
+          <span class="spacer"></span>
+          <button mat-icon-button><mat-icon>share</mat-icon></button>
+          <button mat-icon-button><mat-icon>delete</mat-icon></button>
+        </mat-toolbar>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Tabs -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Tabs</mat-card-title>
+        <mat-card-subtitle>mat-tab-group — organizes content into parallel sections</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="demo-label">Standard</p>
+        <mat-tab-group>
+          @for (tab of tabs; track tab) {
+            <mat-tab [label]="tab">
+              <div style="padding: 16px;">Content for {{ tab }}</div>
+            </mat-tab>
+          }
+        </mat-tab-group>
+
+        <mat-divider style="margin: 24px 0;" />
+
+        <p class="demo-label">With icons</p>
+        <mat-tab-group>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="tab-icon">home</mat-icon> Home
+            </ng-template>
+            <div style="padding: 16px;">Home content</div>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="tab-icon">person</mat-icon> Profile
+            </ng-template>
+            <div style="padding: 16px;">Profile content</div>
+          </mat-tab>
+          <mat-tab disabled>
+            <ng-template mat-tab-label>
+              <mat-icon class="tab-icon">settings</mat-icon> Settings
+            </ng-template>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Chips -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Chips</mat-card-title>
+        <mat-card-subtitle>mat-chip — compact elements for tags, filters, and actions</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="demo-label">Filter Chips</p>
+        <mat-chip-listbox class="demo-row">
+          @for (chip of filterChips; track chip) {
+            <mat-chip-option
+              [selected]="chip === selectedFilter"
+              (click)="selectedFilter = chip"
+            >{{ chip }}</mat-chip-option>
+          }
+        </mat-chip-listbox>
+
+        <mat-divider />
+
+        <p class="demo-label">Action Chips</p>
+        <mat-chip-set class="demo-row">
+          @for (chip of actionChips; track chip) {
+            <mat-chip>{{ chip }}</mat-chip>
+          }
+        </mat-chip-set>
+
+        <mat-divider />
+
+        <p class="demo-label">With icons and removable</p>
+        <mat-chip-set class="demo-row">
+          <mat-chip>
+            <mat-icon matChipAvatar>star</mat-icon>
+            Featured
+          </mat-chip>
+          <mat-chip removable>
+            <mat-icon matChipAvatar>label</mat-icon>
+            Removable
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+          <mat-chip disabled>Disabled</mat-chip>
+        </mat-chip-set>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Badge & Progress -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Badge & Progress</mat-card-title>
+        <mat-card-subtitle>Indicators for status and quantity</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="demo-label">Badge</p>
+        <div class="demo-row">
+          <button mat-icon-button [matBadge]="8" matBadgeColor="primary">
+            <mat-icon>notifications</mat-icon>
+          </button>
+          <button mat-icon-button [matBadge]="3" matBadgeColor="warn">
+            <mat-icon>mail</mat-icon>
+          </button>
+          <button mat-icon-button matBadge="·" matBadgeColor="accent">
+            <mat-icon>message</mat-icon>
+          </button>
+          <span [matBadge]="99" matBadgeOverlap="false" style="padding-right: 8px;">
+            Notifications
+          </span>
+        </div>
+
+        <mat-divider />
+
+        <p class="demo-label">Progress Bar — {{ progressValue }}%</p>
+        <div class="demo-col" style="width: 100%; max-width: 480px;">
+          <mat-progress-bar mode="determinate" [value]="progressValue" />
+          <mat-progress-bar mode="indeterminate" />
+          <mat-progress-bar mode="buffer" [value]="progressValue" [bufferValue]="85" />
+        </div>
+
+        <mat-divider />
+
+        <p class="demo-label">Progress Spinner</p>
+        <div class="demo-row">
+          <mat-progress-spinner mode="determinate" [value]="progressValue" diameter="48" />
+          <mat-progress-spinner mode="indeterminate" diameter="48" />
+          <mat-progress-spinner mode="determinate" [value]="progressValue" diameter="32" />
+          <mat-progress-spinner mode="indeterminate" diameter="32" />
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>

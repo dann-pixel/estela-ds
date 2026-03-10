@@ -1,0 +1,93 @@
+<div class="showcase-page">
+
+  <div class="page-header">
+    <h1>Buttons</h1>
+    <p>Interactive elements that trigger actions. Material Design 3 defines five button variants.</p>
+    <a mat-stroked-button href="https://v19.material.angular.dev/components/button/overview" target="_blank">
+      <mat-icon>open_in_new</mat-icon> Angular Material Docs
+    </a>
+  </div>
+
+  <div class="sections">
+
+    <!-- Common Buttons -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Button Variants</mat-card-title>
+        <mat-card-subtitle>Five standard M3 button levels from lowest to highest emphasis</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="demo-label">Default</p>
+        <div class="demo-row">
+          <button mat-button>Text</button>
+          <button mat-stroked-button>Outlined</button>
+          <button mat-flat-button>Filled</button>
+          <button mat-raised-button>Elevated</button>
+        </div>
+
+        <mat-divider />
+
+        <p class="demo-label">With icon</p>
+        <div class="demo-row">
+          <button mat-button>
+            <mat-icon>add</mat-icon> Text
+          </button>
+          <button mat-stroked-button>
+            <mat-icon>add</mat-icon> Outlined
+          </button>
+          <button mat-flat-button>
+            <mat-icon>add</mat-icon> Filled
+          </button>
+          <button mat-raised-button>
+            <mat-icon>add</mat-icon> Elevated
+          </button>
+        </div>
+
+        <mat-divider />
+
+        <p class="demo-label">Disabled</p>
+        <div class="demo-row">
+          <button mat-button disabled>Text</button>
+          <button mat-stroked-button disabled>Outlined</button>
+          <button mat-flat-button disabled>Filled</button>
+          <button mat-raised-button disabled>Elevated</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Icon Buttons -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Icon Buttons</mat-card-title>
+        <mat-card-subtitle>Compact buttons for toolbar actions and toggles</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="demo-label">Variants</p>
+        <div class="demo-row">
+          <button mat-icon-button aria-label="Standard icon button">
+            <mat-icon>favorite</mat-icon>
+          </button>
+          <button mat-icon-button aria-label="Outlined icon button" style="border: 1px solid var(--mat-sys-outline)">
+            <mat-icon>favorite_border</mat-icon>
+          </button>
+          <button mat-icon-button aria-label="Filled icon button" style="background: var(--mat-sys-primary); color: var(--mat-sys-on-primary)">
+            <mat-icon>favorite</mat-icon>
+          </button>
+          <button mat-icon-button aria-label="Tonal icon button" style="background: var(--mat-sys-secondary-container); color: var(--mat-sys-on-secondary-container)">
+            <mat-icon>favorite</mat-icon>
+          </button>
+        </div>
+
+        <mat-divider />
+
+        <p class="demo-label">Disabled</p>
+        <div class="demo-row">
+          <button mat-icon-button disabled>
+            <mat-icon>favorite</mat-icon>
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>

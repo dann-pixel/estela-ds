@@ -1,0 +1,173 @@
+<div class="showcase-page">
+
+  <div class="page-header">
+    <h1>Forms</h1>
+    <p>Form controls for collecting user input — inputs, selects, toggles, and more.</p>
+    <a mat-stroked-button href="https://v19.material.angular.dev/components/form-field/overview" target="_blank">
+      <mat-icon>open_in_new</mat-icon> Angular Material Docs
+    </a>
+  </div>
+
+  <div class="sections">
+
+    <!-- Text Inputs -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Text Input</mat-card-title>
+        <mat-card-subtitle>mat-form-field with matInput — fill and outline appearances</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+
+        <p class="demo-label">Fill (default)</p>
+        <div class="demo-row form-row">
+          <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="John Doe" />
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" placeholder="user@example.com" />
+            <mat-icon matSuffix>email</mat-icon>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>With hint</mat-label>
+            <input matInput />
+            <mat-hint>Descriptive text about this field</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <mat-divider />
+
+        <p class="demo-label">Outline</p>
+        <div class="demo-row form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="John Doe" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" />
+            <mat-icon matSuffix>visibility_off</mat-icon>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Textarea</mat-label>
+            <textarea matInput rows="3"></textarea>
+          </mat-form-field>
+        </div>
+
+        <mat-divider />
+
+        <p class="demo-label">States</p>
+        <div class="demo-row form-row" [formGroup]="form">
+          <mat-form-field appearance="fill">
+            <mat-label>Required (empty)</mat-label>
+            <input matInput formControlName="name" />
+            @if (form.get('name')?.hasError('required') && form.get('name')?.touched) {
+              <mat-error>Name is required</mat-error>
+            }
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Disabled</mat-label>
+            <input matInput value="Cannot edit" disabled />
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Select -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Select</mat-card-title>
+        <mat-card-subtitle>mat-select for single and multiple selection</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="demo-row form-row">
+          <mat-form-field appearance="fill">
+            <mat-label>Country (single)</mat-label>
+            <mat-select>
+              @for (c of countries; track c) {
+                <mat-option [value]="c">{{ c }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Countries (multiple)</mat-label>
+            <mat-select multiple>
+              @for (c of countries; track c) {
+                <mat-option [value]="c">{{ c }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Country (outline)</mat-label>
+            <mat-select>
+              @for (c of countries; track c) {
+                <mat-option [value]="c">{{ c }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Checkboxes & Radios -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Checkbox & Radio</mat-card-title>
+        <mat-card-subtitle>Binary and single-selection controls</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="demo-label">Checkbox</p>
+        <div class="demo-row">
+          <mat-checkbox>Unchecked</mat-checkbox>
+          <mat-checkbox [checked]="true">Checked</mat-checkbox>
+          <mat-checkbox [indeterminate]="true">Indeterminate</mat-checkbox>
+          <mat-checkbox disabled>Disabled</mat-checkbox>
+          <mat-checkbox [checked]="true" disabled>Disabled checked</mat-checkbox>
+        </div>
+
+        <mat-divider />
+
+        <p class="demo-label">Radio</p>
+        <mat-radio-group class="demo-row">
+          @for (opt of radioOptions; track opt) {
+            <mat-radio-button [value]="opt">{{ opt }}</mat-radio-button>
+          }
+          <mat-radio-button value="disabled" disabled>Disabled</mat-radio-button>
+        </mat-radio-group>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Toggles & Sliders -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Slide Toggle & Slider</mat-card-title>
+        <mat-card-subtitle>Continuous and binary value controls</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="demo-label">Slide Toggle</p>
+        <div class="demo-row">
+          <mat-slide-toggle>Off</mat-slide-toggle>
+          <mat-slide-toggle [checked]="true">On</mat-slide-toggle>
+          <mat-slide-toggle disabled>Disabled off</mat-slide-toggle>
+          <mat-slide-toggle [checked]="true" disabled>Disabled on</mat-slide-toggle>
+        </div>
+
+        <mat-divider />
+
+        <p class="demo-label">Slider — value: {{ sliderValue }}</p>
+        <div class="demo-row" style="flex-direction: column; align-items: stretch; gap: 16px;">
+          <mat-slider style="width: 320px;">
+            <input matSliderThumb [(value)]="sliderValue" />
+          </mat-slider>
+          <mat-slider style="width: 320px;" disabled>
+            <input matSliderThumb [value]="sliderValue" />
+          </mat-slider>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>

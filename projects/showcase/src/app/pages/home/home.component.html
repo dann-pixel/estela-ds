@@ -1,0 +1,72 @@
+<div class="showcase-page">
+
+  <!-- Header -->
+  <div class="page-header">
+    <h1>Estela Design System</h1>
+    <p>Angular Material v19 (Material Design 3) theme and component library.</p>
+  </div>
+
+  <div class="sections">
+
+    <!-- Quick navigation -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Components</mat-card-title>
+        <mat-card-subtitle>Browse component categories</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="quick-links">
+          @for (link of quickLinks; track link.route) {
+            <a [routerLink]="link.route" class="quick-link-card">
+              <mat-icon class="quick-link-icon">{{ link.icon }}</mat-icon>
+              <span class="quick-link-label">{{ link.label }}</span>
+              <span class="quick-link-desc">{{ link.description }}</span>
+            </a>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Color palette -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Color Palette</mat-card-title>
+        <mat-card-subtitle>Material Design 3 color tokens</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="color-grid">
+          @for (token of colorTokens; track token.name) {
+            <div
+              class="color-swatch"
+              [style.background-color]="'var(' + token.var + ')'"
+              [style.color]="'var(' + token.onVar + ')'"
+            >
+              <span class="swatch-name">{{ token.name }}</span>
+              <span class="swatch-var">{{ token.var }}</span>
+            </div>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Typography scale -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Typography Scale</mat-card-title>
+        <mat-card-subtitle>Material Design 3 type roles</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="type-scale">
+          @for (type of typeScale; track type.name) {
+            <div class="type-row">
+              <span class="type-token-name">{{ type.name }}</span>
+              <mat-divider [vertical]="true" />
+              <span [class]="type.class">{{ type.sample }}</span>
+            </div>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>

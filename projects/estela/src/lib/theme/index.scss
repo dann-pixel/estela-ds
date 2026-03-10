@@ -1,0 +1,14 @@
+// =============================================================
+// Estela Design System — Theme Entry Point
+// =============================================================
+// This file forwards all theme mixins and variables so consumers
+// can import the full theme API with a single @use.
+//
+// USAGE:
+//   @use 'lib/theme' as estela;
+//   html { @include estela.light-theme(); }
+// =============================================================
+
+@forward './theme';
+@forward './palette';
+@forward './typography';

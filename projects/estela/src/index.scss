@@ -1,0 +1,12 @@
+// =============================================================
+// Estela Design System — Root SCSS Entry Point
+// =============================================================
+// Import this file directly to apply the default Estela theme.
+// Angular CLI configures includePaths so this resolves as 'index'.
+//
+// USAGE (in styles.scss):
+//   @use 'index' as estela;
+//   html { @include estela.light-theme(); }
+// =============================================================
+
+@forward './lib/theme';
