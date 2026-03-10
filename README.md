@@ -1,59 +1,169 @@
-# EstelaDs
+# Estela Design System
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.22.
+Angular Material v19 (M3) theme library. Provides brand colors, typography, shape, and elevation tokens — ready to apply to any Angular project.
 
-## Development server
+---
 
-To start a local development server, run:
+## Requirements
 
-```bash
-ng serve
-```
+- Angular **19+**
+- `@angular/material` **19+**
+- `@angular/cdk` **19+**
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## Installation
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Install directly from this repository:
 
 ```bash
-ng generate --help
+npm install git+https://github.com/dann-pixel/estela-ds.git
 ```
 
-## Building
+---
 
-To build the project run:
+## Setup
 
-```bash
-ng build
+### 1. Add Google Fonts
+
+Add both font families to your `index.html`:
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### 2. Add `includePaths` to `angular.json`
 
-## Running unit tests
+Point the SCSS preprocessor to the library source so imports resolve correctly:
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
+```json
+"architect": {
+  "build": {
+    "options": {
+      "stylePreprocessorOptions": {
+        "includePaths": ["node_modules/estela/src"]
+      }
+    }
+  }
+}
 ```
 
-## Running end-to-end tests
+> Do the same under `"test"` if you run component tests with SCSS.
 
-For end-to-end (e2e) testing, run:
+### 3. Apply the theme in `styles.scss`
 
-```bash
-ng e2e
+```scss
+@use 'index' as estela;
+
+// Light theme (required)
+@include estela.light-theme-setup();
+
+// Apply base typography to native HTML elements
+body {
+  font-family: var(--mat-sys-body-large-font), sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--mat-sys-headline-large-font), sans-serif;
+}
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+That's it. The theme is now active.
 
-## Additional Resources
+---
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Dark mode
+
+Pass a CSS selector to `dark-theme-setup()`. Toggle the class on `<html>` from your app code.
+
+```scss
+@use 'index' as estela;
+
+@include estela.light-theme-setup();
+@include estela.dark-theme-setup('.dark-theme');
+```
+
+```ts
+// Toggle dark mode
+document.documentElement.classList.toggle('dark-theme');
+```
+
+---
+
+## What the theme applies
+
+| Token group | Value |
+|---|---|
+| Brand primary | `#00b5cc` (cyan) |
+| Brand tertiary | `#4255ff` (indigo) |
+| Border radius | `4px` on all components |
+| Elevation (level 1) | `none` — surfaces use border, not shadow |
+| Elevation (level 2–5) | preserved — menus, dialogs, snackbars |
+| Letter-spacing | `0` on all type roles |
+
+---
+
+## Semantic color tokens
+
+M3 does not define warning, success, or info roles natively. Estela exposes them as CSS custom properties:
+
+```css
+--estela-warning
+--estela-warning-container
+--estela-on-warning
+--estela-on-warning-container
+
+--estela-success
+--estela-success-container
+--estela-on-success
+--estela-on-success-container
+
+--estela-info
+--estela-info-container
+--estela-on-info
+--estela-on-info-container
+```
+
+Error is handled natively by M3 via `--mat-sys-error` and `--mat-sys-error-container`.
+
+Usage example:
+
+```scss
+.alert--success {
+  background-color: var(--estela-success-container);
+  color: var(--estela-on-success-container);
+}
+```
+
+---
+
+## Advanced usage
+
+For custom selectors or fine-grained control, use the low-level mixins directly.
+Call `light-brand-overrides()` in a **separate selector block** placed after `light-theme()` — this is required for brand colors to win the CSS cascade.
+
+```scss
+@use 'node_modules/estela/src/index' as estela;
+
+// Block 1 — mat.theme() output
+.my-shell { @include estela.light-theme(); }
+
+// Block 2 — brand overrides (must come after)
+.my-shell { @include estela.light-brand-overrides(); }
+```
+
+---
+
+## Available mixins
+
+| Mixin | Description |
+|---|---|
+| `light-theme-setup($selector?)` | Recommended. Applies full light theme. Default selector: `html` |
+| `dark-theme-setup($selector?)` | Recommended. Applies full dark theme. Default selector: `.dark-theme` |
+| `light-theme()` | Base light theme only (no brand overrides) |
+| `dark-theme()` | Base dark theme only (no brand overrides) |
+| `light-brand-overrides()` | Brand color overrides — use in a separate block after `light-theme()` |
+| `dark-brand-overrides()` | Brand color overrides — use in a separate block after `dark-theme()` |
