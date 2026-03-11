@@ -152,7 +152,9 @@
 &#64;include estela.light-theme-setup();
 
 // Tema oscuro (opcional)
-// &#64;include estela.dark-theme-setup('.dark-theme');
+// Tema oscuro (opcional) — activa .dark-theme en &lt;html&gt; desde TypeScript
+// Tema oscuro (opcional) — activa .dark-theme en &lt;html&gt; desde TypeScript
+&#64;include estela.dark-theme-setup();
 
 html, body &#123;
   height: 100%;
@@ -323,12 +325,25 @@ $estela-plain-family: 'Instrument Sans'; // Body y labels</code></pre>
 
           <div class="advanced-block">
             <h4><mat-icon>dark_mode</mat-icon> Activar dark mode</h4>
-            <p>Usa <code>dark-theme-setup()</code> con un selector. Aplica la clase en el <code>&lt;html&gt;</code> o <code>&lt;body&gt;</code> cuando el usuario lo solicite.</p>
+            <p>Agrega <code>dark-theme-setup()</code> en <code>styles.scss</code> e inyecta <code>ThemeService</code> en tu shell para alternar el tema.</p>
             <div class="code-block compact">
               <pre><code>// styles.scss
-&#64;include estela.dark-theme-setup('.dark-theme');
+&#64;include estela.dark-theme-setup(); // genera .dark-theme &#123; ... &#125;
 
-// En TypeScript: document.body.classList.toggle('dark-theme')</code></pre>
+// theme.service.ts — usa signal + localStorage + prefers-color-scheme
+&#64;Injectable(&#123; providedIn: 'root' &#125;)
+export class ThemeService &#123;
+  readonly isDark = signal&lt;boolean&gt;(/* detecta OS / localStorage */);
+  toggle() &#123; this.isDark.update(v =&gt; !v); &#125; // aplica clase en &lt;html&gt;
+&#125;
+
+// app.component.ts
+readonly theme = inject(ThemeService);
+
+// app.component.html
+&lt;button mat-icon-button (click)="theme.toggle()"&gt;
+  &lt;mat-icon&gt;&#123;&#123; theme.icon() &#125;&#125;&lt;/mat-icon&gt;
+&lt;/button&gt;</code></pre>
             </div>
           </div>
 

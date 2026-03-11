@@ -106,6 +106,16 @@ export class GettingStartedComponent {
       title: 'Form field condensed',
       description: 'Variante .form-field-sm de 40px — igual de alto que un botón, ideal para barras de filtro.',
     },
+    {
+      icon: 'dark_mode',
+      title: 'Dark mode nativo',
+      description: 'dark-theme-setup() genera todos los tokens dark. ThemeService aplica la clase en <html>. Cero cambios en los componentes.',
+    },
+    {
+      icon: 'phone_android',
+      title: 'Mobile responsive',
+      description: 'Shell con BreakpointObserver: sidenav overlay en mobile, toolbar con hamburger, paddings adaptativos.',
+    },
   ];
 
   readonly colorTokens: Token[] = [

@@ -11,7 +11,7 @@ Sistema de diseño corporativo basado en **Angular Material v19 (Material Design
 
 ## Comandos esenciales
 
-Todos los comandos se ejecutan desde `estela-ds/`:
+Todos los comandos se ejecutan desde `estela-ds-angular/`:
 
 ```bash
 npm start              # Levanta el showcase en http://localhost:4200
@@ -25,14 +25,14 @@ npm run build          # Compila librería + showcase en secuencia
 ## Estructura del proyecto
 
 ```
-estela-ds/
+estela-ds-angular/
 ├── projects/
 │   ├── estela/                          # Angular Library
 │   │   ├── src/
 │   │   │   ├── lib/theme/
 │   │   │   │   ├── _palette.scss        # Paletas de color (reemplazar con brand Estela)
 │   │   │   │   ├── _typography.scss     # Fuente tipográfica
-│   │   │   │   └── _theme.scss          # Mixins light-theme() y dark-theme()
+│   │   │   │   └── _theme.scss          # Mixins light/dark-theme() y *-setup()
 │   │   │   ├── index.scss               # Barrel SCSS (@forward lib/theme)
 │   │   │   └── public-api.ts            # API TypeScript pública
 │   │   ├── ng-package.json              # Configuración ng-packagr (incluye assets SCSS)
@@ -41,17 +41,22 @@ estela-ds/
 │   └── showcase/                        # Angular App (showroom)
 │       └── src/
 │           ├── app/
-│           │   ├── app.component.*      # Shell: sidenav + router-outlet
+│           │   ├── core/
+│           │   │   └── theme.service.ts # ThemeService: dark/light toggle + localStorage
+│           │   ├── app.component.*      # Shell: sidenav responsive + mobile toolbar
 │           │   ├── app.routes.ts        # Rutas lazy-loaded
 │           │   └── pages/
+│           │       ├── getting-started/ # Onboarding para devs (instalación, tokens, uso)
 │           │       ├── home/            # Paleta de colores + escala tipográfica
 │           │       ├── buttons/         # Botones: Text, Filled, Outlined, Elevated, Icon
 │           │       ├── forms/           # Input, Select, Checkbox, Radio, Slider, Slide Toggle
 │           │       ├── navigation/      # Toolbar, Tabs, Chips, Badge, Progress Bar, Progress Spinner
-│           │       └── content/         # Cards, Table, Dialog, Snack Bar, Expansion Panel, Alerts
-│           ├── styles.scss              # Aplica el tema + estilos globales del showcase
+│           │       ├── content/         # Cards, Table, Dialog, Snack Bar, Expansion Panel, Alerts
+│           │       └── solicitudes/     # Demo de tabla con paginación, filtro, sticky column
+│           ├── styles.scss              # Aplica light + dark theme + estilos globales
 │           └── index.html
 ├── angular.json                         # stylePreprocessorOptions apunta a projects/estela/src
+├── vercel.json                          # Deploy config: outputDir, buildCommand, SPA rewrites
 ├── package.json
 └── tsconfig.json
 ```
@@ -286,6 +291,84 @@ Fija la columna al borde derecho del scroll. Útil para columnas de acciones.
 
 > AM agrega la clase `.mat-column-<columnDef>` a cada `th` y `td`, lo que permite estilar
 > columnas específicas desde SCSS sin tocar el HTML.
+
+---
+
+## Dark Mode
+
+El showcase incluye soporte completo de dark mode implementado con `ThemeService`.
+
+### Cómo funciona
+
+1. **`_theme.scss`** — expone `dark-theme-setup($selector)` que genera todos los tokens dark bajo el selector indicado (default: `.dark-theme`).
+2. **`styles.scss`** — llama ambos mixins en el root:
+   ```scss
+   @include estela.light-theme-setup();  // → html { ... }
+   @include estela.dark-theme-setup();   // → .dark-theme { ... }
+   ```
+3. **`ThemeService`** — agrega/quita `.dark-theme` en `document.documentElement` (`<html>`). Al cambiar la clase, todos los `--mat-sys-*` y `--estela-*` se actualizan automáticamente. **Ningún componente necesita cambios**.
+
+### ThemeService API
+
+```typescript
+// Inyectar en cualquier componente:
+readonly theme = inject(ThemeService);
+
+theme.isDark()   // signal<boolean>
+theme.icon()     // computed: 'dark_mode' | 'light_mode'
+theme.tooltip()  // computed: string
+theme.toggle()   // alterna el tema
+```
+
+### Inicialización (orden de prioridad)
+1. `localStorage` key `estela-theme`: `'dark'` | `'light'`
+2. `prefers-color-scheme: dark` del OS
+3. Fallback: light
+
+### Agregar dark mode a un proyecto consumidor
+
+```scss
+// styles.scss
+@include estela.dark-theme-setup(); // genera .dark-theme { ... }
+```
+
+```typescript
+// theme.service.ts (simplificado)
+toggle() {
+  document.documentElement.classList.toggle('dark-theme');
+  localStorage.setItem('estela-theme', isDark ? 'dark' : 'light');
+}
+```
+
+---
+
+## Responsive / Mobile
+
+El shell es responsive usando `BreakpointObserver` de `@angular/cdk/layout`.
+
+### Breakpoint principal: 768px
+
+| Estado | Sidenav | Toolbar |
+|---|---|---|
+| `> 768px` (desktop) | `mode="side"`, siempre visible | Oculta |
+| `≤ 768px` (mobile) | `mode="over"`, cerrado por defecto | Visible (sticky top) |
+
+### Implementación en `app.component.ts`
+
+```typescript
+readonly isMobile = toSignal(
+  inject(BreakpointObserver)
+    .observe('(max-width: 768px)')
+    .pipe(map(r => r.matches)),
+  { initialValue: false }
+);
+```
+
+### Comportamiento mobile
+- Drawer se cierra automáticamente al navegar (via `closeIfMobile()`)
+- Mobile toolbar: hamburger ☰ + logo + theme toggle
+- Padding de páginas: `40px 32px` → `20px 16px`
+- Toolbar de tablas: se wrappea en columna (search full-width, botones debajo)
 
 ---
 
