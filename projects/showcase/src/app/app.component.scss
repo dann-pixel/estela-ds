@@ -51,11 +51,11 @@
     margin-bottom: 2px;
 
     &.active-link {
-      background-color: var(--mat-sys-secondary-container);
-      color: var(--mat-sys-on-secondary-container);
+      background-color: var(--mat-sys-primary-container);
+      color: var(--mat-sys-on-primary-container);
 
       mat-icon {
-        color: var(--mat-sys-on-secondary-container);
+        color: var(--mat-sys-on-primary-container);
       }
     }
   }
