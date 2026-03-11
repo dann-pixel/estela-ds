@@ -36,9 +36,19 @@
       }
     </mat-nav-list>
 
-    <!-- Footer -->
+    <!-- Footer: versión + toggle dark mode -->
     <div class="sidenav-footer">
       <span>v0.0.1 · Angular Material v19</span>
+      <button
+        mat-icon-button
+        (click)="theme.toggle()"
+        [matTooltip]="theme.tooltip()"
+        matTooltipPosition="above"
+        class="theme-toggle"
+        aria-label="Cambiar tema"
+      >
+        <mat-icon>{{ theme.icon() }}</mat-icon>
+      </button>
     </div>
 
   </mat-sidenav>
@@ -54,6 +64,15 @@
         </button>
         <span class="mobile-logo-mark">✦</span>
         <span class="mobile-logo-name">Estela</span>
+        <span class="spacer"></span>
+        <button
+          mat-icon-button
+          (click)="theme.toggle()"
+          [matTooltip]="theme.tooltip()"
+          aria-label="Cambiar tema"
+        >
+          <mat-icon>{{ theme.icon() }}</mat-icon>
+        </button>
       </mat-toolbar>
     }
 

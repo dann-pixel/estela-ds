@@ -8,11 +8,17 @@
 
 @use 'index' as estela;
 
-// Apply light theme globally.
+// Tema claro — aplicado a <html> por defecto.
 // light-theme-setup() emite dos bloques de selector separados para garantizar
 // que los brand color overrides (#00b5cc, #4255ff) aparezcan DESPUÉS del
 // output diferido de mat.theme() y así prevalezcan en el CSS final.
 @include estela.light-theme-setup();
+
+// Tema oscuro — activado cuando ThemeService agrega la clase .dark-theme a <html>.
+// dark-theme-setup() sobreescribe todos los tokens --mat-sys-* y --estela-* con
+// sus variantes dark, por lo que todos los componentes Angular Material y las
+// utilidades del DS se actualizan automáticamente sin cambios adicionales.
+@include estela.dark-theme-setup();
 
 // Base reset
 html,
