@@ -1,7 +1,12 @@
 <mat-sidenav-container class="app-container">
 
   <!-- ── Sidebar ── -->
-  <mat-sidenav mode="side" opened class="app-sidenav">
+  <mat-sidenav
+    #sidenav
+    [mode]="isMobile() ? 'over' : 'side'"
+    [opened]="!isMobile()"
+    class="app-sidenav"
+  >
 
     <!-- Logo -->
     <div class="sidenav-header">
@@ -23,6 +28,7 @@
           routerLinkActive="active-link"
           [routerLinkActiveOptions]="{ exact: item.route === '/' }"
           class="nav-item"
+          (click)="closeIfMobile()"
         >
           <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
           <span matListItemTitle>{{ item.label }}</span>
@@ -39,7 +45,20 @@
 
   <!-- ── Content ── -->
   <mat-sidenav-content class="app-content">
+
+    <!-- Toolbar mobile — solo visible en pantallas pequeñas -->
+    @if (isMobile()) {
+      <mat-toolbar class="mobile-toolbar">
+        <button mat-icon-button (click)="sidenav.toggle()" aria-label="Abrir menú">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span class="mobile-logo-mark">✦</span>
+        <span class="mobile-logo-name">Estela</span>
+      </mat-toolbar>
+    }
+
     <router-outlet />
+
   </mat-sidenav-content>
 
 </mat-sidenav-container>

@@ -72,3 +72,29 @@
   background-color: var(--mat-sys-background);
   overflow-y: auto;
 }
+
+// ── Mobile top toolbar ────────────────────────────────────────────
+// Solo se renderiza en pantallas ≤ 768px (via @if en el template).
+// Sticky en top 0 para que quede fijo mientras el usuario scrollea.
+.mobile-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--mat-sys-surface);
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+  gap: 8px;
+  // Sobreescribe el padding lateral por defecto de mat-toolbar
+  padding: 0 8px !important;
+
+  .mobile-logo-mark {
+    font-size: 22px;
+    color: var(--mat-sys-primary);
+    line-height: 1;
+  }
+
+  .mobile-logo-name {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--mat-sys-on-surface);
+  }
+}

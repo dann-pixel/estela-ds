@@ -2,6 +2,10 @@
   padding: 32px 40px;
   box-sizing: border-box;
 
+  @media (max-width: 768px) {
+    padding: 16px;
+  }
+
   .sol-header {
     margin-bottom: 24px;
 
@@ -41,6 +45,19 @@
       margin-left: auto;
       display: flex;
       gap: 8px;
+    }
+
+    @media (max-width: 600px) {
+      flex-wrap: wrap;
+      padding: 12px 12px 8px;
+
+      .sol-search {
+        flex: 1 1 100%; // ocupa toda la fila en mobile
+      }
+
+      .sol-actions {
+        margin-left: 0;
+      }
     }
   }
 
