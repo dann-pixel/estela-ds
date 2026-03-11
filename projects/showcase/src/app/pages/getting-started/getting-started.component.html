@@ -1,0 +1,383 @@
+<div class="showcase-page">
+
+  <!-- Header -->
+  <div class="page-header">
+    <h1>Getting Started</h1>
+    <p>Todo lo que necesitas para instalar y usar el Estela Design System en tu proyecto Angular.</p>
+    <a mat-stroked-button href="https://github.com/dann-pixel/estela-ds" target="_blank">
+      <mat-icon>open_in_new</mat-icon>
+      Ver en GitHub
+    </a>
+  </div>
+
+  <div class="sections">
+
+    <!-- ¿Qué es? -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>¿Qué es Estela DS?</mat-card-title>
+        <mat-card-subtitle>Sistema de diseño corporativo basado en Angular Material v19</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="about-grid">
+          <div class="about-text">
+            <p>
+              <strong>Estela Design System</strong> es un tema de Angular Material v19 (Material Design 3)
+              creado para estandarizar la interfaz de todos los productos digitales de Estela.
+            </p>
+            <p>
+              Provee un conjunto de tokens de color, tipografía y forma que se aplican globalmente
+              a todos los componentes de Angular Material, sin necesidad de crear nuevos componentes
+              desde cero.
+            </p>
+            <p>
+              Los equipos de desarrollo simplemente instalan el tema, lo configuran en
+              <code>styles.scss</code> y todos los <code>mat-button</code>, <code>mat-input</code>,
+              <code>mat-card</code>, etc. adquieren el look &amp; feel de Estela automáticamente.
+            </p>
+          </div>
+          <div class="stack-badges">
+            <div class="badge-group">
+              <span class="tech-badge primary">Angular 19</span>
+              <span class="tech-badge secondary">Material Design 3</span>
+              <span class="tech-badge neutral">TypeScript 5.7</span>
+              <span class="tech-badge neutral">SCSS</span>
+              <span class="tech-badge neutral">ng-packagr</span>
+            </div>
+            <div class="repo-info">
+              <mat-icon class="repo-icon">folder</mat-icon>
+              <span>Monorepo con 2 proyectos:</span>
+              <div class="repo-projects">
+                <div class="repo-project">
+                  <mat-icon>library_books</mat-icon>
+                  <div>
+                    <strong>projects/estela/</strong>
+                    <span>Librería distribuible (el tema)</span>
+                  </div>
+                </div>
+                <div class="repo-project">
+                  <mat-icon>computer</mat-icon>
+                  <div>
+                    <strong>projects/showcase/</strong>
+                    <span>App de demo (este sitio)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Instalación paso a paso -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Instalación</mat-card-title>
+        <mat-card-subtitle>4 pasos para tener el tema activo en tu proyecto</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+
+        <!-- Paso 1: npm install -->
+        <div class="install-step">
+          <div class="step-header">
+            <div class="step-number">1</div>
+            <div class="step-info">
+              <h3>Instala el paquete</h3>
+              <p>Instala directamente desde el repositorio de GitHub.</p>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">bash</span>
+            </div>
+            <pre><code>npm install git+https://github.com/dann-pixel/estela-ds.git</code></pre>
+          </div>
+          <p class="step-note">
+            <mat-icon>info</mat-icon>
+            Requiere Node.js ≥ 20 y Angular CLI ≥ 19. El paquete se instalará como
+            <code>estela-angular</code> en tu <code>node_modules</code>.
+          </p>
+        </div>
+
+        <mat-divider />
+
+        <!-- Paso 2: angular.json -->
+        <div class="install-step">
+          <div class="step-header">
+            <div class="step-number">2</div>
+            <div class="step-info">
+              <h3>Configura <code>angular.json</code></h3>
+              <p>Agrega el path de los archivos SCSS del DS al compilador de estilos.</p>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">angular.json</span>
+            </div>
+            <pre><code>"build": &#123;
+  "options": &#123;
+    "stylePreprocessorOptions": &#123;
+      "includePaths": [
+        "node_modules/estela-angular/src"
+      ]
+    &#125;
+  &#125;
+&#125;</code></pre>
+          </div>
+          <p class="step-note">
+            <mat-icon>info</mat-icon>
+            Agrégalo tanto en el builder de <code>build</code> como en el de <code>test</code>
+            si usas estilos en tus specs.
+          </p>
+        </div>
+
+        <mat-divider />
+
+        <!-- Paso 3: styles.scss -->
+        <div class="install-step">
+          <div class="step-header">
+            <div class="step-number">3</div>
+            <div class="step-info">
+              <h3>Aplica el tema en <code>styles.scss</code></h3>
+              <p>Importa el DS y activa el tema claro. El setup emite dos bloques CSS para garantizar el orden correcto de los overrides.</p>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">styles.scss</span>
+            </div>
+            <pre><code>&#64;use 'index' as estela;
+
+// Tema claro (requerido)
+&#64;include estela.light-theme-setup();
+
+// Tema oscuro (opcional)
+// &#64;include estela.dark-theme-setup('.dark-theme');
+
+html, body &#123;
+  height: 100%;
+  margin: 0;
+&#125;
+
+body &#123;
+  font-family: var(--mat-sys-body-large-font), sans-serif;
+&#125;
+
+h1, h2, h3, h4, h5, h6 &#123;
+  font-family: var(--mat-sys-headline-large-font), sans-serif;
+&#125;</code></pre>
+          </div>
+        </div>
+
+        <mat-divider />
+
+        <!-- Paso 4: Listo -->
+        <div class="install-step">
+          <div class="step-header">
+            <div class="step-number done">4</div>
+            <div class="step-info">
+              <h3>¡Listo! Usa los componentes</h3>
+              <p>Todos los componentes de Angular Material ya tendrán el tema de Estela aplicado.</p>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">any.component.html</span>
+            </div>
+            <pre><code>&lt;!-- Los componentes de AM adoptan el tema automáticamente --&gt;
+&lt;button mat-flat-button&gt;Guardar&lt;/button&gt;
+&lt;button mat-stroked-button&gt;Cancelar&lt;/button&gt;
+
+&lt;mat-form-field&gt;
+  &lt;mat-label&gt;Nombre&lt;/mat-label&gt;
+  &lt;input matInput /&gt;
+&lt;/mat-form-field&gt;
+
+&lt;mat-card appearance="outlined"&gt;
+  &lt;mat-card-content&gt;Contenido&lt;/mat-card-content&gt;
+&lt;/mat-card&gt;</code></pre>
+          </div>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Tokens de color disponibles -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Tokens de color principales</mat-card-title>
+        <mat-card-subtitle>CSS custom properties disponibles en toda la app</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="tokens-table">
+          <div class="token-row token-header">
+            <span>Token</span>
+            <span>Valor</span>
+            <span>Uso</span>
+          </div>
+          @for (token of colorTokens; track token.name) {
+            <div class="token-row">
+              <code class="token-name">{{ token.name }}</code>
+              <span class="token-value">
+                <span class="color-dot" [style.background]="token.value"></span>
+                {{ token.value }}
+              </span>
+              <span class="token-desc">{{ token.description }}</span>
+            </div>
+          }
+        </div>
+        <p class="step-note">
+          <mat-icon>info</mat-icon>
+          Los tokens <code>--mat-sys-*</code> son generados por Angular Material M3.
+          Los tokens <code>--estela-*</code> son extensiones propias del DS para colores semánticos adicionales.
+        </p>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Particularidades del DS -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Particularidades del DS</mat-card-title>
+        <mat-card-subtitle>Decisiones de diseño que diferencian Estela de un tema Angular Material estándar</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="features-grid">
+          @for (feature of features; track feature.title) {
+            <div class="feature-item">
+              <mat-icon class="feature-icon">{{ feature.icon }}</mat-icon>
+              <div class="feature-content">
+                <h4>{{ feature.title }}</h4>
+                <p>{{ feature.description }}</p>
+              </div>
+            </div>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Clases utilitarias -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Clases utilitarias del DS</mat-card-title>
+        <mat-card-subtitle>Clases globales disponibles cuando se instala el tema</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="utilities-grid">
+
+          <div class="utility-block">
+            <h4><code>.form-field-sm</code></h4>
+            <p>Form field condensed de <strong>40px de alto</strong>. Ideal para barras de búsqueda y filtros alineados con botones.</p>
+            <div class="code-block compact">
+              <pre><code>&lt;mat-form-field class="form-field-sm"&gt;
+  &lt;mat-icon matPrefix&gt;search&lt;/mat-icon&gt;
+  &lt;input matInput placeholder="Buscar..." /&gt;
+&lt;/mat-form-field&gt;</code></pre>
+            </div>
+          </div>
+
+          <div class="utility-block">
+            <h4>Chips de status semántico</h4>
+            <p>Combina <code>mat-chip</code> con las clases <code>.status-chip</code> + estado para mostrar estados con color semántico en tablas.</p>
+            <div class="code-block compact">
+              <pre><code>&lt;mat-chip class="status-chip status-en-progreso"&gt;En Progreso&lt;/mat-chip&gt;
+&lt;mat-chip class="status-chip status-completado"&gt;Completado&lt;/mat-chip&gt;
+&lt;mat-chip class="status-chip status-cancelado"&gt;Cancelado&lt;/mat-chip&gt;
+&lt;mat-chip class="status-chip status-no-iniciado"&gt;No Iniciado&lt;/mat-chip&gt;
+&lt;mat-chip class="status-chip status-en-implementacion"&gt;En Implementación&lt;/mat-chip&gt;</code></pre>
+            </div>
+          </div>
+
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Personalización -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Personalización avanzada</mat-card-title>
+        <mat-card-subtitle>Cómo extender o modificar el tema desde tu proyecto</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="advanced-blocks">
+
+          <div class="advanced-block">
+            <h4><mat-icon>palette</mat-icon> Cambiar colores de marca</h4>
+            <p>Edita <code>projects/estela/src/lib/theme/_palette.scss</code> y actualiza los tokens de la marca.</p>
+            <div class="code-block compact">
+              <pre><code>// _palette.scss
+$brand-primary:           #00b5cc;   // Color principal
+$brand-primary-container: #bfecf2;   // Contenedor (botones tonal, chips)
+$brand-on-primary:        #ffffff;   // Texto sobre primary</code></pre>
+            </div>
+          </div>
+
+          <div class="advanced-block">
+            <h4><mat-icon>text_fields</mat-icon> Cambiar tipografía</h4>
+            <p>Edita <code>projects/estela/src/lib/theme/_typography.scss</code> y actualiza las Google Fonts en <code>index.html</code>.</p>
+            <div class="code-block compact">
+              <pre><code>// _typography.scss
+$estela-brand-family: Outfit;            // Headings (sin comillas)
+$estela-plain-family: 'Instrument Sans'; // Body y labels</code></pre>
+            </div>
+          </div>
+
+          <div class="advanced-block">
+            <h4><mat-icon>dark_mode</mat-icon> Activar dark mode</h4>
+            <p>Usa <code>dark-theme-setup()</code> con un selector. Aplica la clase en el <code>&lt;html&gt;</code> o <code>&lt;body&gt;</code> cuando el usuario lo solicite.</p>
+            <div class="code-block compact">
+              <pre><code>// styles.scss
+&#64;include estela.dark-theme-setup('.dark-theme');
+
+// En TypeScript: document.body.classList.toggle('dark-theme')</code></pre>
+            </div>
+          </div>
+
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Links útiles -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Recursos útiles</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="links-grid">
+          <a class="resource-link" href="https://github.com/dann-pixel/estela-ds" target="_blank">
+            <mat-icon>code</mat-icon>
+            <div>
+              <strong>Repositorio GitHub</strong>
+              <span>dann-pixel/estela-ds</span>
+            </div>
+            <mat-icon class="arrow">arrow_forward</mat-icon>
+          </a>
+          <a class="resource-link" href="https://v19.material.angular.dev/" target="_blank">
+            <mat-icon>library_books</mat-icon>
+            <div>
+              <strong>Angular Material v19 Docs</strong>
+              <span>Documentación oficial de componentes</span>
+            </div>
+            <mat-icon class="arrow">arrow_forward</mat-icon>
+          </a>
+          <a class="resource-link" href="https://m3.material.io/" target="_blank">
+            <mat-icon>design_services</mat-icon>
+            <div>
+              <strong>Material Design 3</strong>
+              <span>Sistema de diseño base de Google</span>
+            </div>
+            <mat-icon class="arrow">arrow_forward</mat-icon>
+          </a>
+          <a class="resource-link" href="https://fonts.google.com/specimen/Outfit" target="_blank">
+            <mat-icon>font_download</mat-icon>
+            <div>
+              <strong>Outfit — Google Fonts</strong>
+              <span>Fuente de headings del DS</span>
+            </div>
+            <mat-icon class="arrow">arrow_forward</mat-icon>
+          </a>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>

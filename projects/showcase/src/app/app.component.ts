@@ -32,6 +32,7 @@ interface NavItem {
 })
 export class AppComponent {
   readonly navItems: NavItem[] = [
+    { label: 'Getting Started', route: '/getting-started', icon: 'rocket_launch' },
     { label: 'Home', route: '/', icon: 'home' },
     { label: 'Buttons', route: '/buttons', icon: 'smart_button' },
     { label: 'Forms', route: '/forms', icon: 'dynamic_form' },

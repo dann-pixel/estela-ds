@@ -39,5 +39,12 @@ export const routes: Routes = [
         (m) => m.SolicitudesComponent
       ),
   },
+  {
+    path: 'getting-started',
+    loadComponent: () =>
+      import('./pages/getting-started/getting-started.component').then(
+        (m) => m.GettingStartedComponent
+      ),
+  },
   { path: '**', redirectTo: '' },
 ];
