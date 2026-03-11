@@ -69,7 +69,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .demo-row {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
   align-items: center;
   gap: 12px;
   padding: 8px 0;
@@ -100,6 +101,70 @@ h1, h2, h3, h4, h5, h6 {
 
 // Tab icon spacing
 .tab-icon { margin-right: 4px; }
+
+// ── Form field — condensed (sm) ─────────────────────────────────
+// Reduces the fill form field to 40 px — same height as a standard button.
+// Ideal for toolbar/filter inputs placed alongside buttons.
+// Use a placeholder instead of mat-label (no room for floating label).
+.form-field-sm {
+  --mat-form-field-container-height: 40px;
+  --mat-form-field-container-vertical-padding: 8px;
+  --mat-form-field-filled-with-label-container-padding-top: 8px;
+  --mat-form-field-filled-with-label-container-padding-bottom: 8px;
+
+  // Hide floating label — use placeholder instead
+  .mdc-floating-label,
+  .mat-mdc-floating-label {
+    display: none;
+  }
+
+  // Collapse the hint/error reserved space
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+}
+
+// ── Status Chips ───────────────────────────────────────────────
+// Chips semánticos de estado usando los colores del DS Estela.
+// Pill-shape: border-radius grande para forma cápsula.
+// Uso: <mat-chip class="status-chip status-completado" disableRipple>Completado</mat-chip>
+// Estados disponibles: no-iniciado, en-progreso, completado, cancelado, en-implementacion
+.status-chip {
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  height: 28px !important;
+  min-height: 28px !important;
+  border-radius: 50px !important;
+  cursor: default;
+
+  // Elimina el borde/outline por defecto del chip M3
+  --mdc-chip-outline-width: 0;
+
+  &.status-no-iniciado {
+    background-color: var(--estela-chip-default-container) !important;
+    color: var(--estela-chip-on-default-container) !important;
+  }
+
+  &.status-en-progreso {
+    background-color: var(--estela-chip-info-container) !important;
+    color: var(--estela-chip-on-info-container) !important;
+  }
+
+  &.status-completado {
+    background-color: var(--estela-chip-success-container) !important;
+    color: var(--estela-chip-on-success-container) !important;
+  }
+
+  &.status-cancelado {
+    background-color: var(--estela-chip-error-container) !important;
+    color: var(--estela-chip-on-error-container) !important;
+  }
+
+  &.status-en-implementacion {
+    background-color: var(--estela-chip-warning-container) !important;
+    color: var(--estela-chip-on-warning-container) !important;
+  }
+}
 
 // ── Alerts ─────────────────────────────────────────────────────
 // Componente visual de alerta usando los colores semánticos de Estela.

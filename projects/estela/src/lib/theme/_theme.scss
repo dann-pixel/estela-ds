@@ -81,6 +81,58 @@
 }
 
 // -------------------------------------------------------
+// Mixin privado — Override de tokens neutral (Blue Gray)
+// -------------------------------------------------------
+// Reemplaza los grises auto-generados por mat.theme() (que heredan
+// el tinte cyan del primary) por la rampa Blue Gray del DS.
+// Afecta: fondos de página, superficies, bordes y divisores.
+// Resultado clave: tablas y bordes más suaves y neutros.
+@mixin _neutral-colors($type: light) {
+  @if $type == light {
+    // Página y superficies
+    --mat-sys-background:                    #{palette.$neutral-50};
+    --mat-sys-on-background:                 #{palette.$neutral-900};
+    --mat-sys-surface:                       #ffffff;
+    --mat-sys-on-surface:                    #{palette.$neutral-900};
+    --mat-sys-surface-variant:               #{palette.$neutral-100};
+    --mat-sys-on-surface-variant:            #{palette.$neutral-700};
+    // Jerarquía de contenedores (form fields, navigation, cards)
+    --mat-sys-surface-container-lowest:      #ffffff;
+    --mat-sys-surface-container-low:         #{palette.$neutral-50};
+    --mat-sys-surface-container:             #{palette.$neutral-50};
+    --mat-sys-surface-container-high:        #{palette.$neutral-50};
+    --mat-sys-surface-container-highest:     #ffffff;
+    // Form field fill — token MDC directo (fallback default: surface-variant = neutral-100)
+    --mdc-filled-text-field-container-color: #ECEFF1;
+    // Color dark — Blue Gray 900 para botones y superficies oscuras
+    --estela-dark:                           #{palette.$neutral-900};
+    --estela-on-dark:                        #ffffff;
+    --estela-dark-container:                 #{palette.$neutral-200};
+    --estela-on-dark-container:              #{palette.$neutral-900};
+    // Bordes — más suaves
+    --mat-sys-outline:                       #{palette.$neutral-300};
+    --mat-sys-outline-variant:               #{palette.$neutral-100};
+  } @else {
+    // Página y superficies dark
+    --mat-sys-background:                    #{palette.$neutral-900};
+    --mat-sys-on-background:                 #{palette.$neutral-50};
+    --mat-sys-surface:                       #{palette.$neutral-800};
+    --mat-sys-on-surface:                    #{palette.$neutral-50};
+    --mat-sys-surface-variant:               #{palette.$neutral-700};
+    --mat-sys-on-surface-variant:            #{palette.$neutral-200};
+    // Jerarquía de contenedores dark
+    --mat-sys-surface-container-lowest:      #{palette.$neutral-900};
+    --mat-sys-surface-container-low:         #{palette.$neutral-900};
+    --mat-sys-surface-container:             #{palette.$neutral-800};
+    --mat-sys-surface-container-high:        #{palette.$neutral-700};
+    --mat-sys-surface-container-highest:     #{palette.$neutral-700};
+    // Bordes dark
+    --mat-sys-outline:                       #{palette.$neutral-500};
+    --mat-sys-outline-variant:               #{palette.$neutral-700};
+  }
+}
+
+// -------------------------------------------------------
 // Mixin privado — Override de tokens de color de la marca
 // -------------------------------------------------------
 // Angular Material v19 genera los tokens --mat-sys-* desde sus
@@ -116,6 +168,7 @@
 // -------------------------------------------------------
 @mixin _semantic-colors($type: light) {
   @if $type == light {
+    // ── Semantic colors (alerts, banners, backgrounds) ──
     --estela-warning:              #{palette.$warning};
     --estela-warning-container:    #{palette.$warning-container};
     --estela-on-warning:           #{palette.$on-warning};
@@ -128,7 +181,20 @@
     --estela-info-container:       #{palette.$info-container};
     --estela-on-info:              #{palette.$on-info};
     --estela-on-info-container:    #{palette.$on-info-container};
+    // ── Chip semantic colors (medium-toned, Figma spec) ──
+    // Uso: <mat-chip class="status-chip status-completado">
+    --estela-chip-default-container:       #{palette.$chip-default-container};
+    --estela-chip-on-default-container:    #{palette.$chip-on-default-container};
+    --estela-chip-info-container:          #{palette.$chip-info-container};
+    --estela-chip-on-info-container:       #{palette.$chip-on-info-container};
+    --estela-chip-success-container:       #{palette.$chip-success-container};
+    --estela-chip-on-success-container:    #{palette.$chip-on-success-container};
+    --estela-chip-error-container:         #{palette.$chip-error-container};
+    --estela-chip-on-error-container:      #{palette.$chip-on-error-container};
+    --estela-chip-warning-container:       #{palette.$chip-warning-container};
+    --estela-chip-on-warning-container:    #{palette.$chip-on-warning-container};
   } @else {
+    // ── Semantic colors dark ──
     --estela-warning:              #{palette.$warning-dark};
     --estela-warning-container:    #{palette.$warning-container-dark};
     --estela-on-warning:           #{palette.$on-warning-dark};
@@ -141,6 +207,17 @@
     --estela-info-container:       #{palette.$info-container-dark};
     --estela-on-info:              #{palette.$on-info-dark};
     --estela-on-info-container:    #{palette.$on-info-container-dark};
+    // ── Chip semantic colors dark ──
+    --estela-chip-default-container:       #{palette.$chip-default-container-dark};
+    --estela-chip-on-default-container:    #{palette.$chip-on-default-container-dark};
+    --estela-chip-info-container:          #{palette.$chip-info-container-dark};
+    --estela-chip-on-info-container:       #{palette.$chip-on-info-container-dark};
+    --estela-chip-success-container:       #{palette.$chip-success-container-dark};
+    --estela-chip-on-success-container:    #{palette.$chip-on-success-container-dark};
+    --estela-chip-error-container:         #{palette.$chip-error-container-dark};
+    --estela-chip-on-error-container:      #{palette.$chip-on-error-container-dark};
+    --estela-chip-warning-container:       #{palette.$chip-warning-container-dark};
+    --estela-chip-on-warning-container:    #{palette.$chip-on-warning-container-dark};
   }
 }
 
@@ -250,6 +327,7 @@
   }
   #{$selector} {
     @include _brand-colors(light);
+    @include _neutral-colors(light);
     @include _shape-tokens();
     @include _elevation-tokens();
     @include _typography-tokens();
@@ -267,6 +345,7 @@
   }
   #{$selector} {
     @include _brand-colors(dark);
+    @include _neutral-colors(dark);
     @include _shape-tokens();
     @include _elevation-tokens();
     @include _typography-tokens();

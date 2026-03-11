@@ -234,6 +234,61 @@ Y luego importar simplemente:
 
 ---
 
+## Columnas sticky en mat-table
+
+Angular Material v19 soporta columnas fijas (sticky) de forma nativa en `mat-table`.
+No requiere librerías externas ni implementación custom.
+
+### Sticky izquierda (`[sticky]`)
+Fija la columna al borde izquierdo del scroll. Útil para columnas de identificador.
+
+```html
+<ng-container matColumnDef="numero" [sticky]="true">
+  <th mat-header-cell *matHeaderCellDef>N°</th>
+  <td mat-cell *matCellDef="let row">{{ row.numero }}</td>
+</ng-container>
+```
+
+### Sticky derecha (`[stickyEnd]`)
+Fija la columna al borde derecho del scroll. Útil para columnas de acciones.
+
+```html
+<ng-container matColumnDef="acciones" stickyEnd>
+  <th mat-header-cell *matHeaderCellDef>Acciones</th>
+  <td mat-cell *matCellDef="let row">
+    <button mat-button>Ver detalle</button>
+  </td>
+</ng-container>
+```
+
+> ⚠️ Usar como atributo booleano (`stickyEnd`, `sticky`), nunca como property binding
+> (`[stickyEnd]="true"`). El binding rompe el registro del `matColumnDef` en Angular Material v19.
+
+### Requisitos para que funcione
+
+1. **Wrapper con scroll horizontal** — el contenedor de la tabla debe tener `overflow-x: auto`
+2. **Tabla con min-width** — para que la tabla desborde y el sticky sea visible:
+   ```scss
+   .table-wrapper {
+     overflow-x: auto;
+     table { min-width: 900px; }
+   }
+   ```
+3. **Fondo explícito en la columna sticky** — AM aplica `position: sticky` automáticamente,
+   pero el `background` debe ser explícito para tapar el contenido que se desplaza debajo:
+   ```scss
+   th.mat-column-acciones,
+   td.mat-column-acciones {
+     background: var(--mat-sys-surface);
+     border-left: 1px solid var(--mat-sys-outline-variant); // separador visual opcional
+   }
+   ```
+
+> AM agrega la clase `.mat-column-<columnDef>` a cada `th` y `td`, lo que permite estilar
+> columnas específicas desde SCSS sin tocar el HTML.
+
+---
+
 ## Versiones clave
 
 | Paquete | Versión |

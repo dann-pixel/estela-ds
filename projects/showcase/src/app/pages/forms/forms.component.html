@@ -14,7 +14,7 @@
     <mat-card class="section-card" appearance="outlined">
       <mat-card-header>
         <mat-card-title>Text Input</mat-card-title>
-        <mat-card-subtitle>mat-form-field with matInput — fill and outline appearances</mat-card-subtitle>
+        <mat-card-subtitle>mat-form-field with matInput — fill appearance</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
 
@@ -38,21 +38,28 @@
 
         <mat-divider />
 
-        <p class="demo-label">Outline</p>
-        <div class="demo-row form-row">
-          <mat-form-field appearance="outline">
-            <mat-label>Name</mat-label>
-            <input matInput placeholder="John Doe" />
+        <p class="demo-label">Condensed (sm)</p>
+        <div class="demo-row">
+          <mat-form-field class="form-field-sm" style="width: 240px;">
+            <mat-icon matPrefix>search</mat-icon>
+            <input matInput placeholder="Buscar..." />
           </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label>Password</mat-label>
-            <input matInput type="password" />
-            <mat-icon matSuffix>visibility_off</mat-icon>
+          <mat-form-field class="form-field-sm" style="width: 200px;">
+            <input matInput placeholder="Filtrar por nombre" />
           </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label>Textarea</mat-label>
-            <textarea matInput rows="3"></textarea>
+        </div>
+        <p class="demo-label" style="margin-top: 8px;">Alineado con botón</p>
+        <div class="demo-row">
+          <mat-form-field class="form-field-sm" style="width: 260px;">
+            <mat-icon matPrefix>search</mat-icon>
+            <input matInput placeholder="Buscar N° Solicitud" />
           </mat-form-field>
+          <button mat-stroked-button>
+            <mat-icon>tune</mat-icon> Filtrar
+          </button>
+          <button mat-flat-button>
+            <mat-icon>add</mat-icon> Nueva solicitud
+          </button>
         </div>
 
         <mat-divider />
@@ -100,14 +107,6 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Country (outline)</mat-label>
-            <mat-select>
-              @for (c of countries; track c) {
-                <mat-option [value]="c">{{ c }}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
         </div>
       </mat-card-content>
     </mat-card>

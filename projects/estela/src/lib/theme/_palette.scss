@@ -21,6 +21,22 @@ $estela-primary:  mat.$cyan-palette;
 $estela-tertiary: mat.$violet-palette;
 
 // =============================================================
+// Neutral palette — Blue Gray ramp
+// Reemplaza los grises auto-generados por M3 (cyan-tinted).
+// Se mapea a tokens --mat-sys-surface/outline/* en _theme.scss.
+// =============================================================
+$neutral-50:  #F7F9FC;
+$neutral-100: #CFD8DC;
+$neutral-200: #B0BEC5;
+$neutral-300: #90A4AE;
+$neutral-400: #78909C;
+$neutral-500: #607D8B;
+$neutral-600: #546E7A;
+$neutral-700: #455A64;
+$neutral-800: #37474F;
+$neutral-900: #263238;
+
+// =============================================================
 // Brand color tokens — Primary (#00b5cc)
 // Derivados de la escala del DS Estela React
 // =============================================================
@@ -97,3 +113,41 @@ $info-dark:              #7acdf2;   // React info 300
 $info-container-dark:    #075a80;   // React info 800
 $on-info-dark:           #000000;
 $on-info-container-dark: #e6f6fc;   // React info 50
+
+// =============================================================
+// Chip semantic colors — medium-toned (Figma spec)
+// =============================================================
+// Los chips de estado requieren más saturación que los containers
+// de alertas para ser legibles como indicadores inline.
+// Fuente: Figma Portal Estela Partners (node 2905-23786).
+// =============================================================
+
+// No Iniciado — neutral (action/selected)
+$chip-default-container:    rgba(0, 0, 0, 0.08);    // Figma action/selected
+$chip-on-default-container: rgba(16, 20, 38, 0.87); // Figma text/primary
+$chip-default-container-dark:    rgba(255, 255, 255, 0.12);
+$chip-on-default-container-dark: rgba(255, 255, 255, 0.87);
+
+// En Progreso — info/sky
+$chip-info-container:    #7dd3fc;   // Figma info/light  (Tailwind sky-300)
+$chip-on-info-container: #0369a1;   // Figma info/dark   (Tailwind sky-700)
+$chip-info-container-dark:    #075985;   // Tailwind sky-900
+$chip-on-info-container-dark: #bae6fd;   // Tailwind sky-200
+
+// Completado — success/green
+$chip-success-container:    #bbf7d0;   // Figma green/200  (Tailwind green-200)
+$chip-on-success-container: #14532d;   // Figma green/900  (Tailwind green-900)
+$chip-success-container-dark:    #14532d;   // Tailwind green-900
+$chip-on-success-container-dark: #bbf7d0;   // Tailwind green-200
+
+// Cancelado — error/red
+$chip-error-container:    #fecaca;   // Figma red/200    (Tailwind red-200)
+$chip-on-error-container: #b91c1c;   // Figma error/dark (Tailwind red-700)
+$chip-error-container-dark:    #7f1d1d;   // Tailwind red-900
+$chip-on-error-container-dark: #fecaca;   // Tailwind red-200
+
+// En Implementación — warning/orange
+$chip-warning-container:    #fed7aa;   // Figma orange/200   (Tailwind orange-200)
+$chip-on-warning-container: #c2410c;   // Figma warning/dark (Tailwind orange-700)
+$chip-warning-container-dark:    #7c2d12;   // Tailwind orange-950
+$chip-on-warning-container-dark: #fed7aa;   // Tailwind orange-200

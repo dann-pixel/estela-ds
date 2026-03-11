@@ -32,5 +32,12 @@ export const routes: Routes = [
         (m) => m.ContentComponent
       ),
   },
+  {
+    path: 'solicitudes',
+    loadComponent: () =>
+      import('./pages/solicitudes/solicitudes.component').then(
+        (m) => m.SolicitudesComponent
+      ),
+  },
   { path: '**', redirectTo: '' },
 ];
