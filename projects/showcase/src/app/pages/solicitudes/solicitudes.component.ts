@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 export interface Solicitud {
   numero: string;
@@ -79,6 +80,7 @@ const SOLICITUDES_DATA: Solicitud[] = [
     MatFormFieldModule,
     MatInputModule,
     MatChipsModule,
+    MatTooltipModule,
   ],
   templateUrl: './solicitudes.component.html',
   styleUrl: './solicitudes.component.scss',

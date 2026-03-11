@@ -44,12 +44,16 @@
 
         <ng-container matColumnDef="cliente">
           <th mat-header-cell *matHeaderCellDef>Cliente</th>
-          <td mat-cell *matCellDef="let row">{{ row.cliente }}</td>
+          <td mat-cell *matCellDef="let row"
+              [matTooltip]="row.cliente"
+              matTooltipShowDelay="600">{{ row.cliente }}</td>
         </ng-container>
 
         <ng-container matColumnDef="rut">
           <th mat-header-cell *matHeaderCellDef>ID</th>
-          <td mat-cell *matCellDef="let row">{{ row.rut }}</td>
+          <td mat-cell *matCellDef="let row"
+              [matTooltip]="row.rut"
+              matTooltipShowDelay="600">{{ row.rut }}</td>
         </ng-container>
 
         <ng-container matColumnDef="servicios">
@@ -70,12 +74,16 @@
 
         <ng-container matColumnDef="fechaCreacion">
           <th mat-header-cell *matHeaderCellDef>Fecha Creación</th>
-          <td mat-cell *matCellDef="let row">{{ row.fechaCreacion }}</td>
+          <td mat-cell *matCellDef="let row"
+              [matTooltip]="row.fechaCreacion"
+              matTooltipShowDelay="600">{{ row.fechaCreacion }}</td>
         </ng-container>
 
         <ng-container matColumnDef="ultimaActividad">
           <th mat-header-cell *matHeaderCellDef>Última actividad</th>
-          <td mat-cell *matCellDef="let row">{{ row.ultimaActividad }}</td>
+          <td mat-cell *matCellDef="let row"
+              [matTooltip]="row.ultimaActividad"
+              matTooltipShowDelay="600">{{ row.ultimaActividad }}</td>
         </ng-container>
 
         <!-- Columna sticky derecha — implementada vía CSS (position: sticky; right: 0)
