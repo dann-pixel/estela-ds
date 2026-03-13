@@ -46,5 +46,12 @@ export const routes: Routes = [
         (m) => m.GettingStartedComponent
       ),
   },
+  {
+    path: 'patterns',
+    loadComponent: () =>
+      import('./pages/patterns/patterns.component').then(
+        (m) => m.PatternsComponent
+      ),
+  },
   { path: '**', redirectTo: '' },
 ];

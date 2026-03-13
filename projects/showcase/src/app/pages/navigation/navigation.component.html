@@ -179,5 +179,125 @@
       </mat-card-content>
     </mat-card>
 
+
+    <!-- Menu -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Menu</mat-card-title>
+        <mat-card-subtitle>mat-menu — dropdown with actions</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="demo-label">Basic</p>
+        <div class="demo-row">
+          <button mat-flat-button [matMenuTriggerFor]="basicMenu">
+            Acciones <mat-icon iconPositionEnd>arrow_drop_down</mat-icon>
+          </button>
+          <mat-menu #basicMenu="matMenu">
+            <button mat-menu-item><mat-icon>edit</mat-icon> Editar</button>
+            <button mat-menu-item><mat-icon>content_copy</mat-icon> Duplicar</button>
+            <button mat-menu-item><mat-icon>archive</mat-icon> Archivar</button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item><mat-icon>delete</mat-icon> Eliminar</button>
+          </mat-menu>
+
+          <button mat-icon-button [matMenuTriggerFor]="iconMenu" matTooltip="More options">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #iconMenu="matMenu">
+            <button mat-menu-item><mat-icon>visibility</mat-icon> Ver detalle</button>
+            <button mat-menu-item><mat-icon>share</mat-icon> Compartir</button>
+            <button mat-menu-item disabled><mat-icon>lock</mat-icon> Bloquear</button>
+          </mat-menu>
+        </div>
+        <p class="demo-label">Nested menu</p>
+        <div class="demo-row">
+          <button mat-stroked-button [matMenuTriggerFor]="parentMenu">
+            Opciones <mat-icon iconPositionEnd>arrow_drop_down</mat-icon>
+          </button>
+          <mat-menu #parentMenu="matMenu">
+            <button mat-menu-item>Item 1</button>
+            <button mat-menu-item [matMenuTriggerFor]="childMenu">
+              Más opciones <mat-icon iconPositionEnd>chevron_right</mat-icon>
+            </button>
+          </mat-menu>
+          <mat-menu #childMenu="matMenu">
+            <button mat-menu-item>Sub-opción A</button>
+            <button mat-menu-item>Sub-opción B</button>
+            <button mat-menu-item>Sub-opción C</button>
+          </mat-menu>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Tooltip -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Tooltip</mat-card-title>
+        <mat-card-subtitle>matTooltip — informative overlay on hover/focus</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="demo-label">Positions</p>
+        <div class="demo-row">
+          <button mat-stroked-button matTooltip="Aparece arriba" matTooltipPosition="above">Above</button>
+          <button mat-stroked-button matTooltip="Aparece abajo" matTooltipPosition="below">Below</button>
+          <button mat-stroked-button matTooltip="Aparece a la izquierda" matTooltipPosition="left">Left</button>
+          <button mat-stroked-button matTooltip="Aparece a la derecha" matTooltipPosition="right">Right</button>
+        </div>
+        <p class="demo-label">On icon buttons</p>
+        <div class="demo-row">
+          <button mat-icon-button matTooltip="Editar registro"><mat-icon>edit</mat-icon></button>
+          <button mat-icon-button matTooltip="Descargar archivo"><mat-icon>download</mat-icon></button>
+          <button mat-icon-button matTooltip="Compartir con el equipo"><mat-icon>share</mat-icon></button>
+          <button mat-icon-button matTooltip="Eliminar — acción irreversible"><mat-icon>delete</mat-icon></button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- List -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>List</mat-card-title>
+        <mat-card-subtitle>mat-list — simple list, nav list, and action list</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="demo-label">Simple list (with icons and lines)</p>
+        <mat-list style="max-width: 360px; border: 1px solid var(--mat-sys-outline-variant); border-radius: 4px;">
+          @for (item of listItems; track item.label) {
+            <mat-list-item>
+              <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+              <span matListItemTitle>{{ item.label }}</span>
+              <span matListItemLine>{{ item.desc }}</span>
+            </mat-list-item>
+          }
+        </mat-list>
+        <p class="demo-label">Nav list (clickable rows)</p>
+        <mat-nav-list style="max-width: 360px; border: 1px solid var(--mat-sys-outline-variant); border-radius: 4px;">
+          @for (item of navListItems; track item.label) {
+            <a mat-list-item>
+              <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+              <span matListItemTitle>{{ item.label }}</span>
+              <mat-icon matListItemMeta>chevron_right</mat-icon>
+            </a>
+          }
+        </mat-nav-list>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Bottom Sheet -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Bottom Sheet</mat-card-title>
+        <mat-card-subtitle>MatBottomSheet — modal panel anchored to the bottom of the screen</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="demo-label">Trigger</p>
+        <div class="demo-row">
+          <button mat-flat-button (click)="openBottomSheet()">
+            <mat-icon>open_in_browser</mat-icon> Open Bottom Sheet
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
   </div>
 </div>

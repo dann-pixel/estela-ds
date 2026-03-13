@@ -168,5 +168,130 @@
       </mat-card-content>
     </mat-card>
 
+
+    <!-- Autocomplete -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Autocomplete</mat-card-title>
+        <mat-card-subtitle>mat-autocomplete — input with filtered suggestions</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="demo-label">Fill</p>
+        <div class="demo-row">
+          <mat-form-field appearance="fill">
+            <mat-label>Framework</mat-label>
+            <input matInput [formControl]="autocompleteCtrl" [matAutocomplete]="autoFill" placeholder="e.g. Angular">
+            <mat-autocomplete #autoFill="matAutocomplete">
+              @for (opt of filteredTechOptions(); track opt) {
+                <mat-option [value]="opt">{{ opt }}</mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <p class="demo-label">Outline</p>
+        <div class="demo-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Framework</mat-label>
+            <input matInput [formControl]="autocompleteCtrl" [matAutocomplete]="autoOutline" placeholder="e.g. Angular">
+            <mat-autocomplete #autoOutline="matAutocomplete">
+              @for (opt of filteredTechOptions(); track opt) {
+                <mat-option [value]="opt">{{ opt }}</mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Datepicker -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Datepicker</mat-card-title>
+        <mat-card-subtitle>mat-datepicker — calendar popup for date selection</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="demo-label">Single date</p>
+        <div class="demo-row">
+          <mat-form-field appearance="fill">
+            <mat-label>Fecha</mat-label>
+            <input matInput [matDatepicker]="pickerFill" [formControl]="dateCtrl">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="pickerFill"></mat-datepicker-toggle>
+            <mat-datepicker #pickerFill></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Fecha</mat-label>
+            <input matInput [matDatepicker]="pickerOutline" [formControl]="dateCtrl">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="pickerOutline"></mat-datepicker-toggle>
+            <mat-datepicker #pickerOutline></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <p class="demo-label">Date range</p>
+        <div class="demo-row">
+          <mat-form-field appearance="fill">
+            <mat-label>Rango de fechas</mat-label>
+            <mat-date-range-input [rangePicker]="rangePicker">
+              <input matStartDate placeholder="Inicio">
+              <input matEndDate placeholder="Fin">
+            </mat-date-range-input>
+            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="rangePicker"></mat-datepicker-toggle>
+            <mat-date-range-picker #rangePicker></mat-date-range-picker>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Rango de fechas</mat-label>
+            <mat-date-range-input [rangePicker]="rangePickerOutline">
+              <input matStartDate placeholder="Inicio">
+              <input matEndDate placeholder="Fin">
+            </mat-date-range-input>
+            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="rangePickerOutline"></mat-datepicker-toggle>
+            <mat-date-range-picker #rangePickerOutline></mat-date-range-picker>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Button Toggle -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Button Toggle</mat-card-title>
+        <mat-card-subtitle>mat-button-toggle-group — mutually exclusive toggle buttons</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="demo-label">View mode (with labels)</p>
+        <div class="demo-row">
+          <mat-button-toggle-group [formControl]="viewModeCtrl" aria-label="View mode">
+            <mat-button-toggle value="list">
+              <mat-icon>list</mat-icon> List
+            </mat-button-toggle>
+            <mat-button-toggle value="grid">
+              <mat-icon>grid_view</mat-icon> Grid
+            </mat-button-toggle>
+            <mat-button-toggle value="card">
+              <mat-icon>view_agenda</mat-icon> Card
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+        <p class="demo-label">Sort (icon only)</p>
+        <div class="demo-row">
+          <mat-button-toggle-group [formControl]="sortCtrl" aria-label="Sort order">
+            <mat-button-toggle value="name"><mat-icon>sort_by_alpha</mat-icon></mat-button-toggle>
+            <mat-button-toggle value="date"><mat-icon>calendar_today</mat-icon></mat-button-toggle>
+            <mat-button-toggle value="amount"><mat-icon>attach_money</mat-icon></mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+        <p class="demo-label">Disabled</p>
+        <div class="demo-row">
+          <mat-button-toggle-group value="b" disabled aria-label="Disabled">
+            <mat-button-toggle value="a">Option A</mat-button-toggle>
+            <mat-button-toggle value="b">Option B</mat-button-toggle>
+            <mat-button-toggle value="c">Option C</mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
   </div>
 </div>

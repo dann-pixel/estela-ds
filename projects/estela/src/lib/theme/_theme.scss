@@ -102,8 +102,8 @@
     --mat-sys-surface-container:             #{palette.$neutral-50};
     --mat-sys-surface-container-high:        #{palette.$neutral-50};
     --mat-sys-surface-container-highest:     #ffffff;
-    // Form field fill — token MDC directo (fallback default: surface-variant = neutral-100)
-    --mdc-filled-text-field-container-color: #ECEFF1;
+    // Form field fill — opacidad sobre surface para funcionar en light y dark
+    --mat-form-field-filled-container-color: color-mix(in srgb, var(--mat-sys-on-surface) 8%, var(--mat-sys-surface));
     // Color dark — Blue Gray 900 para botones y superficies oscuras
     --estela-dark:                           #{palette.$neutral-900};
     --estela-on-dark:                        #ffffff;
@@ -126,6 +126,8 @@
     --mat-sys-surface-container:             #{palette.$neutral-800};
     --mat-sys-surface-container-high:        #{palette.$neutral-700};
     --mat-sys-surface-container-highest:     #{palette.$neutral-700};
+    // Form field fill dark
+    --mat-form-field-filled-container-color: color-mix(in srgb, var(--mat-sys-on-surface) 8%, var(--mat-sys-surface));
     // Bordes dark
     --mat-sys-outline:                       #{palette.$neutral-500};
     --mat-sys-outline-variant:               #{palette.$neutral-700};

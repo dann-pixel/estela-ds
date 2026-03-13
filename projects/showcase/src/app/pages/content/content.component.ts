@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
+import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
@@ -11,6 +12,9 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 // ── Dialog component (inline) ──────────────────────────────────
 @Component({
@@ -54,6 +58,7 @@ export interface TableRow {
   selector: 'app-content',
   standalone: true,
   imports: [
+    ReactiveFormsModule,
     MatCardModule,
     MatTableModule,
     MatSortModule,
@@ -65,6 +70,9 @@ export interface TableRow {
     MatExpansionModule,
     MatDividerModule,
     MatChipsModule,
+    MatStepperModule,
+    MatFormFieldModule,
+    MatInputModule,
     DecimalPipe,
   ],
   templateUrl: './content.component.html',
@@ -73,6 +81,7 @@ export interface TableRow {
 export class ContentComponent {
   private snackBar = inject(MatSnackBar);
   private dialog = inject(MatDialog);
+  private fb = inject(FormBuilder);
 
   readonly tableColumns = ['id', 'name', 'status', 'date', 'amount'];
 
@@ -90,6 +99,13 @@ export class ContentComponent {
     { title: 'Can I customize the colors?', content: 'Yes — override the $primary and $tertiary palette variables in the theme SCSS to match your brand colors.' },
     { title: 'Does it support dark mode?', content: 'Yes — use the dark-theme() mixin on a .dark-theme class or the prefers-color-scheme media query.' },
   ];
+
+  // ── Stepper ─────────────────────────────────────────────────
+  readonly step1Group = this.fb.group({ firstName: ['', Validators.required] });
+  readonly step2Group = this.fb.group({ email: ['', [Validators.required, Validators.email]] });
+  readonly step3Group = this.fb.group({});
+
+  readonly skeletonRows = [1, 2, 3];
 
   openSnackBar(message: string, action = 'Dismiss') {
     this.snackBar.open(message, action, { duration: 4000 });

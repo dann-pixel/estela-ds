@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatChipsModule } from '@angular/material/chips';
+import { ThemeService } from '../../core/theme.service';
 
 interface Step {
   number: number;
@@ -37,6 +38,7 @@ interface Token {
   styleUrl: './getting-started.component.scss',
 })
 export class GettingStartedComponent {
+  readonly theme = inject(ThemeService);
   readonly steps: Step[] = [
     {
       number: 1,

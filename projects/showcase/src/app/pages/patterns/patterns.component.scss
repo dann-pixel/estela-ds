@@ -1,0 +1,60 @@
+// ── Breadcrumbs ──────────────────────────────────────────────────
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px;
+  padding: 8px 0;
+}
+
+.breadcrumb-link {
+  display: flex;
+  align-items: center;
+  font: var(--mat-sys-body-medium);
+  color: var(--mat-sys-primary);
+  text-decoration: none;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: background 150ms;
+
+  &:hover {
+    background: var(--mat-sys-primary-container);
+    color: var(--mat-sys-on-primary-container);
+  }
+
+  &.breadcrumb-home mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.breadcrumb-sep {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: var(--mat-sys-outline);
+  user-select: none;
+}
+
+.breadcrumb-current {
+  font: var(--mat-sys-body-medium);
+  color: var(--mat-sys-on-surface-variant);
+  padding: 2px 4px;
+}
+
+// ── Code block ───────────────────────────────────────────────────
+.code-block {
+  background: var(--mat-sys-surface-variant);
+  border-radius: 4px;
+  padding: 16px;
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-x: auto;
+  color: var(--mat-sys-on-surface);
+  margin: 0;
+
+  code {
+    font-family: 'Roboto Mono', monospace;
+  }
+}

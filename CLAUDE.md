@@ -2,7 +2,7 @@
 
 ## Descripción del proyecto
 
-Sistema de diseño corporativo basado en **Angular Material v19 (Material Design 3)**. Monorepo con dos proyectos:
+Sistema de diseño corporativo basado en **Angular Material v20 (Material Design 3)**. Monorepo con dos proyectos:
 
 - **`projects/estela/`** — Angular Library distribuible (el tema + futuras componentes)
 - **`projects/showcase/`** — App Angular de showroom (demo visual de los componentes)
@@ -49,12 +49,13 @@ estela-ds-angular/
 │           │       ├── getting-started/ # Onboarding para devs (instalación, tokens, uso)
 │           │       ├── home/            # Paleta de colores + escala tipográfica
 │           │       ├── buttons/         # Botones: Text, Filled, Outlined, Elevated, Icon
-│           │       ├── forms/           # Input, Select, Checkbox, Radio, Slider, Slide Toggle
-│           │       ├── navigation/      # Toolbar, Tabs, Chips, Badge, Progress Bar, Progress Spinner
-│           │       ├── content/         # Cards, Table, Dialog, Snack Bar, Expansion Panel, Alerts
-│           │       └── solicitudes/     # Demo de tabla con paginación, filtro, sticky column
-│           ├── styles.scss              # Aplica light + dark theme + estilos globales
-│           └── index.html
+│           │       ├── forms/           # Input, Select, Checkbox, Radio, Slider, Slide Toggle, Autocomplete, Datepicker, Button Toggle
+│           │       ├── navigation/      # Toolbar, Tabs, Chips, Badge, Progress Bar, Progress Spinner, Menu, Tooltip, List, Bottom Sheet
+│           │       ├── content/         # Cards, Table, Dialog, Snack Bar, Expansion Panel, Alerts, Stepper, Empty State, Loading Skeleton
+│           │       ├── solicitudes/     # Demo de tabla con paginación, filtro, sticky column
+│           │       └── patterns/        # Patrones UI custom: Breadcrumbs
+│           ├── styles.scss              # Aplica light + dark theme + Material Symbols + estilos globales
+│           └── index.html               # Google Fonts: Outfit, Instrument Sans, Material Symbols Outlined
 ├── angular.json                         # stylePreprocessorOptions apunta a projects/estela/src
 ├── vercel.json                          # Deploy config: outputDir, buildCommand, SPA rewrites
 ├── package.json
@@ -121,7 +122,7 @@ $brand-primary-container:  #bfecf2;
 // ... etc.
 ```
 
-Angular Material v19 provee estas paletas predefinidas (único formato válido para `mat.theme()`):
+Angular Material v20 provee estas paletas predefinidas (único formato válido para `mat.theme()`):
 `mat.$red-palette`, `mat.$green-palette`, `mat.$blue-palette`, `mat.$yellow-palette`,
 `mat.$cyan-palette`, `mat.$magenta-palette`, `mat.$orange-palette`, `mat.$chartreuse-palette`,
 `mat.$spring-green-palette`, `mat.$azure-palette`, `mat.$violet-palette`, `mat.$rose-palette`
@@ -183,7 +184,7 @@ En el `styles.scss` del proyecto consumidor, llamar los mixins de setup **a nive
 ```
 
 **Por qué `light-theme-setup()` y no `light-theme()` directamente:**
-Angular Material v19 difiere parte de su output CSS al cerrar el scope del selector. Si se llama
+Angular Material v20 difiere parte de su output CSS al cerrar el scope del selector. Si se llama
 `light-theme()` dentro de `html { }`, los brand color overrides quedan en un bloque CSS anterior
 al bloque que genera `mat.theme()`, y pierden en la cascada. Los mixins `*-setup()` emiten dos
 bloques separados garantizando el orden correcto.
@@ -239,9 +240,67 @@ Y luego importar simplemente:
 
 ---
 
+## Iconos — Material Symbols Outlined
+
+El showcase usa **Material Symbols Outlined** (variable font), no Material Icons (la font clásica).
+
+### Configuración
+
+1. **`index.html`** — carga la variable font con todos los axes:
+```html
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+```
+
+2. **`app.config.ts`** — `APP_INITIALIZER` para que `<mat-icon>` use el font set correcto por defecto:
+```typescript
+{
+  provide: APP_INITIALIZER,
+  multi: true,
+  useFactory: (registry: MatIconRegistry) => () =>
+    registry.setDefaultFontSetClass('material-symbols-outlined'),
+  deps: [MatIconRegistry],
+}
+```
+
+3. **`styles.scss`** — defaults de los variable axes (outlined, weight 400):
+```scss
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+```
+
+### Uso
+
+```html
+<mat-icon>home</mat-icon>
+<mat-icon>settings</mat-icon>
+
+<!-- Personalización inline vía variable axes -->
+<mat-icon style="font-variation-settings: 'FILL' 1">favorite</mat-icon>  <!-- filled -->
+<mat-icon style="font-variation-settings: 'wght' 200">home</mat-icon>    <!-- thin -->
+```
+
+---
+
+## Form field fill — color adaptable light/dark
+
+El token `--mat-form-field-filled-container-color` usa `color-mix()` en lugar de un hex fijo,
+para que el color del fondo del input se adapte automáticamente a ambos temas:
+
+```scss
+--mat-form-field-filled-container-color: color-mix(in srgb, var(--mat-sys-on-surface) 8%, var(--mat-sys-surface));
+```
+
+- **Light:** mezcla 8% de `on-surface` (oscuro) sobre `surface` (blanco) ≈ `#EEEFEF`
+- **Dark:** mezcla 8% de `on-surface` (claro) sobre `surface` (dark) ≈ `#46555D`
+
+Este token se define en `_neutral-colors()` en `_theme.scss`, tanto en el bloque `light` como `dark`.
+
+---
+
 ## Columnas sticky en mat-table
 
-Angular Material v19 soporta columnas fijas (sticky) de forma nativa en `mat-table`.
+Angular Material v20 soporta columnas fijas (sticky) de forma nativa en `mat-table`.
 No requiere librerías externas ni implementación custom.
 
 ### Sticky izquierda (`[sticky]`)
@@ -267,7 +326,7 @@ Fija la columna al borde derecho del scroll. Útil para columnas de acciones.
 ```
 
 > ⚠️ Usar como atributo booleano (`stickyEnd`, `sticky`), nunca como property binding
-> (`[stickyEnd]="true"`). El binding rompe el registro del `matColumnDef` en Angular Material v19.
+> (`[stickyEnd]="true"`). El binding rompe el registro del `matColumnDef` en Angular Material v20.
 
 ### Requisitos para que funcione
 
@@ -376,10 +435,23 @@ readonly isMobile = toSignal(
 
 | Paquete | Versión |
 |---|---|
-| Angular | 19.2 |
-| Angular Material / CDK | 19.2 |
-| TypeScript | ~5.7 |
+| Angular / CLI | 20.3.x |
+| Angular Material / CDK | 20.2.x |
+| TypeScript | 5.9.x |
 | Node.js requerido | ≥ 20 |
+
+### peerDependencies de la librería
+
+La librería `projects/estela/` es compatible con proyectos en Angular 19 o 20:
+
+```json
+"peerDependencies": {
+  "@angular/common": ">=19.0.0 <21.0.0",
+  "@angular/core": ">=19.0.0 <21.0.0",
+  "@angular/material": ">=19.0.0 <21.0.0",
+  "@angular/cdk": ">=19.0.0 <21.0.0"
+}
+```
 
 ---
 
@@ -388,11 +460,11 @@ readonly isMobile = toSignal(
 ## Best Practices & Recommendations
 
 ### Documentación oficial
-- **Siempre usar v19**: https://v19.material.angular.dev/ (NO material.angular.io que es versión anterior)
+- **Siempre usar v20**: https://material.angular.dev/ (material.angular.dev ya sirve v20)
 - Consultar primero los ejemplos y patrones recomendados antes de implementar componentes
 - Verificar M3 tokens y propiedades de accesibilidad
 
-### Componentes disponibles en v19 M3
+### Componentes disponibles en v20 M3
 El showcase implementa estos componentes por categoría:
 
 **Buttons & Indicators**
@@ -406,6 +478,9 @@ El showcase implementa estos componentes por categoría:
 - Radio Button
 - Slider
 - Slide Toggle
+- Autocomplete (con filtro reactivo vía `toSignal` + `startWith`/`map`)
+- Datepicker (single date + date range)
+- Button Toggle (label, icon-only, disabled)
 
 **Navigation**
 - Toolbar
@@ -413,6 +488,10 @@ El showcase implementa estos componentes por categoría:
 - Chips (filter, choice, input, suggestion)
 - Badge
 - Progress Bar / Progress Spinner
+- Menu (básico con divider + nested)
+- Tooltip (4 posiciones + icon buttons)
+- List (simple list + nav list)
+- Bottom Sheet (con componente inline)
 
 **Content & Data**
 - Card (elevated, outlined, filled appearances)
@@ -420,6 +499,7 @@ El showcase implementa estos componentes por categoría:
 - Dialog / Modal
 - Snack Bar
 - Expansion Panel
+- Stepper (horizontal linear + vertical)
 
 **Semantic Alerts**
 - Info (usando `--mat-sys-primary-container`)
@@ -427,14 +507,12 @@ El showcase implementa estos componentes por categoría:
 - Warning (usando `--estela-warning-container`)
 - Error (usando `--mat-sys-error-container`)
 
-### Temas permitidos en M3
-Angular Material v19 soporta light y dark theme. El proyecto implementa ambos:
-- `light-theme()` - tema claro (aplicado por defecto)
-- `dark-theme()` - tema oscuro (disponible para @media (prefers-color-scheme: dark))
+**Patrones custom** (`/patterns`)
+- Empty State (sin resultados, bandeja vacía, sin acceso)
+- Loading Skeleton (card skeleton + list rows con animación shimmer)
+- Breadcrumbs (básico, navegación profunda, con ícono home)
 
-### Nuevas características de v19
-- M3 typography hierarchy completamente integrado
-- CSS custom properties como `--mat-sys-*` para todos los tokens
-- Standalone components como estándar (sin NgModules)
-- Mejor soporte para responsive design
-- Improved accessibility (WCAG 2.1 Level AA)
+### Temas permitidos en M3
+Angular Material v20 soporta light y dark theme. El proyecto implementa ambos:
+- `light-theme()` - tema claro (aplicado por defecto)
+- `dark-theme()` - tema oscuro (activado por ThemeService con clase `.dark-theme`)

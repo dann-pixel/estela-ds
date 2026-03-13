@@ -1,8 +1,19 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { MatIconRegistry } from '@angular/material/icon';
 
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes)]
+  providers: [
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideRouter(routes),
+    {
+      provide: APP_INITIALIZER,
+      multi: true,
+      useFactory: (registry: MatIconRegistry) => () =>
+        registry.setDefaultFontSetClass('material-symbols-outlined'),
+      deps: [MatIconRegistry],
+    },
+  ],
 };

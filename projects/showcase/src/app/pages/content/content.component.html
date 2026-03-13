@@ -219,5 +219,132 @@
       </mat-card-content>
     </mat-card>
 
+
+    <!-- Stepper -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Stepper</mat-card-title>
+        <mat-card-subtitle>mat-stepper — multi-step wizard/form flow</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="demo-label">Horizontal</p>
+        <mat-stepper>
+          <mat-step [stepControl]="step1Group" label="Personal">
+            <form [formGroup]="step1Group" class="stepper-form">
+              <mat-form-field appearance="fill">
+                <mat-label>Nombre</mat-label>
+                <input matInput formControlName="firstName" required>
+                <mat-error>Campo requerido</mat-error>
+              </mat-form-field>
+            </form>
+            <div class="stepper-actions">
+              <button mat-flat-button matStepperNext>Siguiente</button>
+            </div>
+          </mat-step>
+          <mat-step [stepControl]="step2Group" label="Contacto">
+            <form [formGroup]="step2Group" class="stepper-form">
+              <mat-form-field appearance="fill">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" required>
+                <mat-error>Email válido requerido</mat-error>
+              </mat-form-field>
+            </form>
+            <div class="stepper-actions">
+              <button mat-stroked-button matStepperPrevious>Atrás</button>
+              <button mat-flat-button matStepperNext>Siguiente</button>
+            </div>
+          </mat-step>
+          <mat-step label="Confirmar">
+            <p style="margin: 16px 0; color: var(--mat-sys-on-surface-variant);">Revisá los datos y confirmá.</p>
+            <div class="stepper-actions">
+              <button mat-stroked-button matStepperPrevious>Atrás</button>
+              <button mat-flat-button>Confirmar</button>
+            </div>
+          </mat-step>
+        </mat-stepper>
+
+        <p class="demo-label" style="margin-top: 24px;">Vertical</p>
+        <mat-stepper orientation="vertical">
+          <mat-step label="Paso 1 — Datos">
+            <p style="margin: 8px 0 16px; color: var(--mat-sys-on-surface-variant);">Completá los datos del paso 1.</p>
+            <div class="stepper-actions">
+              <button mat-flat-button matStepperNext>Siguiente</button>
+            </div>
+          </mat-step>
+          <mat-step label="Paso 2 — Revisión">
+            <p style="margin: 8px 0 16px; color: var(--mat-sys-on-surface-variant);">Revisá la información ingresada.</p>
+            <div class="stepper-actions">
+              <button mat-stroked-button matStepperPrevious>Atrás</button>
+              <button mat-flat-button matStepperNext>Siguiente</button>
+            </div>
+          </mat-step>
+          <mat-step label="Paso 3 — Listo">
+            <p style="margin: 8px 0 16px; color: var(--mat-sys-on-surface-variant);">¡Todos los pasos completados!</p>
+            <div class="stepper-actions">
+              <button mat-stroked-button matStepperPrevious>Atrás</button>
+            </div>
+          </mat-step>
+        </mat-stepper>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Empty State -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Empty State</mat-card-title>
+        <mat-card-subtitle>Patrón custom — placeholder cuando no hay datos</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="demo-label">Sin resultados de búsqueda</p>
+        <div class="empty-state">
+          <mat-icon class="empty-state-icon">search_off</mat-icon>
+          <h3 class="empty-state-title">No se encontraron resultados</h3>
+          <p class="empty-state-body">Probá ajustando los filtros de búsqueda.</p>
+          <button mat-stroked-button>Limpiar filtros</button>
+        </div>
+        <p class="demo-label">Lista vacía</p>
+        <div class="empty-state">
+          <mat-icon class="empty-state-icon">inbox</mat-icon>
+          <h3 class="empty-state-title">Bandeja vacía</h3>
+          <p class="empty-state-body">Cuando recibas mensajes aparecerán aquí.</p>
+        </div>
+        <p class="demo-label">Sin permisos</p>
+        <div class="empty-state">
+          <mat-icon class="empty-state-icon">lock</mat-icon>
+          <h3 class="empty-state-title">Sin acceso</h3>
+          <p class="empty-state-body">No tenés permisos para ver este contenido.</p>
+          <button mat-flat-button>Solicitar acceso</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Loading Skeleton -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Loading Skeleton</mat-card-title>
+        <mat-card-subtitle>Patrón custom — placeholder mientras carga el contenido</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="demo-label">Card skeleton</p>
+        <div class="skeleton-card">
+          <div class="skeleton-line skeleton-title"></div>
+          <div class="skeleton-line"></div>
+          <div class="skeleton-line short"></div>
+        </div>
+        <p class="demo-label">List rows skeleton</p>
+        <div class="skeleton-list">
+          @for (i of skeletonRows; track i) {
+            <div class="skeleton-row">
+              <div class="skeleton-avatar"></div>
+              <div class="skeleton-text">
+                <div class="skeleton-line skeleton-label"></div>
+                <div class="skeleton-line short"></div>
+              </div>
+            </div>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+
   </div>
 </div>

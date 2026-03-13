@@ -1,0 +1,56 @@
+<div class="showcase-page">
+
+  <div class="page-header">
+    <h1>Patterns</h1>
+    <p>Custom UI patterns built with design system tokens — not in Angular Material but essential for real apps.</p>
+  </div>
+
+  <div class="sections">
+
+    <!-- Breadcrumbs -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Breadcrumbs</mat-card-title>
+        <mat-card-subtitle>Patrón custom — jerarquía de navegación</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="demo-label">Basic</p>
+        <nav class="breadcrumbs" aria-label="breadcrumb">
+          @for (crumb of basicCrumbs; track crumb.label; let last = $last) {
+            @if (!last) {
+              <a class="breadcrumb-link" [routerLink]="crumb.route">{{ crumb.label }}</a>
+              <mat-icon class="breadcrumb-sep">chevron_right</mat-icon>
+            } @else {
+              <span class="breadcrumb-current" aria-current="page">{{ crumb.label }}</span>
+            }
+          }
+        </nav>
+
+        <p class="demo-label">Deep navigation</p>
+        <nav class="breadcrumbs" aria-label="breadcrumb">
+          @for (crumb of deepCrumbs; track crumb.label; let last = $last) {
+            @if (!last) {
+              <a class="breadcrumb-link" [routerLink]="crumb.route">{{ crumb.label }}</a>
+              <mat-icon class="breadcrumb-sep">chevron_right</mat-icon>
+            } @else {
+              <span class="breadcrumb-current" aria-current="page">{{ crumb.label }}</span>
+            }
+          }
+        </nav>
+
+        <p class="demo-label">With home icon</p>
+        <nav class="breadcrumbs" aria-label="breadcrumb">
+          <a class="breadcrumb-link breadcrumb-home" routerLink="/">
+            <mat-icon>home</mat-icon>
+          </a>
+          <mat-icon class="breadcrumb-sep">chevron_right</mat-icon>
+          <a class="breadcrumb-link" routerLink="/content">Proyectos</a>
+          <mat-icon class="breadcrumb-sep">chevron_right</mat-icon>
+          <span class="breadcrumb-current">Project Alpha</span>
+        </nav>
+
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>

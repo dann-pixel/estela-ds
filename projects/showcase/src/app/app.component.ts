@@ -57,6 +57,7 @@ export class AppComponent {
     { label: 'Navigation', route: '/navigation', icon: 'navigation' },
     { label: 'Content', route: '/content', icon: 'dashboard' },
     { label: 'Solicitudes', route: '/solicitudes', icon: 'assignment' },
+    { label: 'Patterns', route: '/patterns', icon: 'widgets' },
   ];
 
   /** Cierra el drawer overlay al navegar en mobile */
