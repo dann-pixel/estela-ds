@@ -1,5 +1,5 @@
-import { Injectable, inject, signal, computed, effect } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { Injectable, inject, signal, computed, effect, DOCUMENT } from '@angular/core';
+
 
 /**
  * ThemeService — gestiona el cambio entre light y dark mode.
