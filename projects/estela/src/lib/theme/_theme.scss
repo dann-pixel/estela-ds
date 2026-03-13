@@ -330,6 +330,7 @@
   #{$selector} {
     @include _brand-colors(light);
     @include _neutral-colors(light);
+    @include _semantic-colors(light);
     @include _shape-tokens();
     @include _elevation-tokens();
     @include _typography-tokens();
@@ -348,6 +349,7 @@
   #{$selector} {
     @include _brand-colors(dark);
     @include _neutral-colors(dark);
+    @include _semantic-colors(dark);
     @include _shape-tokens();
     @include _elevation-tokens();
     @include _typography-tokens();
