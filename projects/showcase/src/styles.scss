@@ -160,29 +160,41 @@ h1, h2, h3, h4, h5, h6 {
   // Elimina el borde/outline por defecto del chip M3
   --mat-chip-outline-width: 0;
 
+  // Angular Material aplica el color del texto en el elemento interno
+  // .mdc-evolution-chip__text-label, no en el host del chip.
+  // Por eso hay que apuntar a ese selector para que el color sea correcto.
+  .mdc-evolution-chip__text-label {
+    color: inherit;
+  }
+
   &.status-no-iniciado {
     background-color: var(--estela-chip-default-container) !important;
     color: var(--estela-chip-on-default-container) !important;
+    .mdc-evolution-chip__text-label { color: var(--estela-chip-on-default-container) !important; }
   }
 
   &.status-en-progreso {
     background-color: var(--estela-chip-info-container) !important;
     color: var(--estela-chip-on-info-container) !important;
+    .mdc-evolution-chip__text-label { color: var(--estela-chip-on-info-container) !important; }
   }
 
   &.status-completado {
     background-color: var(--estela-chip-success-container) !important;
     color: var(--estela-chip-on-success-container) !important;
+    .mdc-evolution-chip__text-label { color: var(--estela-chip-on-success-container) !important; }
   }
 
   &.status-cancelado {
     background-color: var(--estela-chip-error-container) !important;
     color: var(--estela-chip-on-error-container) !important;
+    .mdc-evolution-chip__text-label { color: var(--estela-chip-on-error-container) !important; }
   }
 
   &.status-en-implementacion {
     background-color: var(--estela-chip-warning-container) !important;
     color: var(--estela-chip-on-warning-container) !important;
+    .mdc-evolution-chip__text-label { color: var(--estela-chip-on-warning-container) !important; }
   }
 }
 
