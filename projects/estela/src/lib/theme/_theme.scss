@@ -128,6 +128,14 @@
     --mat-sys-surface-container-highest:     #{palette.$neutral-700};
     // Form field fill dark
     --mat-form-field-filled-container-color: color-mix(in srgb, var(--mat-sys-on-surface) 8%, var(--mat-sys-surface));
+    // Color dark — se invierte respecto a light: fondo claro + texto oscuro,
+    // igual que hace el color custom `dark` del DS Estela React en modo oscuro.
+    // Antes no se sobreescribía acá y el botón "Dark" heredaba los valores de
+    // light (navy oscuro de texto sobre fondo oscuro, casi ilegible).
+    --estela-dark:                           #{palette.$neutral-100};
+    --estela-on-dark:                        #{palette.$neutral-900};
+    --estela-dark-container:                 #{palette.$neutral-600};
+    --estela-on-dark-container:              #{palette.$neutral-50};
     // Bordes dark
     --mat-sys-outline:                       #{palette.$neutral-500};
     --mat-sys-outline-variant:               #{palette.$neutral-700};
@@ -149,6 +157,17 @@
     --mat-sys-on-primary:             #{palette.$brand-on-primary};
     --mat-sys-primary-container:      #{palette.$brand-primary-container};
     --mat-sys-on-primary-container:   #{palette.$brand-on-primary-container};
+    // Primary cuando va como texto o trazo sobre la superficie. Público:
+    // usarlo en lugar de --mat-sys-primary para labels, links e íconos.
+    --estela-primary-on-surface:             #{palette.$brand-primary-on-surface};
+    // Botones sin relleno: M3 usa --mat-sys-primary como label, que sobre la
+    // superficie clara da 2.48:1. Se reemplaza por el tono on-surface (6.04:1).
+    // El borde del outlined no se toca: ya usa --mat-sys-outline (neutral).
+    --mat-button-text-label-text-color:      #{palette.$brand-primary-on-surface};
+    --mat-button-text-state-layer-color:     #{palette.$brand-primary-on-surface};
+    --mat-button-outlined-label-text-color:  #{palette.$brand-primary-on-surface};
+    --mat-button-outlined-state-layer-color: #{palette.$brand-primary-on-surface};
+    --mat-button-protected-label-text-color: #{palette.$brand-primary-on-surface};
     --mat-sys-tertiary:               #{palette.$brand-tertiary};
     --mat-sys-on-tertiary:            #{palette.$brand-on-tertiary};
     --mat-sys-tertiary-container:     #{palette.$brand-tertiary-container};
@@ -156,6 +175,18 @@
   } @else {
     --mat-sys-primary:                #{palette.$brand-primary-dark};
     --mat-sys-on-primary:             #{palette.$brand-on-primary-dark};
+    // En dark el primary ya es un tono claro (8.97:1 sobre la surface), así que
+    // no necesita un tono aparte: el token existe igual para que el consumidor
+    // pueda usarlo sin ramificar por tema.
+    --estela-primary-on-surface:      #{palette.$brand-primary-dark};
+    // Los overrides de botón se redeclaran acá a propósito: el selector dark se
+    // aplica sobre el mismo elemento que el light, así que sin esto quedaría
+    // vigente el tono oscuro de light (1.60:1 sobre la surface oscura).
+    --mat-button-text-label-text-color:      #{palette.$brand-primary-dark};
+    --mat-button-text-state-layer-color:     #{palette.$brand-primary-dark};
+    --mat-button-outlined-label-text-color:  #{palette.$brand-primary-dark};
+    --mat-button-outlined-state-layer-color: #{palette.$brand-primary-dark};
+    --mat-button-protected-label-text-color: #{palette.$brand-primary-dark};
     --mat-sys-primary-container:      #{palette.$brand-primary-container-dark};
     --mat-sys-on-primary-container:   #{palette.$brand-on-primary-container-dark};
     --mat-sys-tertiary:               #{palette.$brand-tertiary-dark};

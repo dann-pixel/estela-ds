@@ -21,6 +21,7 @@
         <div class="demo-row">
           <button mat-button>Text</button>
           <button mat-stroked-button>Outlined</button>
+          <button matButton="tonal">Tonal</button>
           <button mat-flat-button>Filled</button>
           <button mat-raised-button>Elevated</button>
         </div>
@@ -34,6 +35,9 @@
           </button>
           <button mat-stroked-button>
             <mat-icon>add</mat-icon> Outlined
+          </button>
+          <button matButton="tonal">
+            <mat-icon>add</mat-icon> Tonal
           </button>
           <button mat-flat-button>
             <mat-icon>add</mat-icon> Filled
@@ -49,6 +53,7 @@
         <div class="demo-row">
           <button mat-button disabled>Text</button>
           <button mat-stroked-button disabled>Outlined</button>
+          <button matButton="tonal" disabled>Tonal</button>
           <button mat-flat-button disabled>Filled</button>
           <button mat-raised-button disabled>Elevated</button>
         </div>
@@ -66,7 +71,7 @@
         <p class="demo-label">Filled</p>
         <div class="demo-row">
           <button mat-flat-button style="background-color:var(--mat-sys-primary);color:var(--mat-sys-on-primary)">Primary</button>
-          <button mat-flat-button style="background-color:var(--mat-sys-tertiary);color:var(--mat-sys-on-tertiary)">Secondary</button>
+          <button mat-flat-button style="background-color:var(--mat-sys-tertiary);color:var(--mat-sys-on-tertiary)">Tertiary</button>
           <button mat-flat-button style="background-color:var(--mat-sys-error);color:var(--mat-sys-on-error)">Error</button>
           <button mat-flat-button style="background-color:var(--estela-success);color:var(--estela-on-success)">Success</button>
           <button mat-flat-button style="background-color:var(--estela-warning);color:var(--estela-on-warning)">Warning</button>
@@ -79,7 +84,7 @@
         <p class="demo-label">Tonal</p>
         <div class="demo-row">
           <button mat-flat-button style="background-color:var(--mat-sys-primary-container);color:var(--mat-sys-on-primary-container)">Primary</button>
-          <button mat-flat-button style="background-color:var(--mat-sys-tertiary-container);color:var(--mat-sys-on-tertiary-container)">Secondary</button>
+          <button mat-flat-button style="background-color:var(--mat-sys-tertiary-container);color:var(--mat-sys-on-tertiary-container)">Tertiary</button>
           <button mat-flat-button style="background-color:var(--mat-sys-error-container);color:var(--mat-sys-on-error-container)">Error</button>
           <button mat-flat-button style="background-color:var(--estela-success-container);color:var(--estela-on-success-container)">Success</button>
           <button mat-flat-button style="background-color:var(--estela-warning-container);color:var(--estela-on-warning-container)">Warning</button>
@@ -91,8 +96,8 @@
 
         <p class="demo-label">Text</p>
         <div class="demo-row">
-          <button mat-button style="color:var(--mat-sys-primary);--mat-button-text-state-layer-color:var(--mat-sys-primary)">Primary</button>
-          <button mat-button style="color:var(--mat-sys-tertiary);--mat-button-text-state-layer-color:var(--mat-sys-tertiary)">Secondary</button>
+          <button mat-button style="color:var(--estela-primary-on-surface);--mat-button-text-state-layer-color:var(--estela-primary-on-surface)">Primary</button>
+          <button mat-button style="color:var(--mat-sys-tertiary);--mat-button-text-state-layer-color:var(--mat-sys-tertiary)">Tertiary</button>
           <button mat-button style="color:var(--mat-sys-error);--mat-button-text-state-layer-color:var(--mat-sys-error)">Error</button>
           <button mat-button style="color:var(--estela-success);--mat-button-text-state-layer-color:var(--estela-success)">Success</button>
           <button mat-button style="color:var(--estela-warning);--mat-button-text-state-layer-color:var(--estela-warning)">Warning</button>

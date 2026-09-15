@@ -25,7 +25,7 @@ $estela-tertiary: mat.$violet-palette;
 // Reemplaza los grises auto-generados por M3 (cyan-tinted).
 // Se mapea a tokens --mat-sys-surface/outline/* en _theme.scss.
 // =============================================================
-$neutral-50:  #F7F9FC;
+$neutral-50:  #eceff1;   // blueGrey[50] — alineado a NEUTRAL_LIGHT del DS Estela React
 $neutral-100: #CFD8DC;
 $neutral-200: #B0BEC5;
 $neutral-300: #90A4AE;
@@ -42,10 +42,17 @@ $neutral-900: #263238;
 // =============================================================
 
 // Light mode
-$brand-primary:                 #00b5cc;   // React 500
-$brand-on-primary:              #ffffff;
+$brand-primary:                 #00b5cc;   // React primary.main
+// No es blanco: blanco sobre #00b5cc da 2.48:1, muy por debajo del 4.5 de AA
+// para texto. Es el PRIMARY_950 de React (su contrastText medido) → 6.15:1.
+$brand-on-primary:              #00293a;   // React PRIMARY_950 / ON_FILL.primary
 $brand-primary-container:       #bfecf2;   // React 100
 $brand-on-primary-container:    #001e26;   // derivado de React 900
+// Primary cuando va como TEXTO o TRAZO sobre la superficie, no como relleno.
+// #00b5cc sobre blanco da 2.48:1; este tono da 6.04:1. Equivale al
+// ON_SURFACE_LIGHT.primary / primary.dark de React (helper onSurface()).
+// Solo aplica a light: en dark el primary claro ya da 8.97:1 sobre la surface.
+$brand-primary-on-surface:      #006a92;   // React ON_SURFACE_LIGHT.primary
 
 // Dark mode (tone 80 → React 200, tone 20 → derivado oscuro)
 $brand-primary-dark:                #99e1ea;   // React 200
@@ -78,76 +85,83 @@ $brand-on-tertiary-container-dark:   #cfceff;   // React 100
 // Uso: var(--estela-warning), var(--estela-success), var(--estela-info)
 // Error lo maneja M3 nativamente (--mat-sys-error-*).
 //
-// Valores derivados del DS Estela React.
+// Valores derivados de las rampas COLOR_RAMPS del DS Estela React
+// (src/theme/index.ts). El texto sobre el relleno (on-*) usa el tono 950
+// de cada rampa en vez de blanco puro: blanco falla AA sobre estos tonos
+// (ej. warning 500 da 2.05:1), igual que corrigió React con ON_FILL.
 // =============================================================
 
-// --- Warning — React warning scale ---
-$warning:              #f97316;   // React warning 500
-$warning-container:    #fef1e7;   // React warning 50
-$on-warning:           #ffffff;
-$on-warning-container: #632e08;   // React warning 900
+// --- Warning — rampa "tangerine" ---
+$warning:              #fca113;   // tangerine 500
+$warning-container:    #fffbed;   // tangerine 50
+$on-warning:           #442006;   // tangerine 950 · AA sobre warning
+$on-warning-container: #7e4210;   // tangerine 900
 
-$warning-dark:              #fbb27e;   // React warning 300
-$warning-container-dark:    #883f0c;   // React warning 800
+$warning-dark:              #ffd672;   // tangerine 300
+$warning-container-dark:    #9c4f10;   // tangerine 800
 $on-warning-dark:           #000000;
-$on-warning-container-dark: #fef1e7;   // React warning 50
+$on-warning-container-dark: #fffbed;   // tangerine 50
 
-// --- Success — React success scale ---
-$success:              #22c55e;   // React success 500
-$success-container:    #e8f9ee;   // React success 50
-$on-success:           #ffffff;
-$on-success-container: #0d4e25;   // React success 900
+// --- Success — rampa "mountain-meadow" ---
+$success:              #2abb7f;   // mountain-meadow 500
+$success-container:    #eefbf4;   // mountain-meadow 50
+$on-success:           #07271d;   // mountain-meadow 950 · AA sobre success
+$on-success-container: #0f4532;   // mountain-meadow 900
 
-$success-dark:              #85dfa6;   // React success 300
-$success-container-dark:    #126c33;   // React success 800
+$success-dark:              #7dd8ac;   // mountain-meadow 300
+$success-container-dark:    #11543c;   // mountain-meadow 800
 $on-success-dark:           #000000;
-$on-success-container-dark: #e8f9ee;   // React success 50
+$on-success-container-dark: #eefbf4;   // mountain-meadow 50
 
-// --- Info — React info scale ---
-$info:              #0ea5e9;   // React info 500
-$info-container:    #e6f6fc;   // React info 50
-$on-info:           #ffffff;
-$on-info-container: #05425d;   // React info 900
+// --- Info — rampa "teal-sea" ---
+// Usa el tono 400, no el 500: es la excepción de marca que hace React
+// (el 500 de esta rampa es notoriamente más oscuro que el resto de semánticos).
+$info:              #42b2d7;   // teal-sea 400
+$info-container:    #eefafd;   // teal-sea 50
+$on-info:           #0f2b3d;   // teal-sea 950 · AA sobre info
+$on-info-container: #1f435a;   // teal-sea 900
 
-$info-dark:              #7acdf2;   // React info 300
-$info-container-dark:    #075a80;   // React info 800
+$info-dark:              #79cde7;   // teal-sea 300
+$info-container-dark:    #214f69;   // teal-sea 800
 $on-info-dark:           #000000;
-$on-info-container-dark: #e6f6fc;   // React info 50
+$on-info-container-dark: #eefafd;   // teal-sea 50
 
 // =============================================================
-// Chip semantic colors — medium-toned (Figma spec)
+// Chip semantic colors — medium-toned
 // =============================================================
 // Los chips de estado requieren más saturación que los containers
 // de alertas para ser legibles como indicadores inline.
-// Fuente: Figma Portal Estela Partners (node 2905-23786).
+// Recalibrados a los tonos 200/900 de las rampas COLOR_RAMPS del DS
+// Estela React (src/theme/index.ts), para que todo el sistema de color
+// salga de una única fuente de verdad en vez de un spec de Figma aparte.
 // =============================================================
 
-// No Iniciado — neutral (action/selected)
+// No Iniciado — neutral (action/selected), sin rampa asociada
 $chip-default-container:    rgba(0, 0, 0, 0.08);    // Figma action/selected
 $chip-on-default-container: rgba(16, 20, 38, 0.87); // Figma text/primary
 $chip-default-container-dark:    rgba(255, 255, 255, 0.12);
 $chip-on-default-container-dark: rgba(255, 255, 255, 0.87);
 
-// En Progreso — info/sky
-$chip-info-container:    #7dd3fc;   // Figma info/light  (Tailwind sky-300)
-$chip-on-info-container: #0369a1;   // Figma info/dark   (Tailwind sky-700)
-$chip-info-container-dark:    #075985;   // Tailwind sky-900
-$chip-on-info-container-dark: #bae6fd;   // Tailwind sky-200
+// En Progreso — rampa "teal-sea" (info)
+$chip-info-container:    #afe3f2;   // teal-sea 200
+$chip-on-info-container: #1f435a;   // teal-sea 900
+$chip-info-container-dark:    #1f435a;   // teal-sea 900
+$chip-on-info-container-dark: #afe3f2;   // teal-sea 200
 
-// Completado — success/green
-$chip-success-container:    #bbf7d0;   // Figma green/200  (Tailwind green-200)
-$chip-on-success-container: #14532d;   // Figma green/900  (Tailwind green-900)
-$chip-success-container-dark:    #14532d;   // Tailwind green-900
-$chip-on-success-container-dark: #bbf7d0;   // Tailwind green-200
+// Completado — rampa "mountain-meadow" (success)
+$chip-success-container:    #b0eacb;   // mountain-meadow 200
+$chip-on-success-container: #0f4532;   // mountain-meadow 900
+$chip-success-container-dark:    #0f4532;   // mountain-meadow 900
+$chip-on-success-container-dark: #b0eacb;   // mountain-meadow 200
 
-// Cancelado — error/red
-$chip-error-container:    #fecaca;   // Figma red/200    (Tailwind red-200)
-$chip-on-error-container: #b91c1c;   // Figma error/dark (Tailwind red-700)
-$chip-error-container-dark:    #7f1d1d;   // Tailwind red-900
-$chip-on-error-container-dark: #fecaca;   // Tailwind red-200
+// Cancelado — rampa "sunset-orange" (error)
+$chip-error-container:    #fececa;   // sunset-orange 200
+$chip-on-error-container: #80231c;   // sunset-orange 900
+$chip-error-container-dark:    #80231c;   // sunset-orange 900
+$chip-on-error-container-dark: #fececa;   // sunset-orange 200
 
-// En Implementación — warning/orange
-$chip-warning-container:    #fed7aa;   // Figma orange/200   (Tailwind orange-200)
-$chip-on-warning-container: #c2410c;   // Figma warning/dark (Tailwind orange-700)
-$chip-warning-container-dark:    #7c2d12;   // Tailwind orange-950
-$chip-on-warning-container-dark: #fed7aa;   // Tailwind orange-200
+// En Implementación — rampa "tangerine" (warning)
+$chip-warning-container:    #ffe8a9;   // tangerine 200
+$chip-on-warning-container: #7e4210;   // tangerine 900
+$chip-warning-container-dark:    #7e4210;   // tangerine 900
+$chip-on-warning-container-dark: #ffe8a9;   // tangerine 200
