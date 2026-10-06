@@ -6,7 +6,6 @@ import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-buttons',
-  standalone: true,
   imports: [MatButtonModule, MatIconModule, MatCardModule, MatDividerModule],
   templateUrl: './buttons.component.html',
 })

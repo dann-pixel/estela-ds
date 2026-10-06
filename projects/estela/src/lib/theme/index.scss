@@ -5,10 +5,11 @@
 // can import the full theme API with a single @use.
 //
 // USAGE:
-//   @use 'lib/theme' as estela;
-//   html { @include estela.light-theme(); }
+//   @use 'estela-angular/theme' as estela;
+//   @include estela.light-theme-setup();
 // =============================================================
 
 @forward './theme';
 @forward './palette';
 @forward './typography';
+@forward './utilities';

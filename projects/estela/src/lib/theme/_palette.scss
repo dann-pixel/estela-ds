@@ -14,7 +14,7 @@
 @use '@angular/material' as mat;
 
 // --- Paletas base para M3 (generan neutrals, superficies, etc.) ---
-// Se usan las paletas predefinidas de AM v19 más cercanas a la marca.
+// Se usan las paletas predefinidas de AM más cercanas a la marca.
 // Los tokens --mat-sys-primary/tertiary se sobreescriben en _theme.scss
 // con los colores exactos del DS Estela React.
 $estela-primary:  mat.$cyan-palette;

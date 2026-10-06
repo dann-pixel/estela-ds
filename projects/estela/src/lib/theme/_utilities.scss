@@ -1,0 +1,173 @@
+// =============================================================
+// Estela Design System — Utilidades globales
+// =============================================================
+// Clases y estilos base que forman parte del DS pero que Angular
+// Material no provee. Se incluyen UNA vez, a nivel raíz del
+// styles.scss del proyecto (no dentro de un selector):
+//
+//   @include estela.global-styles();
+//
+// O por partes: base-styles(), form-field-sm(), status-chips(), alerts().
+// =============================================================
+
+@mixin global-styles() {
+  @include base-styles();
+  @include form-field-sm();
+  @include status-chips();
+  @include alerts();
+}
+
+// ── Base ───────────────────────────────────────────────────────
+// AM M3 solo aplica las fuentes a sus propias clases; los elementos
+// nativos deben heredarlas explícitamente vía tokens.
+@mixin base-styles() {
+  body {
+    font-family: var(--mat-sys-body-large-font), sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--mat-sys-headline-large-font), sans-serif;
+  }
+
+  // Material Symbols — defaults de los variable axes
+  // Fill: 0 (outlined), Weight: 400, Grade: 0, Optical size: 24
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+}
+
+@mixin form-field-sm() {
+  // ── Form field — condensed (sm) ─────────────────────────────────
+  // Reduces the fill form field to 40 px — same height as a standard button.
+  // Ideal for toolbar/filter inputs placed alongside buttons.
+  // Use a placeholder instead of mat-label (no room for floating label).
+  .form-field-sm {
+    --mat-form-field-container-height: 40px;
+    --mat-form-field-container-vertical-padding: 8px;
+    --mat-form-field-filled-with-label-container-padding-top: 8px;
+    --mat-form-field-filled-with-label-container-padding-bottom: 8px;
+
+    // Hide floating label — use placeholder instead
+    .mdc-floating-label,
+    .mat-mdc-floating-label {
+      display: none;
+    }
+
+    // Collapse the hint/error reserved space
+    .mat-mdc-form-field-subscript-wrapper {
+      display: none;
+    }
+  }
+}
+
+@mixin status-chips() {
+  // ── Status Chips ───────────────────────────────────────────────
+  // Chips semánticos de estado usando los colores del DS Estela.
+  // Pill-shape: border-radius grande para forma cápsula.
+  // Uso: <mat-chip class="status-chip status-completado" disableRipple>Completado</mat-chip>
+  // Estados disponibles: no-iniciado, en-progreso, completado, cancelado, en-implementacion
+  .status-chip {
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    height: 28px !important;
+    min-height: 28px !important;
+    border-radius: 50px !important;
+    cursor: default;
+
+    // Elimina el borde/outline por defecto del chip M3
+    --mat-chip-outline-width: 0;
+
+    // Angular Material aplica el color del texto en el elemento interno
+    // .mdc-evolution-chip__text-label, no en el host del chip.
+    // Por eso hay que apuntar a ese selector para que el color sea correcto.
+    .mdc-evolution-chip__text-label {
+      color: inherit;
+    }
+
+    &.status-no-iniciado {
+      background-color: var(--estela-chip-default-container) !important;
+      color: var(--estela-chip-on-default-container) !important;
+      .mdc-evolution-chip__text-label { color: var(--estela-chip-on-default-container) !important; }
+    }
+
+    &.status-en-progreso {
+      background-color: var(--estela-chip-info-container) !important;
+      color: var(--estela-chip-on-info-container) !important;
+      .mdc-evolution-chip__text-label { color: var(--estela-chip-on-info-container) !important; }
+    }
+
+    &.status-completado {
+      background-color: var(--estela-chip-success-container) !important;
+      color: var(--estela-chip-on-success-container) !important;
+      .mdc-evolution-chip__text-label { color: var(--estela-chip-on-success-container) !important; }
+    }
+
+    &.status-cancelado {
+      background-color: var(--estela-chip-error-container) !important;
+      color: var(--estela-chip-on-error-container) !important;
+      .mdc-evolution-chip__text-label { color: var(--estela-chip-on-error-container) !important; }
+    }
+
+    &.status-en-implementacion {
+      background-color: var(--estela-chip-warning-container) !important;
+      color: var(--estela-chip-on-warning-container) !important;
+      .mdc-evolution-chip__text-label { color: var(--estela-chip-on-warning-container) !important; }
+    }
+  }
+}
+
+@mixin alerts() {
+  // ── Alerts ─────────────────────────────────────────────────────
+  // Componente visual de alerta usando los colores semánticos de Estela.
+  // Uso: <div class="estela-alert estela-alert--success">...</div>
+  .estela-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: var(--mat-sys-corner-medium);
+    font-size: 14px;
+    line-height: 1.5;
+
+    mat-icon {
+      flex-shrink: 0;
+      font-size: 20px;
+      height: 20px;
+      width: 20px;
+      margin-top: 1px;
+    }
+
+    .alert-body {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+
+      strong { font-weight: 600; }
+      span   { opacity: 0.9; }
+    }
+
+    &--info {
+      background-color: var(--estela-info-container);
+      color: var(--estela-on-info-container);
+      mat-icon { color: var(--estela-info); }
+    }
+
+    &--success {
+      background-color: var(--estela-success-container);
+      color: var(--estela-on-success-container);
+      mat-icon { color: var(--estela-success); }
+    }
+
+    &--warning {
+      background-color: var(--estela-warning-container);
+      color: var(--estela-on-warning-container);
+      mat-icon { color: var(--estela-warning); }
+    }
+
+    &--error {
+      background-color: var(--mat-sys-error-container);
+      color: var(--mat-sys-on-error-container);
+      mat-icon { color: var(--mat-sys-error); }
+    }
+  }
+}

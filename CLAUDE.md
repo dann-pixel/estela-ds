@@ -4,7 +4,7 @@
 
 Sistema de diseño corporativo basado en **Angular Material v20 (Material Design 3)**. Monorepo con dos proyectos:
 
-- **`projects/estela/`** — Angular Library distribuible (el tema + futuras componentes)
+- **`projects/estela/`** — Angular Library distribuible, paquete `estela-angular` (tema SCSS, utilidades, `ThemeService`, `provideEstela()`, entry point `estela-angular/intl`)
 - **`projects/showcase/`** — App Angular de showroom (demo visual de los componentes)
 
 ---
@@ -18,7 +18,12 @@ npm start              # Levanta el showcase en http://localhost:4200
 npm run build:lib      # Compila solo la librería (dist/estela/)
 npm run build:showcase # Compila solo el showcase (dist/showcase/)
 npm run build          # Compila librería + showcase en secuencia
+npm run pack:lib       # Compila la lib y genera dist/estela-angular-<versión>.tgz
+npm test               # Tests de lib + showcase (ChromeHeadless; en macOS exportar CHROME_BIN)
 ```
+
+El showcase consume la lib desde el **source** (`tsconfig.json` → `paths` para `estela-angular` y
+`estela-angular/intl`; SCSS vía `includePaths`), así que `npm start` no requiere compilar la lib antes.
 
 ---
 
@@ -32,17 +37,22 @@ estela-ds-angular/
 │   │   │   ├── lib/theme/
 │   │   │   │   ├── _palette.scss        # Paletas de color (reemplazar con brand Estela)
 │   │   │   │   ├── _typography.scss     # Fuente tipográfica
-│   │   │   │   └── _theme.scss          # Mixins light/dark-theme() y *-setup()
-│   │   │   ├── index.scss               # Barrel SCSS (@forward lib/theme)
-│   │   │   └── public-api.ts            # API TypeScript pública
+│   │   │   │   ├── _theme.scss          # Mixins light/dark-theme() y *-setup()
+│   │   │   │   └── _utilities.scss      # global-styles(): status chips, alerts, form-field-sm, base
+│   │   │   ├── lib/core/
+│   │   │   │   ├── provide-estela.ts    # provideEstela(): Material Symbols + MAT_DATE_LOCALE + config
+│   │   │   │   ├── estela-config.ts     # ESTELA_CONFIG (darkThemeClass, storageKey, dateLocale)
+│   │   │   │   └── theme.service.ts     # ThemeService: dark/light toggle + localStorage
+│   │   │   ├── index.scss               # Barrel SCSS → expuesto como 'estela-angular/theme'
+│   │   │   └── public-api.ts            # API TypeScript pública (ESTELA_VERSION)
+│   │   ├── intl/                        # Entry point secundario 'estela-angular/intl'
+│   │   │   └── src/estela-intl.ts       # Paginator/Datepicker/Stepper en español
 │   │   ├── ng-package.json              # Configuración ng-packagr (incluye assets SCSS)
-│   │   └── package.json                 # peerDeps: @angular/material, @angular/cdk
+│   │   └── package.json                 # peerDeps Angular 20 + exports "./theme" (sass)
 │   │
 │   └── showcase/                        # Angular App (showroom)
 │       └── src/
 │           ├── app/
-│           │   ├── core/
-│           │   │   └── theme.service.ts # ThemeService: dark/light toggle + localStorage
 │           │   ├── app.component.*      # Shell: sidenav responsive + mobile toolbar
 │           │   ├── app.routes.ts        # Rutas lazy-loaded
 │           │   └── pages/
@@ -76,7 +86,12 @@ estela-ds-angular/
 - Los **tokens de color** se acceden como CSS custom properties: `var(--mat-sys-primary)`, `var(--mat-sys-on-surface)`, etc.
 - **No usar** colores hardcodeados; siempre usar variables del sistema de diseño
 - Los mixins del tema son `light-theme()` y `dark-theme()` en `projects/estela/src/lib/theme/_theme.scss`
-- El showcase importa el tema con `@use 'index' as estela` (resuelto por `stylePreprocessorOptions.includePaths`)
+- El showcase importa el tema con `@use 'index' as estela` (resuelto por `stylePreprocessorOptions.includePaths`).
+  Los proyectos consumidores usan `@use 'estela-angular/theme' as estela` (sin includePaths)
+- Las utilidades del DS (`.status-chip`, `.estela-alert`, `.form-field-sm`) viven en la lib
+  (`_utilities.scss`), no en el showcase. Patrones nuevos reutilizables → agregarlos ahí
+- Botones sin relleno y textos/íconos primary sobre superficie: usar `--estela-primary-on-surface`,
+  no `--mat-sys-primary` (2.48:1 sobre blanco, no pasa AA)
 
 ### Componentes del showcase
 Cada página de showroom sigue este patrón:
@@ -142,6 +157,10 @@ El DS Estela usa **4px en todos los componentes**. Se controla sobreescribiendo 
 `--mat-sys-corner-*` de M3 en el mixin privado `_shape-tokens()` de `_theme.scss`.
 No se modifica `--mat-sys-corner-none` (permanece en 0 por diseño).
 
+**Excepción — formas circulares:** AM usa `corner-full` tanto para botones como para elementos
+circulares. Como `corner-full` va a 4px, `_round-shapes()` restaura `9999px` en los tokens de
+slide-toggle (handle/track), slider (handle/tracks), badge y avatar de lista.
+
 ### Elevation
 El DS Estela **no usa sombras en componentes de superficie** (cards, buttons elevated, navigation bar).
 Solo se preserva la elevación para elementos genuinamente en capa superior:
@@ -168,19 +187,22 @@ $estela-plain-family: 'Instrument Sans'; // ← fuente para body/labels (con com
 - `$estela-plain-family` puede llevar comillas si el nombre de la fuente tiene espacios
 - `mat.theme()` recibe ambas a través de un mapa `typography: (brand-family, plain-family)`
 - Actualizar también los `<link>` de Google Fonts en `index.html` del proyecto consumidor
-- Luego en `styles.scss` aplicar explícitamente: `body { font-family: var(--mat-sys-body-large-font), sans-serif; }` y `h1-h6 { font-family: var(--mat-sys-headline-large-font), sans-serif; }`
+- Los elementos nativos (`body`, `h1-h6`) toman las fuentes vía `estela.global-styles()` / `base-styles()`
 
 ### Aplicar el tema (uso recomendado)
 En el `styles.scss` del proyecto consumidor, llamar los mixins de setup **a nivel raíz** (no dentro de ningún selector):
 
 ```scss
-@use 'index' as estela;
+@use 'estela-angular/theme' as estela;   // en el showcase: @use 'index' as estela;
 
 // Tema claro (requerido)
 @include estela.light-theme-setup();
 
 // Tema oscuro (opcional)
 // @include estela.dark-theme-setup('.dark-theme');
+
+// Utilidades y tipografía base
+@include estela.global-styles();
 ```
 
 **Por qué `light-theme-setup()` y no `light-theme()` directamente:**
@@ -189,7 +211,10 @@ Angular Material v20 difiere parte de su output CSS al cerrar el scope del selec
 al bloque que genera `mat.theme()`, y pierden en la cascada. Los mixins `*-setup()` emiten dos
 bloques separados garantizando el orden correcto.
 
-**Uso avanzado** (selector custom o dark mode condicional):
+`dark-theme()` solo emite color: tipografía, densidad y typography-hierarchy se heredan del tema claro.
+
+**Uso avanzado** (selector custom o dark mode condicional). `*-brand-overrides()` emite TODOS
+los overrides de Estela (marca, neutrals, semánticos, shape, elevation, tracking), así que es obligatorio:
 ```scss
 html { @include estela.light-theme(); }
 html { @include estela.light-brand-overrides(); }   // ← bloque separado, SIEMPRE después
@@ -210,33 +235,28 @@ html { @include estela.light-brand-overrides(); }   // ← bloque separado, SIEM
 
 ## Distribución de la librería
 
-Los consumidores instalan el tema así:
+El paquete es `estela-angular` (generado en `dist/estela`). **No** se puede instalar con
+`npm install git+…`: la raíz del repo es el monorepo (privado), no la librería.
 
 ```bash
-npm install git+https://github.com/<org>/estela-ds.git
+npm run pack:lib                                   # → dist/estela-angular-<versión>.tgz
+npm install /ruta/a/dist/estela-angular-0.1.0.tgz  # en el proyecto consumidor
+# o publicar en un registry privado: cd dist/estela && npm publish
 ```
 
-Y en su `styles.scss`:
+En el consumidor:
 
 ```scss
-@use 'node_modules/estela/src/lib/theme' as estela;
+@use 'estela-angular/theme' as estela;   // "exports" con condición "sass" → sin includePaths
 @include estela.light-theme-setup();
+@include estela.global-styles();
 ```
 
-O bien, agregar a `angular.json`:
-
-```json
-"stylePreprocessorOptions": {
-  "includePaths": ["node_modules/estela/src"]
-}
+```ts
+providers: [provideEstela(), provideEstelaIntl() /* de 'estela-angular/intl' */, provideNativeDateAdapter()]
 ```
 
-Y luego importar simplemente:
-
-```scss
-@use 'index' as estela;
-@include estela.light-theme-setup();
-```
+**Release:** subir `version` en `projects/estela/package.json` y `ESTELA_VERSION` en `public-api.ts`.
 
 ---
 
@@ -251,23 +271,11 @@ El showcase usa **Material Symbols Outlined** (variable font), no Material Icons
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
 ```
 
-2. **`app.config.ts`** — `APP_INITIALIZER` para que `<mat-icon>` use el font set correcto por defecto:
-```typescript
-{
-  provide: APP_INITIALIZER,
-  multi: true,
-  useFactory: (registry: MatIconRegistry) => () =>
-    registry.setDefaultFontSetClass('material-symbols-outlined'),
-  deps: [MatIconRegistry],
-}
-```
+2. **`app.config.ts`** — `provideEstela()` registra `material-symbols-outlined` como font set por
+   defecto de `<mat-icon>` (vía `provideAppInitializer`).
 
-3. **`styles.scss`** — defaults de los variable axes (outlined, weight 400):
-```scss
-.material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-}
-```
+3. **`styles.scss`** — `estela.global-styles()` (o `base-styles()`) aplica los defaults de los
+   variable axes (outlined, weight 400).
 
 ### Uso
 
@@ -365,12 +373,13 @@ El showcase incluye soporte completo de dark mode implementado con `ThemeService
    @include estela.light-theme-setup();  // → html { ... }
    @include estela.dark-theme-setup();   // → .dark-theme { ... }
    ```
-3. **`ThemeService`** — agrega/quita `.dark-theme` en `document.documentElement` (`<html>`). Al cambiar la clase, todos los `--mat-sys-*` y `--estela-*` se actualizan automáticamente. **Ningún componente necesita cambios**.
+3. **`ThemeService`** (exportado por `estela-angular`) — agrega/quita `.dark-theme` en `document.documentElement` (`<html>`). Al cambiar la clase, todos los `--mat-sys-*` y `--estela-*` se actualizan automáticamente. **Ningún componente necesita cambios**.
 
 ### ThemeService API
 
 ```typescript
 // Inyectar en cualquier componente:
+import { ThemeService } from 'estela-angular';
 readonly theme = inject(ThemeService);
 
 theme.isDark()   // signal<boolean>
@@ -392,11 +401,8 @@ theme.toggle()   // alterna el tema
 ```
 
 ```typescript
-// theme.service.ts (simplificado)
-toggle() {
-  document.documentElement.classList.toggle('dark-theme');
-  localStorage.setItem('estela-theme', isDark ? 'dark' : 'light');
-}
+// Usar el ThemeService de la lib. Si se cambió el selector de dark-theme-setup():
+provideEstela({ darkThemeClass: 'my-dark' })
 ```
 
 ---
@@ -442,14 +448,15 @@ readonly isMobile = toSignal(
 
 ### peerDependencies de la librería
 
-La librería `projects/estela/` es compatible con proyectos en Angular 19 o 20:
+Solo Angular 20: el tema usa nombres de tokens de v20 (`--mat-button-*`, `--mat-form-field-*`);
+en v19 eran `--mdc-*` y los overrides no se aplicarían.
 
 ```json
 "peerDependencies": {
-  "@angular/common": ">=19.0.0 <21.0.0",
-  "@angular/core": ">=19.0.0 <21.0.0",
-  "@angular/material": ">=19.0.0 <21.0.0",
-  "@angular/cdk": ">=19.0.0 <21.0.0"
+  "@angular/common": ">=20.0.0 <21.0.0",
+  "@angular/core": ">=20.0.0 <21.0.0",
+  "@angular/material": ">=20.0.0 <21.0.0",
+  "@angular/cdk": ">=20.0.0 <21.0.0"
 }
 ```
 
@@ -502,7 +509,7 @@ El showcase implementa estos componentes por categoría:
 - Stepper (horizontal linear + vertical)
 
 **Semantic Alerts**
-- Info (usando `--mat-sys-primary-container`)
+- Info (usando `--estela-info-container`)
 - Success (usando `--estela-success-container`)
 - Warning (usando `--estela-warning-container`)
 - Error (usando `--mat-sys-error-container`)

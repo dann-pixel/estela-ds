@@ -87,7 +87,7 @@
 
     // ── Nowrap en todas las celdas ────────────────────────────────
     // Previene que cualquier celda salte de línea en cualquier tabla del DS.
-    // AM v19 usa las clases MDC: mat-mdc-header-cell / mat-mdc-cell
+    // AM usa las clases MDC: mat-mdc-header-cell / mat-mdc-cell
     // (NO mat-header-cell / mat-cell que son las clases de versiones anteriores)
     th.mat-mdc-header-cell,
     td.mat-mdc-cell {
@@ -112,7 +112,7 @@
     }
 
     // ── Columna sticky derecha ────────────────────────────────────
-    // CSS puro, más confiable que el atributo stickyEnd de AM en v19.
+    // CSS puro: no depende del registro de stickyEnd en matColumnDef.
     // position: sticky + right: 0 fija la columna al borde derecho del scroll.
     // background explícito es obligatorio para tapar el contenido que pasa debajo.
     th.mat-column-acciones,
@@ -135,21 +135,42 @@
     gap: 6px;
     overflow: hidden;
 
-    .copy-icon {
-      font-size: 16px;
-      width: 16px;
-      height: 16px;
+    .copy-btn {
+      display: inline-flex;
       flex-shrink: 0; // el ícono nunca se comprime
+      padding: 2px;
+      border: 0;
+      border-radius: var(--mat-sys-corner-extra-small);
+      background: none;
       color: var(--mat-sys-on-surface-variant);
       cursor: pointer;
       opacity: 0.7;
 
-      &:hover {
+      &:hover,
+      &:focus-visible {
         opacity: 1;
+        background: color-mix(in srgb, var(--mat-sys-on-surface) 8%, transparent);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--estela-primary-on-surface);
+        outline-offset: 1px;
+      }
+
+      mat-icon {
+        font-size: 16px;
+        width: 16px;
+        height: 16px;
       }
     }
   }
 
-  // .status-chip y sus variantes semánticas están definidas globalmente
-  // en styles.scss como utilidad reutilizable del DS.
+  .no-results-row td {
+    padding: 24px 16px;
+    text-align: center;
+    color: var(--mat-sys-on-surface-variant);
+  }
+
+  // .status-chip y sus variantes semánticas vienen de la librería
+  // (estela.global-styles() → status-chips()).
 }

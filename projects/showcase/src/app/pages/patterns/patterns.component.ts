@@ -11,7 +11,6 @@ interface BreadcrumbItem {
 
 @Component({
   selector: 'app-patterns',
-  standalone: true,
   imports: [RouterLink, MatCardModule, MatButtonModule, MatIconModule],
   templateUrl: './patterns.component.html',
   styleUrl: './patterns.component.scss',

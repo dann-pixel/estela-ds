@@ -1,4 +1,4 @@
-import { Component, ViewChild, inject } from '@angular/core';
+import { Component, inject, viewChild } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { MatSidenavModule, MatSidenav } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -10,7 +10,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
-import { ThemeService } from './core/theme.service';
+import { ESTELA_VERSION, ThemeService } from 'estela-angular';
 
 interface NavItem {
   label: string;
@@ -20,7 +20,6 @@ interface NavItem {
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   imports: [
     RouterOutlet,
     RouterLink,
@@ -37,9 +36,10 @@ interface NavItem {
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  @ViewChild('sidenav') sidenav!: MatSidenav;
+  private readonly sidenav = viewChild.required<MatSidenav>('sidenav');
 
   readonly theme = inject(ThemeService);
+  readonly version = ESTELA_VERSION;
 
   private readonly bp = inject(BreakpointObserver);
 
@@ -62,6 +62,6 @@ export class AppComponent {
 
   /** Cierra el drawer overlay al navegar en mobile */
   closeIfMobile(): void {
-    if (this.isMobile()) this.sidenav.close();
+    if (this.isMobile()) this.sidenav().close();
   }
 }

@@ -7,8 +7,9 @@
     "build:lib": "ng build estela",
     "build:showcase": "ng build showcase",
     "build": "npm run build:lib && npm run build:showcase",
+    "pack:lib": "npm run build:lib && cd dist/estela && npm pack --pack-destination ..",
     "watch": "ng build showcase --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test estela --watch=false --browsers=ChromeHeadless && ng test showcase --watch=false --browsers=ChromeHeadless"
   },
   "private": true,
   "dependencies": {

@@ -13,14 +13,13 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { startWith, map } from 'rxjs';
+import { provideEstelaDatepickerIntl } from 'estela-angular/intl';
 
 @Component({
   selector: 'app-forms',
-  standalone: true,
   imports: [
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -36,9 +35,9 @@ import { startWith, map } from 'rxjs';
     MatIconModule,
     MatAutocompleteModule,
     MatDatepickerModule,
-    MatNativeDateModule,
     MatButtonToggleModule,
   ],
+  providers: [provideEstelaDatepickerIntl()],
   templateUrl: './forms.component.html',
 })
 export class FormsComponent {

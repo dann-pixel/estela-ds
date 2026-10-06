@@ -83,51 +83,58 @@
             <div class="step-number">1</div>
             <div class="step-info">
               <h3>Instala el paquete</h3>
-              <p>Instala directamente desde el repositorio de GitHub.</p>
+              <p>La librería se distribuye como el paquete <code>estela-angular</code>. Genera el tarball desde este repo o instálalo desde el registry privado del equipo.</p>
             </div>
           </div>
           <div class="code-block">
             <div class="code-header">
               <span class="code-lang">bash</span>
             </div>
-            <pre><code>npm install git+https://github.com/dann-pixel/estela-ds.git</code></pre>
+            <pre><code># En el repo del DS: genera dist/estela-angular-&lt;versión&gt;.tgz
+npm run pack:lib
+
+# En tu proyecto
+npm install ../estela-ds-angular/dist/estela-angular-0.1.0.tgz</code></pre>
           </div>
           <p class="step-note">
             <mat-icon>info</mat-icon>
-            Requiere Node.js ≥ 20 y Angular CLI ≥ 19. El paquete se instalará como
-            <code>estela-angular</code> en tu <code>node_modules</code>.
+            Requiere Angular y Angular Material 20 (peerDependencies <code>&gt;=20 &lt;21</code>) y Node.js ≥ 20.
+            No hace falta configurar <code>includePaths</code>: el paquete expone el SCSS en <code>estela-angular/theme</code>.
           </p>
         </div>
 
         <mat-divider />
 
-        <!-- Paso 2: angular.json -->
+        <!-- Paso 2: providers -->
         <div class="install-step">
           <div class="step-header">
             <div class="step-number">2</div>
             <div class="step-info">
-              <h3>Configura <code>angular.json</code></h3>
-              <p>Agrega el path de los archivos SCSS del DS al compilador de estilos.</p>
+              <h3>Registra los providers en <code>app.config.ts</code></h3>
+              <p><code>provideEstela()</code> usa Material Symbols en <code>&lt;mat-icon&gt;</code> y fija el locale <code>es-CL</code>. Los textos en español de Paginator, Datepicker y Stepper están en <code>estela-angular/intl</code>.</p>
             </div>
           </div>
           <div class="code-block">
             <div class="code-header">
-              <span class="code-lang">angular.json</span>
+              <span class="code-lang">app.config.ts</span>
             </div>
-            <pre><code>"build": &#123;
-  "options": &#123;
-    "stylePreprocessorOptions": &#123;
-      "includePaths": [
-        "node_modules/estela-angular/src"
-      ]
-    &#125;
-  &#125;
-&#125;</code></pre>
+            <pre><code>import &#123; provideEstela &#125; from 'estela-angular';
+import &#123; provideEstelaIntl &#125; from 'estela-angular/intl';
+import &#123; provideNativeDateAdapter &#125; from '&#64;angular/material/core';
+
+export const appConfig: ApplicationConfig = &#123;
+  providers: [
+    provideEstela(),            // opcional: provideEstela(&#123; dateLocale: 'es-AR' &#125;)
+    provideEstelaIntl(),        // Paginator, Datepicker y Stepper en español
+    provideNativeDateAdapter(), // solo si usas mat-datepicker
+  ],
+&#125;;</code></pre>
           </div>
           <p class="step-note">
             <mat-icon>info</mat-icon>
-            Agrégalo tanto en el builder de <code>build</code> como en el de <code>test</code>
-            si usas estilos en tus specs.
+            <code>provideEstelaIntl()</code> en <code>app.config.ts</code> suma esos módulos al bundle inicial. Si solo los usas en rutas lazy,
+            registra <code>provideEstelaPaginatorIntl()</code> / <code>provideEstelaDatepickerIntl()</code> / <code>provideEstelaStepperIntl()</code>
+            en los <code>providers</code> de esos componentes. Agrega también las Google Fonts (Outfit, Instrument Sans y Material Symbols Outlined) en tu <code>index.html</code>.
           </p>
         </div>
 
@@ -139,34 +146,27 @@
             <div class="step-number">3</div>
             <div class="step-info">
               <h3>Aplica el tema en <code>styles.scss</code></h3>
-              <p>Importa el DS y activa el tema claro. El setup emite dos bloques CSS para garantizar el orden correcto de los overrides.</p>
+              <p>Llama a los mixins a nivel raíz (fuera de cualquier selector). El setup emite dos bloques CSS para garantizar el orden correcto de los overrides.</p>
             </div>
           </div>
           <div class="code-block">
             <div class="code-header">
               <span class="code-lang">styles.scss</span>
             </div>
-            <pre><code>&#64;use 'index' as estela;
+            <pre><code>&#64;use 'estela-angular/theme' as estela;
 
 // Tema claro (requerido)
 &#64;include estela.light-theme-setup();
 
-// Tema oscuro (opcional)
-// Tema oscuro (opcional) — activa .dark-theme en &lt;html&gt; desde TypeScript
-// Tema oscuro (opcional) — activa .dark-theme en &lt;html&gt; desde TypeScript
+// Tema oscuro (opcional) — ThemeService activa .dark-theme en &lt;html&gt;
 &#64;include estela.dark-theme-setup();
+
+// Tipografía base, Material Symbols, .form-field-sm, .status-chip, .estela-alert
+&#64;include estela.global-styles();
 
 html, body &#123;
   height: 100%;
   margin: 0;
-&#125;
-
-body &#123;
-  font-family: var(--mat-sys-body-large-font), sans-serif;
-&#125;
-
-h1, h2, h3, h4, h5, h6 &#123;
-  font-family: var(--mat-sys-headline-large-font), sans-serif;
 &#125;</code></pre>
           </div>
         </div>
@@ -217,7 +217,7 @@ h1, h2, h3, h4, h5, h6 &#123;
             <span>Valor</span>
             <span>Uso</span>
           </div>
-          @for (token of colorTokens; track token.name) {
+          @for (token of colorTokens(); track token.name) {
             <div class="token-row">
               <code class="token-name">{{ token.name }}</code>
               <span class="token-value">
@@ -366,7 +366,7 @@ readonly theme = inject(ThemeService);
             </div>
             <mat-icon class="arrow">arrow_forward</mat-icon>
           </a>
-          <a class="resource-link" href="https://v19.material.angular.dev/" target="_blank">
+          <a class="resource-link" href="https://material.angular.dev/" target="_blank">
             <mat-icon>library_books</mat-icon>
             <div>
               <strong>Angular Material v20 Docs</strong>

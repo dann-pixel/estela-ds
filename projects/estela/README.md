@@ -1,63 +1,28 @@
-# Estela
+# estela-angular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.0.
+Estela Design System for Angular Material 20 (M3): theme, utility classes, `ThemeService` and Spanish i18n.
 
-## Code scaffolding
+```scss
+// styles.scss
+@use 'estela-angular/theme' as estela;
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+@include estela.light-theme-setup();
+@include estela.dark-theme-setup();   // optional
+@include estela.global-styles();
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+```ts
+// app.config.ts
+import { provideEstela } from 'estela-angular';
+import { provideEstelaIntl } from 'estela-angular/intl';
 
-```bash
-ng generate --help
+providers: [provideEstela(), provideEstelaIntl()]
 ```
 
-## Building
+| Entry point | Contents |
+|---|---|
+| `estela-angular/theme` (SCSS) | `light-theme-setup()`, `dark-theme-setup()`, `global-styles()`, palette variables |
+| `estela-angular` | `provideEstela()`, `ThemeService`, `ESTELA_CONFIG`, `ESTELA_VERSION` |
+| `estela-angular/intl` | `provideEstelaIntl()` and per-component `provideEstela{Paginator,Datepicker,Stepper}Intl()` |
 
-To build the library, run:
-
-```bash
-ng build estela
-```
-
-This command will compile your project, and the build artifacts will be placed in the `dist/` directory.
-
-### Publishing the Library
-
-Once the project is built, you can publish your library by following these steps:
-
-1. Navigate to the `dist` directory:
-   ```bash
-   cd dist/estela
-   ```
-
-2. Run the `npm publish` command to publish your library to the npm registry:
-   ```bash
-   npm publish
-   ```
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Full documentation: see the README at the root of the `estela-ds-angular` repository and the showcase's *Getting Started* page.

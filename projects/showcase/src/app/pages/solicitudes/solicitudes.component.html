@@ -17,7 +17,13 @@
     <div class="sol-toolbar">
       <mat-form-field class="sol-search form-field-sm">
         <mat-icon matPrefix>search</mat-icon>
-        <input matInput placeholder="Buscar N° Solicitud" [(ngModel)]="searchQuery" />
+        <input
+          matInput
+          placeholder="Buscar N° solicitud, cliente o RUT"
+          aria-label="Buscar solicitudes"
+          [(ngModel)]="searchQuery"
+          (ngModelChange)="applyFilter($event)"
+        />
       </mat-form-field>
 
       <div class="sol-actions">
@@ -40,7 +46,15 @@
           <th mat-header-cell *matHeaderCellDef>N° Solicitud</th>
           <td mat-cell *matCellDef="let row">
             <span class="numero-cell">
-              <mat-icon class="copy-icon">content_copy</mat-icon>
+              <button
+                type="button"
+                class="copy-btn"
+                (click)="copyNumero(row.numero)"
+                matTooltip="Copiar N°"
+                [attr.aria-label]="'Copiar número ' + row.numero"
+              >
+                <mat-icon>content_copy</mat-icon>
+              </button>
               {{ row.numero }}
             </span>
           </td>
@@ -91,14 +105,12 @@
         </ng-container>
 
         <!-- Columna sticky derecha — implementada vía CSS (position: sticky; right: 0)
-             en .mat-column-acciones en el SCSS. Angular Material v20 agrega automáticamente la clase
-             mat-column-<columnDef> a th y td, lo que permite estilar columnas específicas sin
-             modificar el HTML. Ver solicitudes.component.scss → .mat-column-acciones
-             NOTA: usar como atributo booleano 'stickyEnd', nunca como [stickyEnd]="true" -->
+             en .mat-column-acciones en el SCSS. Angular Material agrega automáticamente la clase
+             mat-column-<columnDef> a th y td. Ver solicitudes.component.scss → .mat-column-acciones -->
         <ng-container matColumnDef="acciones">
           <th mat-header-cell *matHeaderCellDef>Acciones</th>
           <td mat-cell *matCellDef="let row">
-            <button mat-button style="color:var(--mat-sys-primary);--mat-button-text-state-layer-color:var(--mat-sys-primary)">
+            <button mat-button>
               Ver detalle
             </button>
           </td>
@@ -106,6 +118,12 @@
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <tr class="mat-mdc-row no-results-row" *matNoDataRow>
+          <td class="mat-mdc-cell" [attr.colspan]="displayedColumns.length">
+            No hay solicitudes que coincidan con "{{ searchQuery }}"
+          </td>
+        </tr>
 
       </table>
     </div>

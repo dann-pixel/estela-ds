@@ -1,4 +1,5 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, inject, viewChild } from '@angular/core';
+import { Clipboard } from '@angular/cdk/clipboard';
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -9,6 +10,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { provideEstelaPaginatorIntl } from 'estela-angular/intl';
 
 export interface Solicitud {
   numero: string;
@@ -70,7 +73,6 @@ const SOLICITUDES_DATA: Solicitud[] = [
 
 @Component({
   selector: 'app-solicitudes',
-  standalone: true,
   imports: [
     FormsModule,
     MatTableModule,
@@ -82,11 +84,15 @@ const SOLICITUDES_DATA: Solicitud[] = [
     MatChipsModule,
     MatTooltipModule,
   ],
+  // Intl a nivel de componente: mantiene el paginator fuera del bundle inicial
+  providers: [provideEstelaPaginatorIntl()],
   templateUrl: './solicitudes.component.html',
   styleUrl: './solicitudes.component.scss',
 })
 export class SolicitudesComponent implements AfterViewInit {
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  private readonly paginator = viewChild.required(MatPaginator);
+  private readonly clipboard = inject(Clipboard);
+  private readonly snackBar = inject(MatSnackBar);
 
   searchQuery = '';
 
@@ -103,8 +109,25 @@ export class SolicitudesComponent implements AfterViewInit {
 
   readonly dataSource = new MatTableDataSource<Solicitud>(SOLICITUDES_DATA);
 
+  constructor() {
+    // Busca por N° de solicitud, cliente o RUT (sin distinguir mayúsculas ni puntos)
+    this.dataSource.filterPredicate = (row, filter) =>
+      [row.numero, row.cliente, row.rut]
+        .some((value) => normalize(value).includes(filter));
+  }
+
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    this.dataSource.paginator = this.paginator();
+  }
+
+  applyFilter(query: string): void {
+    this.dataSource.filter = normalize(query);
+    this.dataSource.paginator?.firstPage();
+  }
+
+  copyNumero(numero: string): void {
+    this.clipboard.copy(numero);
+    this.snackBar.open(`N° ${numero} copiado`, undefined, { duration: 2000 });
   }
 
   estadoLabel(estado: Solicitud['estado']): string {
@@ -117,4 +140,8 @@ export class SolicitudesComponent implements AfterViewInit {
     };
     return labels[estado];
   }
+}
+
+function normalize(value: string): string {
+  return value.trim().toLowerCase().replace(/[.\s]/g, '');
 }

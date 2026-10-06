@@ -31,6 +31,10 @@
             "polyfills": [
               "zone.js",
               "zone.js/testing"
+            ],
+            "include": [
+              "**/*.spec.ts",
+              "../intl/**/*.spec.ts"
             ]
           }
         }
@@ -68,7 +72,9 @@
               "projects/showcase/src/styles.scss"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": ["projects/estela/src"]
+              "includePaths": [
+                "projects/estela/src"
+              ]
             },
             "scripts": []
           },
@@ -77,13 +83,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
+                  "maximumWarning": "700kB",
                   "maximumError": "1MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "8kB",
+                  "maximumError": "16kB"
                 }
               ],
               "outputHashing": "all"
@@ -130,7 +136,9 @@
               "projects/showcase/src/styles.scss"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": ["projects/estela/src"]
+              "includePaths": [
+                "projects/estela/src"
+              ]
             },
             "scripts": []
           }

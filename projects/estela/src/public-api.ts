@@ -1,13 +1,13 @@
 /*
- * Public API Surface of estela
+ * Public API Surface of estela-angular
  *
- * This library currently exports Angular Material theming via SCSS.
- * Import the theme in your styles.scss (not here).
- *
- * Example:
- *   @use 'lib/theme' as estela;
- *   html { @include estela.light-theme(); }
+ * El tema se importa desde SCSS (no desde acá):
+ *   @use 'estela-angular/theme' as estela;
+ *   @include estela.light-theme-setup();
  */
 
-// Re-export library version info
-export const ESTELA_VERSION = '0.0.1';
+export const ESTELA_VERSION = '0.1.0';
+
+export * from './lib/core/estela-config';
+export * from './lib/core/provide-estela';
+export * from './lib/core/theme.service';

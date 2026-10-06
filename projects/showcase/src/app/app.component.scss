@@ -47,7 +47,7 @@
   }
 
   .nav-item {
-    border-radius: 28px;
+    border-radius: var(--mat-sys-corner-medium);
     margin-bottom: 2px;
 
     &.active-link {

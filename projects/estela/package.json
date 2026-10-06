@@ -1,15 +1,20 @@
 {
   "name": "estela-angular",
-  "version": "0.0.1",
-  "description": "Estela Design System - Angular Material Theme",
+  "version": "0.1.0",
+  "description": "Estela Design System - Angular Material theme, utilities and providers",
   "peerDependencies": {
-    "@angular/common": ">=19.0.0 <21.0.0",
-    "@angular/core": ">=19.0.0 <21.0.0",
-    "@angular/material": ">=19.0.0 <21.0.0",
-    "@angular/cdk": ">=19.0.0 <21.0.0"
+    "@angular/common": ">=20.0.0 <21.0.0",
+    "@angular/core": ">=20.0.0 <21.0.0",
+    "@angular/material": ">=20.0.0 <21.0.0",
+    "@angular/cdk": ">=20.0.0 <21.0.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
+  },
+  "exports": {
+    "./theme": {
+      "sass": "./src/index.scss"
+    }
   },
   "sideEffects": false
 }

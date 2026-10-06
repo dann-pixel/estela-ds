@@ -5,8 +5,11 @@
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
     "paths": {
-      "estela": [
-        "./dist/estela"
+      "estela-angular": [
+        "./projects/estela/src/public-api.ts"
+      ],
+      "estela-angular/intl": [
+        "./projects/estela/intl/src/public-api.ts"
       ]
     },
     "strict": true,

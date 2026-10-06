@@ -4,16 +4,20 @@
 //
 // USAGE EN PROYECTO CONSUMIDOR (recomendado):
 //
-//   @use 'index' as estela;
+//   @use 'estela-angular/theme' as estela;
 //
 //   @include estela.light-theme-setup();
 //   // @include estela.dark-theme-setup('.dark-theme');
+//   @include estela.global-styles();
 //
-// USAGE AVANZADO (selector custom, sin brand overrides automáticos):
+// USAGE AVANZADO (selector custom):
 //
-//   @use 'index' as estela;
 //   .my-shell { @include estela.light-theme(); }
 //   .my-shell { @include estela.light-brand-overrides(); }  // ← bloque separado, siempre después
+//
+// light-theme() / dark-theme() solo emiten los tokens base de M3. Los
+// *-brand-overrides() emiten TODO lo propio de Estela (marca, neutrals,
+// semánticos, shape, elevation, tracking) y son obligatorios.
 //
 // NOTA: light-theme-setup() y dark-theme-setup() emiten DOS bloques
 // de selector separados para garantizar que los brand color overrides
@@ -42,6 +46,25 @@
   --mat-sys-corner-extra-large:     4px;
   --mat-sys-corner-extra-large-top: 4px;
   --mat-sys-corner-full:            4px;
+  @include _round-shapes();
+}
+
+// -------------------------------------------------------
+// Mixin privado — Formas circulares por naturaleza
+// -------------------------------------------------------
+// AM usa corner-full tanto para botones (que en Estela van a 4px) como
+// para elementos cuya geometría es circular. Al bajar corner-full a 4px,
+// el handle del switch/slider, los badges y los avatares quedaban
+// cuadrados. Se restauran solo esos componentes.
+@mixin _round-shapes() {
+  --mat-slide-toggle-handle-shape:            9999px;
+  --mat-slide-toggle-track-shape:             9999px;
+  --mat-slider-handle-shape:                  9999px;
+  --mat-slider-active-track-shape:            9999px;
+  --mat-slider-inactive-track-shape:          9999px;
+  --mat-slider-with-tick-marks-container-shape: 9999px;
+  --mat-badge-container-shape:                9999px;
+  --mat-list-list-item-leading-avatar-shape:  9999px;
 }
 
 // -------------------------------------------------------
@@ -101,7 +124,9 @@
     --mat-sys-surface-container-low:         #{palette.$neutral-50};
     --mat-sys-surface-container:             #{palette.$neutral-50};
     --mat-sys-surface-container-high:        #{palette.$neutral-50};
-    --mat-sys-surface-container-highest:     #ffffff;
+    // highest es el escalón más marcado (lo usa la card "filled"): debe
+    // distinguirse tanto de la surface blanca como del background.
+    --mat-sys-surface-container-highest:     #{palette.$neutral-100};
     // Form field fill — opacidad sobre surface para funcionar en light y dark
     --mat-form-field-filled-container-color: color-mix(in srgb, var(--mat-sys-on-surface) 8%, var(--mat-sys-surface));
     // Color dark — Blue Gray 900 para botones y superficies oscuras
@@ -145,7 +170,7 @@
 // -------------------------------------------------------
 // Mixin privado — Override de tokens de color de la marca
 // -------------------------------------------------------
-// Angular Material v19 genera los tokens --mat-sys-* desde sus
+// Angular Material genera los tokens --mat-sys-* desde sus
 // paletas tonales predefinidas. Este mixin los sobreescribe con
 // los colores exactos del DS Estela React.
 // IMPORTANTE: debe ser incluido en un bloque de selector SEPARADO
@@ -286,8 +311,6 @@
       plain-family: '#{typo.$estela-plain-family}',
     ),
   )));
-
-  @include _semantic-colors(light);
 }
 
 // -------------------------------------------------------
@@ -295,35 +318,18 @@
 // -------------------------------------------------------
 @mixin dark-theme(
   $primary: palette.$estela-primary,
-  $tertiary: palette.$estela-tertiary,
-  $density: 0
+  $tertiary: palette.$estela-tertiary
 ) {
+  // Solo color: tipografía, densidad y typography-hierarchy ya los emite
+  // el tema claro sobre <html> y se heredan. Repetirlos acá duplicaba
+  // todo ese CSS bajo .dark-theme.
   @include mat.theme((
     color: (
       theme-type: dark,
       primary: $primary,
       tertiary: $tertiary,
     ),
-    typography: (
-      brand-family: '#{typo.$estela-brand-family}',
-      plain-family: '#{typo.$estela-plain-family}',
-    ),
-    density: $density,
   ));
-
-  @include mat.typography-hierarchy(mat.define-theme((
-    color: (
-      theme-type: dark,
-      primary: $primary,
-      tertiary: $tertiary,
-    ),
-    typography: (
-      brand-family: '#{typo.$estela-brand-family}',
-      plain-family: '#{typo.$estela-plain-family}',
-    ),
-  )));
-
-  @include _semantic-colors(dark);
 }
 
 // -------------------------------------------------------
@@ -333,11 +339,20 @@
 // casos de uso avanzado (selector custom). En el uso normal,
 // preferir light-theme-setup() / dark-theme-setup().
 @mixin light-brand-overrides() {
-  @include _brand-colors(light);
+  @include _estela-overrides(light);
 }
 
 @mixin dark-brand-overrides() {
-  @include _brand-colors(dark);
+  @include _estela-overrides(dark);
+}
+
+@mixin _estela-overrides($type) {
+  @include _brand-colors($type);
+  @include _neutral-colors($type);
+  @include _semantic-colors($type);
+  @include _shape-tokens();
+  @include _elevation-tokens();
+  @include _typography-tokens();
 }
 
 // -------------------------------------------------------
@@ -359,30 +374,19 @@
     @include light-theme($primary, $tertiary, $density);
   }
   #{$selector} {
-    @include _brand-colors(light);
-    @include _neutral-colors(light);
-    @include _semantic-colors(light);
-    @include _shape-tokens();
-    @include _elevation-tokens();
-    @include _typography-tokens();
+    @include _estela-overrides(light);
   }
 }
 
 @mixin dark-theme-setup(
   $selector: '.dark-theme',
   $primary: palette.$estela-primary,
-  $tertiary: palette.$estela-tertiary,
-  $density: 0
+  $tertiary: palette.$estela-tertiary
 ) {
   #{$selector} {
-    @include dark-theme($primary, $tertiary, $density);
+    @include dark-theme($primary, $tertiary);
   }
   #{$selector} {
-    @include _brand-colors(dark);
-    @include _neutral-colors(dark);
-    @include _semantic-colors(dark);
-    @include _shape-tokens();
-    @include _elevation-tokens();
-    @include _typography-tokens();
+    @include _estela-overrides(dark);
   }
 }

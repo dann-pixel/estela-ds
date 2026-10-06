@@ -20,7 +20,6 @@ interface QuickLink {
 
 @Component({
   selector: 'app-home',
-  standalone: true,
   imports: [RouterLink, MatCardModule, MatButtonModule, MatIconModule, MatDividerModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',

@@ -17,7 +17,6 @@ import { MatBottomSheetModule, MatBottomSheet } from '@angular/material/bottom-s
 // ── Bottom Sheet demo component ────────────────────────────────────────────
 @Component({
   selector: 'app-demo-bottom-sheet',
-  standalone: true,
   imports: [MatListModule, MatIconModule],
   template: `
     <mat-nav-list>
@@ -48,7 +47,6 @@ export class DemoBottomSheetComponent {
 // ── Main component ─────────────────────────────────────────────────────────
 @Component({
   selector: 'app-navigation',
-  standalone: true,
   imports: [
     MatTabsModule,
     MatChipsModule,

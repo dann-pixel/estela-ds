@@ -15,11 +15,11 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { provideEstelaPaginatorIntl, provideEstelaStepperIntl } from 'estela-angular/intl';
 
 // ── Dialog component (inline) ──────────────────────────────────
 @Component({
   selector: 'app-demo-dialog',
-  standalone: true,
   imports: [MatDialogModule, MatButtonModule, MatIconModule],
   template: `
     <div mat-dialog-title class="dialog-header">
@@ -56,7 +56,6 @@ export interface TableRow {
 
 @Component({
   selector: 'app-content',
-  standalone: true,
   imports: [
     ReactiveFormsModule,
     MatCardModule,
@@ -75,6 +74,7 @@ export interface TableRow {
     MatInputModule,
     DecimalPipe,
   ],
+  providers: [provideEstelaPaginatorIntl(), provideEstelaStepperIntl()],
   templateUrl: './content.component.html',
   styleUrl: './content.component.scss',
 })
@@ -95,9 +95,9 @@ export class ContentComponent {
 
   readonly panelItems = [
     { title: 'What is Estela Design System?', content: 'Estela is an Angular Material-based design system that provides a consistent theme and component library for building products.' },
-    { title: 'How do I install it?', content: 'Install via npm using: npm install git+https://github.com/your-org/estela-ds.git — then import the theme in your styles.scss.' },
-    { title: 'Can I customize the colors?', content: 'Yes — override the $primary and $tertiary palette variables in the theme SCSS to match your brand colors.' },
-    { title: 'Does it support dark mode?', content: 'Yes — use the dark-theme() mixin on a .dark-theme class or the prefers-color-scheme media query.' },
+    { title: 'How do I install it?', content: 'Install the estela-angular package (npm install estela-angular-<version>.tgz or from the private registry), then add @use \'estela-angular/theme\' as estela; and @include estela.light-theme-setup(); to your styles.scss.' },
+    { title: 'Can I customize the colors?', content: 'Yes — light-theme-setup() and dark-theme-setup() accept $primary and $tertiary palettes; exact brand tokens live in _palette.scss.' },
+    { title: 'Does it support dark mode?', content: 'Yes — include dark-theme-setup() in styles.scss and toggle .dark-theme on <html> with ThemeService (exported by estela-angular).' },
   ];
 
   // ── Stepper ─────────────────────────────────────────────────

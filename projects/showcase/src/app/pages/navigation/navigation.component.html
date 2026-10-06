@@ -3,7 +3,7 @@
   <div class="page-header">
     <h1>Navigation</h1>
     <p>Components that help users navigate and filter content.</p>
-    <a mat-stroked-button href="https://v19.material.angular.dev/components/tabs/overview" target="_blank">
+    <a mat-stroked-button href="https://material.angular.dev/components/tabs/overview" target="_blank">
       <mat-icon>open_in_new</mat-icon> Angular Material Docs
     </a>
   </div>
@@ -19,22 +19,22 @@
       <mat-card-content>
         <p class="demo-label">Basic</p>
         <mat-toolbar>
-          <button mat-icon-button><mat-icon>menu</mat-icon></button>
+          <button mat-icon-button aria-label="Abrir menú"><mat-icon>menu</mat-icon></button>
           <span>Application Title</span>
           <span class="spacer"></span>
-          <button mat-icon-button><mat-icon>search</mat-icon></button>
-          <button mat-icon-button><mat-icon>more_vert</mat-icon></button>
+          <button mat-icon-button aria-label="Buscar"><mat-icon>search</mat-icon></button>
+          <button mat-icon-button aria-label="Más opciones"><mat-icon>more_vert</mat-icon></button>
         </mat-toolbar>
 
         <mat-divider style="margin: 16px 0;" />
 
         <p class="demo-label">Primary color</p>
         <mat-toolbar color="primary">
-          <button mat-icon-button><mat-icon>arrow_back</mat-icon></button>
+          <button mat-icon-button aria-label="Volver"><mat-icon>arrow_back</mat-icon></button>
           <span>Page Title</span>
           <span class="spacer"></span>
-          <button mat-icon-button><mat-icon>share</mat-icon></button>
-          <button mat-icon-button><mat-icon>delete</mat-icon></button>
+          <button mat-icon-button aria-label="Compartir"><mat-icon>share</mat-icon></button>
+          <button mat-icon-button aria-label="Eliminar"><mat-icon>delete</mat-icon></button>
         </mat-toolbar>
       </mat-card-content>
     </mat-card>
@@ -144,13 +144,15 @@
       <mat-card-content>
         <p class="demo-label">Badge</p>
         <div class="demo-row">
-          <button mat-icon-button [matBadge]="8" matBadgeColor="primary">
+          <!-- En M3 matBadgeColor no tiene efecto: el color sale de los tokens
+               --mat-badge-* (por defecto, error). -->
+          <button mat-icon-button [matBadge]="8" aria-label="Notificaciones (8)">
             <mat-icon>notifications</mat-icon>
           </button>
-          <button mat-icon-button [matBadge]="3" matBadgeColor="warn">
+          <button mat-icon-button [matBadge]="3" aria-label="Correo (3)">
             <mat-icon>mail</mat-icon>
           </button>
-          <button mat-icon-button matBadge="·" matBadgeColor="accent">
+          <button mat-icon-button matBadge="1" matBadgeSize="small" aria-label="Mensajes nuevos">
             <mat-icon>message</mat-icon>
           </button>
           <span [matBadge]="99" matBadgeOverlap="false" style="padding-right: 8px;">
@@ -200,7 +202,7 @@
             <button mat-menu-item><mat-icon>delete</mat-icon> Eliminar</button>
           </mat-menu>
 
-          <button mat-icon-button [matMenuTriggerFor]="iconMenu" matTooltip="More options">
+          <button mat-icon-button [matMenuTriggerFor]="iconMenu" matTooltip="More options" aria-label="More options">
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #iconMenu="matMenu">
@@ -245,10 +247,10 @@
         </div>
         <p class="demo-label">On icon buttons</p>
         <div class="demo-row">
-          <button mat-icon-button matTooltip="Editar registro"><mat-icon>edit</mat-icon></button>
-          <button mat-icon-button matTooltip="Descargar archivo"><mat-icon>download</mat-icon></button>
-          <button mat-icon-button matTooltip="Compartir con el equipo"><mat-icon>share</mat-icon></button>
-          <button mat-icon-button matTooltip="Eliminar — acción irreversible"><mat-icon>delete</mat-icon></button>
+          <button mat-icon-button matTooltip="Editar registro" aria-label="Editar registro"><mat-icon>edit</mat-icon></button>
+          <button mat-icon-button matTooltip="Descargar archivo" aria-label="Descargar archivo"><mat-icon>download</mat-icon></button>
+          <button mat-icon-button matTooltip="Compartir con el equipo" aria-label="Compartir con el equipo"><mat-icon>share</mat-icon></button>
+          <button mat-icon-button matTooltip="Eliminar — acción irreversible" aria-label="Eliminar — acción irreversible"><mat-icon>delete</mat-icon></button>
         </div>
       </mat-card-content>
     </mat-card>
