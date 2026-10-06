@@ -19,7 +19,13 @@ Package name: **`estela-angular`** · Monorepo: `projects/estela` (library) + `p
 The library is distributed as the `estela-angular` npm package (built from `dist/estela`).
 It can't be installed with `npm install git+…` because the repo root is the monorepo, not the library.
 
-**Option A — tarball** (no registry needed):
+**Option A — GitHub Release** (recommended): each release attaches the tarball.
+
+```bash
+npm install https://github.com/dann-pixel/estela-ds/releases/download/v1.0.0/estela-angular-1.0.0.tgz
+```
+
+**Option B — local tarball**:
 
 ```bash
 # In this repo: builds the lib and writes dist/estela-angular-<version>.tgz
@@ -28,10 +34,10 @@ npm run pack:lib
 
 ```bash
 # In your project (or attach the .tgz to a GitHub Release and install from its URL)
-npm install /path/to/estela-ds-angular/dist/estela-angular-0.1.0.tgz
+npm install /path/to/estela-ds-angular/dist/estela-angular-1.0.0.tgz
 ```
 
-**Option B — private registry** (GitHub Packages, Verdaccio, etc.): `npm run build:lib`, then `cd dist/estela && npm publish`.
+**Option C — private registry** (GitHub Packages, Verdaccio, etc.): `npm run build:lib`, then `cd dist/estela && npm publish`.
 
 ---
 
@@ -198,4 +204,7 @@ npm test               # Library + showcase unit tests (ChromeHeadless)
 
 On macOS without Chrome on the PATH: `export CHROME_BIN="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"`.
 
-Release: bump `version` in `projects/estela/package.json` **and** `ESTELA_VERSION` in `projects/estela/src/public-api.ts`.
+Release:
+1. Bump `version` in `projects/estela/package.json` **and** `ESTELA_VERSION` in `projects/estela/src/public-api.ts`
+2. `npm run pack:lib`
+3. `gh release create vX.Y.Z dist/estela-angular-X.Y.Z.tgz`

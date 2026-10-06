@@ -1,6 +1,6 @@
 {
   "name": "estela-angular",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Estela Design System - Angular Material theme, utilities and providers",
   "peerDependencies": {
     "@angular/common": ">=20.0.0 <21.0.0",

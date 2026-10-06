@@ -240,7 +240,8 @@ El paquete es `estela-angular` (generado en `dist/estela`). **No** se puede inst
 
 ```bash
 npm run pack:lib                                   # → dist/estela-angular-<versión>.tgz
-npm install /ruta/a/dist/estela-angular-0.1.0.tgz  # en el proyecto consumidor
+npm install /ruta/a/dist/estela-angular-1.0.0.tgz  # en el proyecto consumidor (local)
+npm install https://github.com/dann-pixel/estela-ds/releases/download/v1.0.0/estela-angular-1.0.0.tgz  # desde el GitHub Release
 # o publicar en un registry privado: cd dist/estela && npm publish
 ```
 
@@ -256,7 +257,8 @@ En el consumidor:
 providers: [provideEstela(), provideEstelaIntl() /* de 'estela-angular/intl' */, provideNativeDateAdapter()]
 ```
 
-**Release:** subir `version` en `projects/estela/package.json` y `ESTELA_VERSION` en `public-api.ts`.
+**Release:** subir `version` en `projects/estela/package.json` y `ESTELA_VERSION` en `public-api.ts`,
+luego `npm run pack:lib` y `gh release create vX.Y.Z dist/estela-angular-X.Y.Z.tgz`.
 
 ---
 

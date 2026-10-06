@@ -83,18 +83,18 @@
             <div class="step-number">1</div>
             <div class="step-info">
               <h3>Instala el paquete</h3>
-              <p>La librería se distribuye como el paquete <code>estela-angular</code>. Genera el tarball desde este repo o instálalo desde el registry privado del equipo.</p>
+              <p>La librería se distribuye como el paquete <code>estela-angular</code>. Cada versión se publica como GitHub Release con el tarball adjunto.</p>
             </div>
           </div>
           <div class="code-block">
             <div class="code-header">
               <span class="code-lang">bash</span>
             </div>
-            <pre><code># En el repo del DS: genera dist/estela-angular-&lt;versión&gt;.tgz
-npm run pack:lib
+            <pre><code># Desde el GitHub Release (recomendado)
+npm install https://github.com/dann-pixel/estela-ds/releases/download/v1.0.0/estela-angular-1.0.0.tgz
 
-# En tu proyecto
-npm install ../estela-ds-angular/dist/estela-angular-0.1.0.tgz</code></pre>
+# O desde un tarball local (en el repo del DS: npm run pack:lib)
+npm install ../estela-ds-angular/dist/estela-angular-1.0.0.tgz</code></pre>
           </div>
           <p class="step-note">
             <mat-icon>info</mat-icon>
