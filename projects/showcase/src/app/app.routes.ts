@@ -60,5 +60,12 @@ export const routes: Routes = [
         (m) => m.PatternsComponent
       ),
   },
+  {
+    path: 'changelog',
+    loadComponent: () =>
+      import('./pages/changelog/changelog.component').then(
+        (m) => m.ChangelogComponent
+      ),
+  },
   { path: '**', redirectTo: '' },
 ];

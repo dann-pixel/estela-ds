@@ -61,6 +61,7 @@ estela-ds-angular/
 │           │       ├── buttons/         # Botones: Text, Filled, Outlined, Elevated, Icon
 │           │       ├── forms/           # Input, Select, Checkbox, Radio, Slider, Slide Toggle, Autocomplete, Datepicker, Button Toggle
 │           │       ├── navigation/      # Toolbar, Tabs, Chips, Badge, Progress Bar, Progress Spinner, Menu, Tooltip, List, Bottom Sheet
+│           │       ├── changelog/       # Changelog (changelog.json = fuente única de versiones)
 │           │       ├── tables/          # Tabla: básica, densidad/striped/hover, selección, expandibles, sticky+footer, filtro
 │           │       ├── content/         # Cards, Dialog, Snack Bar, Expansion Panel, Alerts, Stepper, Empty State, Loading Skeleton
 │           │       ├── solicitudes/     # Demo de tabla con paginación, filtro, sticky column
@@ -242,8 +243,8 @@ El paquete es `estela-angular` (generado en `dist/estela`). **No** se puede inst
 
 ```bash
 npm run pack:lib                                   # → dist/estela-angular-<versión>.tgz
-npm install /ruta/a/dist/estela-angular-1.0.0.tgz  # en el proyecto consumidor (local)
-npm install https://github.com/dann-pixel/estela-ds/releases/download/v1.0.0/estela-angular-1.0.0.tgz  # desde el GitHub Release
+npm install /ruta/a/dist/estela-angular-1.1.0.tgz  # en el proyecto consumidor (local)
+npm install https://github.com/dann-pixel/estela-ds/releases/download/v1.1.0/estela-angular-1.1.0.tgz  # desde el GitHub Release
 # o publicar en un registry privado: cd dist/estela && npm publish
 ```
 
@@ -259,8 +260,14 @@ En el consumidor:
 providers: [provideEstela(), provideEstelaIntl() /* de 'estela-angular/intl' */, provideNativeDateAdapter()]
 ```
 
-**Release:** subir `version` en `projects/estela/package.json` y `ESTELA_VERSION` en `public-api.ts`,
-luego `npm run pack:lib` y `gh release create vX.Y.Z dist/estela-angular-X.Y.Z.tgz`.
+**Release (obligatorio en cada push a `main`):** toda subida a `main` genera una versión nueva (semver:
+patch = fixes, minor = features/utilidades nuevas, major = breaking).
+1. Subir `version` en `projects/estela/package.json` y `ESTELA_VERSION` en `public-api.ts`
+2. Agregar la entrada **al inicio** de `projects/showcase/src/app/pages/changelog/changelog.json`
+   (fuente única: alimenta la página `/changelog` y las notas del GitHub Release)
+3. `node scripts/release.mjs check` valida que las tres versiones coincidan
+4. Push a `main` → `.github/workflows/release.yml` hace `pack:lib` y crea el GitHub Release `vX.Y.Z`
+   con el tarball. Si la versión ya existe, no publica (solo deja un warning).
 
 ---
 

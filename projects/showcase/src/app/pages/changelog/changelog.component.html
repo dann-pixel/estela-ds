@@ -1,0 +1,37 @@
+<div class="showcase-page">
+  <div class="page-header">
+    <h1>Changelog</h1>
+    <p>Cambios y mejoras de cada versión de <code>estela-angular</code>. Versión actual: <strong>v{{ currentVersion }}</strong>.</p>
+    <a mat-stroked-button href="https://github.com/dann-pixel/estela-ds/releases" target="_blank">GitHub Releases</a>
+  </div>
+
+  <div class="sections">
+    @for (release of releases; track release.version; let first = $first) {
+      <mat-card class="section-card" appearance="outlined">
+        <mat-card-header>
+          <mat-card-title class="release-title">
+            <span>v{{ release.version }} — {{ release.title }}</span>
+            @if (first) {
+              <span class="latest-tag">Actual</span>
+            }
+          </mat-card-title>
+          <mat-card-subtitle>{{ release.date }} · {{ release.summary }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          @for (group of release.groups; track group.type) {
+            <p class="demo-label change-type change-type--{{ group.type }}">{{ typeLabels[group.type] }}</p>
+            <ul class="change-list">
+              @for (item of group.items; track $index) {
+                <li>
+                  @for (seg of item; track $index) {
+                    @if (seg.code) { <code>{{ seg.text }}</code> } @else { {{ seg.text }} }
+                  }
+                </li>
+              }
+            </ul>
+          }
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+</div>

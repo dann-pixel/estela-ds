@@ -1,0 +1,55 @@
+[
+  {
+    "version": "1.1.0",
+    "date": "2026-10-07",
+    "title": "Tablas y changelog",
+    "summary": "Divisores de tabla más suaves, nuevas variantes de mat-table y releases automáticos.",
+    "changes": [
+      { "type": "added", "text": "Página `Tables` en el showcase con 6 variantes: básica (sort + paginator), densidad y estilo, selección con checkbox, filas expandibles, header fijo + footer de totales y filtro con `*matNoDataRow`." },
+      { "type": "added", "text": "Mixin `tables()` (incluido en `global-styles()`) con las clases `.estela-table-compact`, `.estela-table-striped`, `.estela-table-hover` y `.estela-row-selected`." },
+      { "type": "added", "text": "Página `Changelog` en el showcase, generada desde `changelog.json`." },
+      { "type": "added", "text": "GitHub Action que publica el GitHub Release (con el tarball) al subir a `main` una versión nueva." },
+      { "type": "changed", "text": "El divisor de filas de `mat-table` usa `--mat-sys-outline-variant` (#CFD8DC light / #455A64 dark) en lugar del `outline` más marcado." },
+      { "type": "changed", "text": "La demo de tabla se movió de `Content` a la nueva página `Tables`." }
+    ]
+  },
+  {
+    "version": "1.0.0",
+    "date": "2026-10-06",
+    "title": "Primera versión estable",
+    "summary": "El paquete se instala directo desde el GitHub Release.",
+    "changes": [
+      { "type": "added", "text": "Tarball `estela-angular-<versión>.tgz` publicado como GitHub Release; instalación con `npm install <url del release>`." },
+      { "type": "added", "text": "Pasos de release documentados en README y CLAUDE.md." }
+    ]
+  },
+  {
+    "version": "0.1.0",
+    "date": "2026-10-06",
+    "title": "Consumible como paquete",
+    "summary": "La librería pasa a distribuirse como el paquete estela-angular.",
+    "changes": [
+      { "type": "added", "text": "Tema expuesto como `estela-angular/theme` vía `exports` (condición sass): los consumidores ya no necesitan `includePaths`." },
+      { "type": "added", "text": "`provideEstela()`: Material Symbols en `<mat-icon>`, `MAT_DATE_LOCALE` es-CL y `ESTELA_CONFIG`." },
+      { "type": "added", "text": "Entry point `estela-angular/intl` con Paginator, Datepicker y Stepper en español." },
+      { "type": "added", "text": "`ThemeService` y utilidades (`global-styles()`: status chips, alerts, `.form-field-sm`, tipografía base) movidos a la librería." },
+      { "type": "changed", "text": "peerDependencies acotadas a Angular 20; `dark-theme()` solo emite color (CSS 30kB → 23kB)." },
+      { "type": "fixed", "text": "Switch, slider, badge y avatar se mantienen circulares pese a `corner-full: 4px`." },
+      { "type": "fixed", "text": "Jerarquía de `surface-container-highest` (la card filled quedaba blanco sobre blanco)." },
+      { "type": "fixed", "text": "Solicitudes: el buscador filtra de verdad, fila sin resultados y botón de copiar accesible." }
+    ]
+  },
+  {
+    "version": "0.0.1",
+    "date": "2026-09-15",
+    "title": "Base del sistema de diseño",
+    "summary": "Tema M3 sobre Angular Material 20, showcase y dark mode.",
+    "changes": [
+      { "type": "added", "text": "Upgrade a Angular 20, 12 componentes nuevos en el showcase y Material Symbols Outlined." },
+      { "type": "added", "text": "Dark mode con `ThemeService`, layout responsive y página Getting Started." },
+      { "type": "added", "text": "Demo de Solicitudes con paginación, filtro y columnas sticky." },
+      { "type": "changed", "text": "Paleta sincronizada con el DS Estela React." },
+      { "type": "fixed", "text": "Contraste AA en botones y colores de texto de los chips semánticos." }
+    ]
+  }
+]

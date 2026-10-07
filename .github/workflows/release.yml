@@ -1,0 +1,56 @@
+# Publica un GitHub Release de estela-angular cada vez que llega a main una
+# versión nueva (projects/estela/package.json). Si la versión ya tiene release,
+# no hace nada: para publicar, subir la versión y agregar la entrada en
+# projects/showcase/src/app/pages/changelog/changelog.json.
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Validar versiones
+        run: node scripts/release.mjs check
+
+      - name: ¿Versión nueva?
+        id: version
+        run: |
+          VERSION=$(node scripts/release.mjs version)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          if gh release view "v$VERSION" > /dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "::warning::v$VERSION ya está publicada; no se genera release. Sube la versión para publicar una nueva."
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build y pack
+        if: steps.version.outputs.exists == 'false'
+        run: |
+          npm ci
+          npm run pack:lib
+
+      - name: Crear GitHub Release
+        if: steps.version.outputs.exists == 'false'
+        run: |
+          VERSION=${{ steps.version.outputs.version }}
+          node scripts/release.mjs notes > release-notes.md
+          gh release create "v$VERSION" "dist/estela-angular-$VERSION.tgz" \
+            --title "estela-angular v$VERSION" \
+            --notes-file release-notes.md \
+            --target "$GITHUB_SHA"

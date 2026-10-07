@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatChipsModule } from '@angular/material/chips';
-import { ThemeService } from 'estela-angular';
+import { ESTELA_VERSION, ThemeService } from 'estela-angular';
 
 interface Step {
   number: number;
@@ -53,6 +53,7 @@ const COLOR_TOKENS: Token[] = [
 })
 export class GettingStartedComponent {
   readonly theme = inject(ThemeService);
+  readonly version = ESTELA_VERSION;
   private readonly doc = inject(DOCUMENT);
   readonly steps: Step[] = [
     {

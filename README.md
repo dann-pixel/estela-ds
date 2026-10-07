@@ -22,7 +22,7 @@ It can't be installed with `npm install git+…` because the repo root is the mo
 **Option A — GitHub Release** (recommended): each release attaches the tarball.
 
 ```bash
-npm install https://github.com/dann-pixel/estela-ds/releases/download/v1.0.0/estela-angular-1.0.0.tgz
+npm install https://github.com/dann-pixel/estela-ds/releases/download/v1.1.0/estela-angular-1.1.0.tgz
 ```
 
 **Option B — local tarball**:
@@ -34,7 +34,7 @@ npm run pack:lib
 
 ```bash
 # In your project (or attach the .tgz to a GitHub Release and install from its URL)
-npm install /path/to/estela-ds-angular/dist/estela-angular-1.0.0.tgz
+npm install /path/to/estela-ds-angular/dist/estela-angular-1.1.0.tgz
 ```
 
 **Option C — private registry** (GitHub Packages, Verdaccio, etc.): `npm run build:lib`, then `cd dist/estela && npm publish`.
