@@ -7,7 +7,7 @@
 //
 //   @include estela.global-styles();
 //
-// O por partes: base-styles(), form-field-sm(), status-chips(), alerts().
+// O por partes: base-styles(), form-field-sm(), status-chips(), alerts(), tables().
 // =============================================================
 
 @mixin global-styles() {
@@ -15,6 +15,7 @@
   @include form-field-sm();
   @include status-chips();
   @include alerts();
+  @include tables();
 }
 
 // ── Base ───────────────────────────────────────────────────────
@@ -169,5 +170,39 @@
       color: var(--mat-sys-on-error-container);
       mat-icon { color: var(--mat-sys-error); }
     }
+  }
+}
+
+@mixin tables() {
+  // ── Tables ─────────────────────────────────────────────────────
+  // Modificadores para <table mat-table>. Combinables entre sí.
+  // Uso: <table mat-table class="estela-table-compact estela-table-striped estela-table-hover">
+
+  // Densidad compacta: filas de 40px (default M3: 52px) y header de 44px.
+  .estela-table-compact {
+    --mat-table-row-item-container-height: 40px;
+    --mat-table-header-container-height: 44px;
+    --mat-table-footer-container-height: 40px;
+  }
+
+  // Filas alternadas (zebra) — facilita leer tablas anchas.
+  .estela-table-striped {
+    tr.mat-mdc-row:nth-child(even) {
+      background-color: var(--mat-sys-surface-container-low);
+    }
+  }
+
+  // Resaltado de fila al pasar el mouse. Va como background-image para
+  // apilarse sobre el fondo de striped/selected en lugar de reemplazarlo.
+  .estela-table-hover {
+    tr.mat-mdc-row:hover {
+      --_hover: color-mix(in srgb, var(--mat-sys-on-surface) 4%, transparent);
+      background-image: linear-gradient(var(--_hover), var(--_hover));
+    }
+  }
+
+  // Fila seleccionada (usar junto a SelectionModel).
+  tr.mat-mdc-row.estela-row-selected {
+    background-color: color-mix(in srgb, var(--mat-sys-primary) 8%, transparent);
   }
 }

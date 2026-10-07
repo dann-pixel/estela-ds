@@ -56,6 +56,7 @@ export class AppComponent {
     { label: 'Forms', route: '/forms', icon: 'dynamic_form' },
     { label: 'Navigation', route: '/navigation', icon: 'navigation' },
     { label: 'Content', route: '/content', icon: 'dashboard' },
+    { label: 'Tables', route: '/tables', icon: 'table' },
     { label: 'Solicitudes', route: '/solicitudes', icon: 'assignment' },
     { label: 'Patterns', route: '/patterns', icon: 'widgets' },
   ];

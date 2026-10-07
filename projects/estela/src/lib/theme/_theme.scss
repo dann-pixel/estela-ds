@@ -137,6 +137,9 @@
     // Bordes — más suaves
     --mat-sys-outline:                       #{palette.$neutral-300};
     --mat-sys-outline-variant:               #{palette.$neutral-100};
+    // Divisor de filas de mat-table: AM usa `outline` (#90A4AE), demasiado
+    // marcado para datos densos. outline-variant da un gris más suave.
+    --mat-table-row-item-outline-color:      var(--mat-sys-outline-variant);
   } @else {
     // Página y superficies dark
     --mat-sys-background:                    #{palette.$neutral-900};
@@ -164,6 +167,7 @@
     // Bordes dark
     --mat-sys-outline:                       #{palette.$neutral-500};
     --mat-sys-outline-variant:               #{palette.$neutral-700};
+    --mat-table-row-item-outline-color:      var(--mat-sys-outline-variant);
   }
 }
 

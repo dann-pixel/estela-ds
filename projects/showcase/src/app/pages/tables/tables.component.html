@@ -1,0 +1,283 @@
+<div class="showcase-page">
+  <div class="page-header">
+    <h1>Table</h1>
+    <p>Variantes de mat-table: ordenamiento, paginación, densidad, selección, filas expandibles, header fijo y filtro.</p>
+    <a mat-stroked-button href="https://material.angular.dev/components/table/overview" target="_blank">Angular Material Docs</a>
+  </div>
+
+  <div class="sections">
+
+    <!-- Básica -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Básica</mat-card-title>
+        <mat-card-subtitle>MatSort + MatPaginator con MatTableDataSource</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="table-wrapper">
+          <table mat-table [dataSource]="basicData" matSort #basicSort="matSort" class="estela-table-hover">
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>#</th>
+              <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+            </ng-container>
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Project</th>
+              <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+              <td mat-cell *matCellDef="let row">
+                <mat-chip [class]="'status-chip status-' + row.status.toLowerCase()">{{ row.status }}</mat-chip>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+              <td mat-cell *matCellDef="let row">{{ row.date }}</td>
+            </ng-container>
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header arrowPosition="before" class="num">Amount</th>
+              <td mat-cell *matCellDef="let row" class="num">${{ row.amount | number }}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="basicColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: basicColumns;"></tr>
+          </table>
+          <mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons />
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Densidad y estilo -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Densidad y estilo</mat-card-title>
+        <mat-card-subtitle>Clases del DS: .estela-table-compact, .estela-table-striped, .estela-table-hover</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="demo-row table-controls">
+          <mat-button-toggle-group [value]="density()" (change)="density.set($event.value)" aria-label="Densidad">
+            <mat-button-toggle value="default">Default (52px)</mat-button-toggle>
+            <mat-button-toggle value="compact">Compacta (40px)</mat-button-toggle>
+          </mat-button-toggle-group>
+          <mat-slide-toggle [checked]="striped()" (change)="striped.set($event.checked)">Filas alternadas</mat-slide-toggle>
+          <mat-slide-toggle [checked]="hover()" (change)="hover.set($event.checked)">Hover</mat-slide-toggle>
+        </div>
+        <div class="table-wrapper">
+          <table mat-table [dataSource]="projects" [class]="styleClasses()">
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Project</th>
+              <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+            </ng-container>
+            <ng-container matColumnDef="owner">
+              <th mat-header-cell *matHeaderCellDef>Owner</th>
+              <td mat-cell *matCellDef="let row">{{ row.owner }}</td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>Status</th>
+              <td mat-cell *matCellDef="let row">
+                <mat-chip [class]="'status-chip status-' + row.status.toLowerCase()">{{ row.status }}</mat-chip>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef class="num">Amount</th>
+              <td mat-cell *matCellDef="let row" class="num">${{ row.amount | number }}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="styleColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: styleColumns;"></tr>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Selección -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Selección de filas</mat-card-title>
+        <mat-card-subtitle>Checkbox + SelectionModel (&#64;angular/cdk/collections)</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="demo-label">{{ selectedCount() }} de {{ projects.length }} seleccionados</p>
+        <div class="table-wrapper">
+          <table mat-table [dataSource]="projects" class="estela-table-hover">
+            <ng-container matColumnDef="select">
+              <th mat-header-cell *matHeaderCellDef class="checkbox-cell">
+                <mat-checkbox
+                  (change)="$event ? toggleAll() : null"
+                  [checked]="selection.hasValue() && isAllSelected()"
+                  [indeterminate]="selection.hasValue() && !isAllSelected()"
+                  aria-label="Seleccionar todas las filas" />
+              </th>
+              <td mat-cell *matCellDef="let row" class="checkbox-cell">
+                <mat-checkbox
+                  (click)="$event.stopPropagation()"
+                  (change)="$event ? selection.toggle(row) : null"
+                  [checked]="selection.isSelected(row)"
+                  [attr.aria-label]="'Seleccionar ' + row.name" />
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Project</th>
+              <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+            </ng-container>
+            <ng-container matColumnDef="owner">
+              <th mat-header-cell *matHeaderCellDef>Owner</th>
+              <td mat-cell *matCellDef="let row">{{ row.owner }}</td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>Status</th>
+              <td mat-cell *matCellDef="let row">
+                <mat-chip [class]="'status-chip status-' + row.status.toLowerCase()">{{ row.status }}</mat-chip>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="selectColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: selectColumns;"
+                class="clickable-row"
+                [class.estela-row-selected]="selection.isSelected(row)"
+                (click)="selection.toggle(row)"></tr>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Expandibles -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Filas expandibles</mat-card-title>
+        <mat-card-subtitle>multiTemplateDataRows + fila de detalle</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="table-wrapper">
+          <table mat-table [dataSource]="projects" multiTemplateDataRows class="expandable-table">
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Project</th>
+              <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+            </ng-container>
+            <ng-container matColumnDef="owner">
+              <th mat-header-cell *matHeaderCellDef>Owner</th>
+              <td mat-cell *matCellDef="let row">{{ row.owner }}</td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>Status</th>
+              <td mat-cell *matCellDef="let row">
+                <mat-chip [class]="'status-chip status-' + row.status.toLowerCase()">{{ row.status }}</mat-chip>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="expand">
+              <th mat-header-cell *matHeaderCellDef class="icon-cell"><span class="cdk-visually-hidden">Acciones</span></th>
+              <td mat-cell *matCellDef="let row" class="icon-cell">
+                <button mat-icon-button
+                        [attr.aria-label]="(expanded() === row ? 'Contraer ' : 'Expandir ') + row.name"
+                        [attr.aria-expanded]="expanded() === row"
+                        (click)="toggleExpand(row); $event.stopPropagation()">
+                  <mat-icon class="expand-icon" [class.expand-icon--open]="expanded() === row">expand_more</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="detail">
+              <td mat-cell *matCellDef="let row" [attr.colspan]="expandColumns.length" class="detail-cell">
+                <div class="detail-wrapper" [class.detail-wrapper--open]="expanded() === row">
+                  <div class="detail-inner">
+                    <div class="detail-content">
+                      <div><span class="detail-label">Descripción</span>{{ row.description }}</div>
+                      <div><span class="detail-label">Fecha</span>{{ row.date }}</div>
+                      <div><span class="detail-label">Monto</span>${{ row.amount | number }}</div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="expandColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: expandColumns;"
+                class="clickable-row element-row"
+                [class.element-row--open]="expanded() === row"
+                (click)="toggleExpand(row)"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['detail']" class="detail-row"></tr>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Sticky header + footer -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Header fijo y footer de totales</mat-card-title>
+        <mat-card-subtitle>matHeaderRowDef sticky + matFooterRowDef en contenedor con scroll</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="table-wrapper table-wrapper--scroll">
+          <table mat-table [dataSource]="projects" class="estela-table-compact">
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Project</th>
+              <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+              <td mat-footer-cell *matFooterCellDef>Total</td>
+            </ng-container>
+            <ng-container matColumnDef="owner">
+              <th mat-header-cell *matHeaderCellDef>Owner</th>
+              <td mat-cell *matCellDef="let row">{{ row.owner }}</td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef>Date</th>
+              <td mat-cell *matCellDef="let row">{{ row.date }}</td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef class="num">Amount</th>
+              <td mat-cell *matCellDef="let row" class="num">${{ row.amount | number }}</td>
+              <td mat-footer-cell *matFooterCellDef class="num">${{ totalAmount | number }}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="stickyColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: stickyColumns;"></tr>
+            <tr mat-footer-row *matFooterRowDef="stickyColumns; sticky: true"></tr>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Filtro -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Con filtro</mat-card-title>
+        <mat-card-subtitle>MatTableDataSource.filter + fila "sin resultados" (*matNoDataRow)</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field class="form-field-sm filter-field">
+          <mat-icon matPrefix>search</mat-icon>
+          <input matInput placeholder="Buscar proyecto, owner o estado" (input)="applyFilter($event)" aria-label="Filtrar tabla" />
+        </mat-form-field>
+        <div class="table-wrapper">
+          <table mat-table [dataSource]="filterData" class="estela-table-hover">
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Project</th>
+              <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+            </ng-container>
+            <ng-container matColumnDef="owner">
+              <th mat-header-cell *matHeaderCellDef>Owner</th>
+              <td mat-cell *matCellDef="let row">{{ row.owner }}</td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>Status</th>
+              <td mat-cell *matCellDef="let row">
+                <mat-chip [class]="'status-chip status-' + row.status.toLowerCase()">{{ row.status }}</mat-chip>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="filterColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: filterColumns;"></tr>
+            <tr class="mat-mdc-row" *matNoDataRow>
+              <td class="mat-mdc-cell no-data-cell" [attr.colspan]="filterColumns.length">
+                Sin resultados para la búsqueda.
+              </td>
+            </tr>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>

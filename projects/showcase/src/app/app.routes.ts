@@ -33,6 +33,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'tables',
+    loadComponent: () =>
+      import('./pages/tables/tables.component').then(
+        (m) => m.TablesComponent
+      ),
+  },
+  {
     path: 'solicitudes',
     loadComponent: () =>
       import('./pages/solicitudes/solicitudes.component').then(

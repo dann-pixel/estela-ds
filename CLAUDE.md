@@ -61,7 +61,8 @@ estela-ds-angular/
 │           │       ├── buttons/         # Botones: Text, Filled, Outlined, Elevated, Icon
 │           │       ├── forms/           # Input, Select, Checkbox, Radio, Slider, Slide Toggle, Autocomplete, Datepicker, Button Toggle
 │           │       ├── navigation/      # Toolbar, Tabs, Chips, Badge, Progress Bar, Progress Spinner, Menu, Tooltip, List, Bottom Sheet
-│           │       ├── content/         # Cards, Table, Dialog, Snack Bar, Expansion Panel, Alerts, Stepper, Empty State, Loading Skeleton
+│           │       ├── tables/          # Tabla: básica, densidad/striped/hover, selección, expandibles, sticky+footer, filtro
+│           │       ├── content/         # Cards, Dialog, Snack Bar, Expansion Panel, Alerts, Stepper, Empty State, Loading Skeleton
 │           │       ├── solicitudes/     # Demo de tabla con paginación, filtro, sticky column
 │           │       └── patterns/        # Patrones UI custom: Breadcrumbs
 │           ├── styles.scss              # Aplica light + dark theme + Material Symbols + estilos globales
@@ -88,7 +89,8 @@ estela-ds-angular/
 - Los mixins del tema son `light-theme()` y `dark-theme()` en `projects/estela/src/lib/theme/_theme.scss`
 - El showcase importa el tema con `@use 'index' as estela` (resuelto por `stylePreprocessorOptions.includePaths`).
   Los proyectos consumidores usan `@use 'estela-angular/theme' as estela` (sin includePaths)
-- Las utilidades del DS (`.status-chip`, `.estela-alert`, `.form-field-sm`) viven en la lib
+- Las utilidades del DS (`.status-chip`, `.estela-alert`, `.form-field-sm`, `.estela-table-compact`,
+  `.estela-table-striped`, `.estela-table-hover`, `.estela-row-selected`) viven en la lib
   (`_utilities.scss`), no en el showcase. Patrones nuevos reutilizables → agregarlos ahí
 - Botones sin relleno y textos/íconos primary sobre superficie: usar `--estela-primary-on-surface`,
   no `--mat-sys-primary` (2.48:1 sobre blanco, no pasa AA)
@@ -504,7 +506,9 @@ El showcase implementa estos componentes por categoría:
 
 **Content & Data**
 - Card (elevated, outlined, filled appearances)
-- Table (con Sort y Paginator)
+- Table (`/tables`): Sort + Paginator, densidad compacta, striped, hover, selección con checkbox,
+  filas expandibles, header sticky + footer de totales, filtro con `*matNoDataRow`.
+  El divisor de filas usa `--mat-sys-outline-variant` (override de `--mat-table-row-item-outline-color`)
 - Dialog / Modal
 - Snack Bar
 - Expansion Panel

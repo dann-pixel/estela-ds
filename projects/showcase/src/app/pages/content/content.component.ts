@@ -1,10 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
-import { MatTableModule } from '@angular/material/table';
-import { MatSortModule } from '@angular/material/sort';
-import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
@@ -15,7 +11,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { provideEstelaPaginatorIntl, provideEstelaStepperIntl } from 'estela-angular/intl';
+import { provideEstelaStepperIntl } from 'estela-angular/intl';
 
 // ── Dialog component (inline) ──────────────────────────────────
 @Component({
@@ -46,22 +42,11 @@ import { provideEstelaPaginatorIntl, provideEstelaStepperIntl } from 'estela-ang
 export class DemoDialogComponent {}
 
 // ── Main component ─────────────────────────────────────────────
-export interface TableRow {
-  id: number;
-  name: string;
-  status: string;
-  date: string;
-  amount: number;
-}
-
 @Component({
   selector: 'app-content',
   imports: [
     ReactiveFormsModule,
     MatCardModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
@@ -72,9 +57,8 @@ export interface TableRow {
     MatStepperModule,
     MatFormFieldModule,
     MatInputModule,
-    DecimalPipe,
   ],
-  providers: [provideEstelaPaginatorIntl(), provideEstelaStepperIntl()],
+  providers: [provideEstelaStepperIntl()],
   templateUrl: './content.component.html',
   styleUrl: './content.component.scss',
 })
@@ -82,16 +66,6 @@ export class ContentComponent {
   private snackBar = inject(MatSnackBar);
   private dialog = inject(MatDialog);
   private fb = inject(FormBuilder);
-
-  readonly tableColumns = ['id', 'name', 'status', 'date', 'amount'];
-
-  readonly tableData: TableRow[] = [
-    { id: 1, name: 'Project Alpha', status: 'Active', date: '2025-01-15', amount: 12400 },
-    { id: 2, name: 'Project Beta', status: 'Draft', date: '2025-02-03', amount: 8750 },
-    { id: 3, name: 'Project Gamma', status: 'Paused', date: '2025-03-22', amount: 31200 },
-    { id: 4, name: 'Project Delta', status: 'Active', date: '2025-04-10', amount: 5600 },
-    { id: 5, name: 'Project Epsilon', status: 'Archived', date: '2025-05-30', amount: 19800 },
-  ];
 
   readonly panelItems = [
     { title: 'What is Estela Design System?', content: 'Estela is an Angular Material-based design system that provides a consistent theme and component library for building products.' },
