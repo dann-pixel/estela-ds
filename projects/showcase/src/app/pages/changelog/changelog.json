@@ -1,5 +1,15 @@
 [
   {
+    "version": "1.1.1",
+    "date": "2026-10-07",
+    "title": "Mantenimiento",
+    "summary": "Actualización del workflow de release y del entorno de desarrollo.",
+    "changes": [
+      { "type": "changed", "text": "Workflow de release actualizado a `actions/checkout@v5` y `actions/setup-node@v5` con Node 22 (Node 20 está deprecado en GitHub Actions)." },
+      { "type": "changed", "text": "`.claude/launch.json`: el showcase usa otro puerto automáticamente si el 4200 está ocupado." }
+    ]
+  },
+  {
     "version": "1.1.0",
     "date": "2026-10-07",
     "title": "Tablas y changelog",

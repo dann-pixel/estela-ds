@@ -3,9 +3,10 @@
   "configurations": [
     {
       "name": "showcase",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "start"],
-      "port": 4200
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "npx ng serve showcase --configuration development --port ${PORT:-4200}"],
+      "port": 4200,
+      "autoPort": true
     }
   ]
 }

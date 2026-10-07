@@ -243,8 +243,8 @@ El paquete es `estela-angular` (generado en `dist/estela`). **No** se puede inst
 
 ```bash
 npm run pack:lib                                   # → dist/estela-angular-<versión>.tgz
-npm install /ruta/a/dist/estela-angular-1.1.0.tgz  # en el proyecto consumidor (local)
-npm install https://github.com/dann-pixel/estela-ds/releases/download/v1.1.0/estela-angular-1.1.0.tgz  # desde el GitHub Release
+npm install /ruta/a/dist/estela-angular-1.1.1.tgz  # en el proyecto consumidor (local)
+npm install https://github.com/dann-pixel/estela-ds/releases/download/v1.1.1/estela-angular-1.1.1.tgz  # desde el GitHub Release
 # o publicar en un registry privado: cd dist/estela && npm publish
 ```
 
