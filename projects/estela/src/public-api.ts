@@ -6,7 +6,7 @@
  *   @include estela.light-theme-setup();
  */
 
-export const ESTELA_VERSION = '1.2.0';
+export const ESTELA_VERSION = '1.3.0';
 
 export * from './lib/core/estela-config';
 export * from './lib/core/provide-estela';

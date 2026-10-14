@@ -301,6 +301,19 @@ El showcase usa **Material Symbols Outlined** (variable font), no Material Icons
 
 ---
 
+## Fondos de página
+
+| Token | Light | Dark | Uso |
+|---|---|---|---|
+| `--mat-sys-background` | `#ECEFF1` (`$neutral-50`) | `#263238` (`$neutral-900`) | Fondo de página por defecto |
+| `--estela-background-subtle` | `#F6F7F8` (`$neutral-25`) | `#2F3D44` (`$neutral-850`) | Fondo de página más suave: punto medio entre la superficie blanca y `background` |
+| `--mat-sys-surface` | `#FFFFFF` | `#37474F` | Tarjetas, paneles, desplegables |
+
+Con `background-subtle` el contraste entre fondo y tarjeta es menor: las tarjetas deben llevar
+borde (`appearance="outlined"`), que el DS ya usa en lugar de sombras.
+
+---
+
 ## Chip de tipo de documento
 
 `.doc-type-chip` (en `_utilities.scss`, incluido en `global-styles()`) es el chip del tipo de

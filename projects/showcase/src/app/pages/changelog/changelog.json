@@ -1,5 +1,16 @@
 [
   {
+    "version": "1.3.0",
+    "date": "2026-10-14",
+    "title": "Fondo de página suave",
+    "summary": "Nuevo tono neutro entre el blanco y el gris de fondo, para páginas con menos contraste.",
+    "changes": [
+      { "type": "added", "text": "Tono `$neutral-25` (#F6F7F8), punto medio exacto entre blanco y `$neutral-50` (#ECEFF1), y su par dark `$neutral-850` (#2F3D44, entre `$neutral-800` y `$neutral-900`)." },
+      { "type": "added", "text": "Token `--estela-background-subtle`: fondo de página más suave que `--mat-sys-background`. Light #F6F7F8 · Dark #2F3D44." },
+      { "type": "added", "text": "La paleta de Home del showcase muestra Background y Background Subtle." }
+    ]
+  },
+  {
     "version": "1.2.0",
     "date": "2026-10-14",
     "title": "Chip de tipo de documento",

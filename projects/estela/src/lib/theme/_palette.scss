@@ -25,6 +25,8 @@ $estela-tertiary: mat.$violet-palette;
 // Reemplaza los grises auto-generados por M3 (cyan-tinted).
 // Se mapea a tokens --mat-sys-surface/outline/* en _theme.scss.
 // =============================================================
+// 25: punto medio exacto entre blanco y neutral-50, para fondos de página más suaves.
+$neutral-25:  #f6f7f8;
 $neutral-50:  #eceff1;   // blueGrey[50] — alineado a NEUTRAL_LIGHT del DS Estela React
 $neutral-100: #CFD8DC;
 $neutral-200: #B0BEC5;
@@ -35,6 +37,8 @@ $neutral-600: #546E7A;
 $neutral-700: #455A64;
 $neutral-800: #37474F;
 $neutral-900: #263238;
+// 850: punto medio entre neutral-800 y neutral-900 — par dark de neutral-25.
+$neutral-850: #2f3d44;
 
 // =============================================================
 // Brand color tokens — Primary (#00b5cc)

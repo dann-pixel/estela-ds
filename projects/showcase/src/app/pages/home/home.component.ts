@@ -33,6 +33,8 @@ export class HomeComponent {
     { name: 'Tertiary', var: '--mat-sys-tertiary', onVar: '--mat-sys-on-tertiary' },
     { name: 'Tertiary Container', var: '--mat-sys-tertiary-container', onVar: '--mat-sys-on-tertiary-container' },
     { name: 'Error', var: '--mat-sys-error', onVar: '--mat-sys-on-error' },
+    { name: 'Background', var: '--mat-sys-background', onVar: '--mat-sys-on-background' },
+    { name: 'Background Subtle', var: '--estela-background-subtle', onVar: '--mat-sys-on-background' },
     { name: 'Surface', var: '--mat-sys-surface', onVar: '--mat-sys-on-surface' },
     { name: 'Surface Variant', var: '--mat-sys-surface-variant', onVar: '--mat-sys-on-surface-variant' },
     { name: 'Outline', var: '--mat-sys-outline', onVar: '--mat-sys-surface' },

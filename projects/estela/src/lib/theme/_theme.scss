@@ -115,6 +115,8 @@
     // Página y superficies
     --mat-sys-background:                    #{palette.$neutral-50};
     --mat-sys-on-background:                 #{palette.$neutral-900};
+    // Fondo de página más suave: entre el blanco de las superficies y background.
+    --estela-background-subtle:              #{palette.$neutral-25};
     --mat-sys-surface:                       #ffffff;
     --mat-sys-on-surface:                    #{palette.$neutral-900};
     --mat-sys-surface-variant:               #{palette.$neutral-100};
@@ -144,6 +146,7 @@
     // Página y superficies dark
     --mat-sys-background:                    #{palette.$neutral-900};
     --mat-sys-on-background:                 #{palette.$neutral-50};
+    --estela-background-subtle:              #{palette.$neutral-850};
     --mat-sys-surface:                       #{palette.$neutral-800};
     --mat-sys-on-surface:                    #{palette.$neutral-50};
     --mat-sys-surface-variant:               #{palette.$neutral-700};
