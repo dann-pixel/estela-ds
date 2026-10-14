@@ -172,6 +172,22 @@
 }
 
 // -------------------------------------------------------
+// Mixin privado — Desplegables con fondo de superficie
+// -------------------------------------------------------
+// M3 pinta los paneles desplegables con `surface-container*`, que en
+// este DS es gris (Blue Gray 50). Regla de Estela: todo desplegable va
+// sobre la superficie (blanco en light), separado del fondo por la
+// elevación que se preserva para capas superiores (level2).
+// Se apunta a `--mat-sys-surface`, así también se adapta a dark.
+// Afecta: mat-menu, mat-select, mat-autocomplete, calendario de mat-datepicker.
+@mixin _overlay-surfaces() {
+  --mat-menu-container-color:                         var(--mat-sys-surface);
+  --mat-select-panel-background-color:                var(--mat-sys-surface);
+  --mat-autocomplete-background-color:                var(--mat-sys-surface);
+  --mat-datepicker-calendar-container-background-color: var(--mat-sys-surface);
+}
+
+// -------------------------------------------------------
 // Mixin privado — Override de tokens de color de la marca
 // -------------------------------------------------------
 // Angular Material genera los tokens --mat-sys-* desde sus
@@ -353,6 +369,7 @@
 @mixin _estela-overrides($type) {
   @include _brand-colors($type);
   @include _neutral-colors($type);
+  @include _overlay-surfaces();
   @include _semantic-colors($type);
   @include _shape-tokens();
   @include _elevation-tokens();

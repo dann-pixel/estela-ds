@@ -1,5 +1,14 @@
 [
   {
+    "version": "1.1.2",
+    "date": "2026-10-14",
+    "title": "Desplegables en blanco",
+    "summary": "Menús, selects, autocompletes y el calendario del datepicker van sobre la superficie (blanco) en lugar de gris.",
+    "changes": [
+      { "type": "fixed", "text": "El panel de `mat-menu`, `mat-select`, `mat-autocomplete` y el calendario de `mat-datepicker` usaba `surface-container` (Blue Gray 50, gris). Ahora usa `--mat-sys-surface`: blanco en light y la superficie dark en dark. Nuevo mixin privado `_overlay-surfaces()`, incluido en `*-theme-setup()` y `*-brand-overrides()`." }
+    ]
+  },
+  {
     "version": "1.1.1",
     "date": "2026-10-07",
     "title": "Mantenimiento",

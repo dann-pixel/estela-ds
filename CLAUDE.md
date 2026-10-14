@@ -301,6 +301,24 @@ El showcase usa **Material Symbols Outlined** (variable font), no Material Icons
 
 ---
 
+## Desplegables — fondo blanco
+
+Regla de Estela: **todo desplegable va con fondo blanco** (la superficie), nunca gris. M3 pinta
+esos paneles con `surface-container*`, que en este DS es Blue Gray 50. El mixin privado
+`_overlay-surfaces()` de `_theme.scss` (incluido en `_estela-overrides()`) los apunta a
+`--mat-sys-surface`, que también se adapta a dark:
+
+| Componente | Token |
+|---|---|
+| `mat-menu` | `--mat-menu-container-color` |
+| `mat-select` (panel) | `--mat-select-panel-background-color` |
+| `mat-autocomplete` | `--mat-autocomplete-background-color` |
+| `mat-datepicker` (calendario) | `--mat-datepicker-calendar-container-background-color` |
+
+Si se usa otro componente con panel desplegable que salga gris, agregar su token ahí.
+
+---
+
 ## Form field fill — color adaptable light/dark
 
 El token `--mat-form-field-filled-container-color` usa `color-mix()` en lugar de un hex fijo,
