@@ -127,6 +127,27 @@ $on-info-dark:           #000000;
 $on-info-container-dark: #eefafd;   // teal-sea 50
 
 // =============================================================
+// Tipos de documento tributario
+// =============================================================
+// Color por familia de documento, para el chip de tipo (`.doc-type-chip`).
+// Los tonos light son los que ya usa Estela Suite Chile en su bandeja de
+// documentos emitidos (`emision/documentos/dte.ts`), para que el chip se vea
+// igual en todos los países. Los tonos dark son los mismos colores en su
+// tono 200 de Material, legibles sobre la superficie oscura.
+// =============================================================
+$doc-factura:     #c62828;   // red 800
+$doc-boleta:      #3949ab;   // indigo 600
+$doc-nota:        #283593;   // indigo 800 — notas de crédito y débito
+$doc-guia:        #7b1fa2;   // purple 700 — guías de despacho / remisión
+$doc-exportacion: #2e7d32;   // green 800
+
+$doc-factura-dark:     #ef9a9a;   // red 200
+$doc-boleta-dark:      #9fa8da;   // indigo 200
+$doc-nota-dark:        #c5cae9;   // indigo 100
+$doc-guia-dark:        #ce93d8;   // purple 200
+$doc-exportacion-dark: #a5d6a7;   // green 200
+
+// =============================================================
 // Chip semantic colors — medium-toned
 // =============================================================
 // Los chips de estado requieren más saturación que los containers

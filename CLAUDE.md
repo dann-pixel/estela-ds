@@ -301,6 +301,31 @@ El showcase usa **Material Symbols Outlined** (variable font), no Material Icons
 
 ---
 
+## Chip de tipo de documento
+
+`.doc-type-chip` (en `_utilities.scss`, incluido en `global-styles()`) es el chip del tipo de
+documento tributario en tablas y fichas. Regla (heredada de Estela Suite Chile): **muestra solo
+el código** y el nombre del tipo va en un `matTooltip`.
+
+```html
+<mat-chip class="doc-type-chip doc-type-factura" disableRipple matTooltip="Factura Electrónica">1</mat-chip>
+```
+
+| Familia | Modificador | Token | Ejemplos |
+|---|---|---|---|
+| Factura | `doc-type-factura` | `--estela-doc-factura` | Chile 33, 34, 43, 46 · Perú 1 |
+| Boleta | `doc-type-boleta` | `--estela-doc-boleta` | Chile 39, 41 · Perú 3 |
+| Nota de crédito / débito | `doc-type-nota` | `--estela-doc-nota` | Chile 56, 61 · Perú 7, 8 |
+| Guía | `doc-type-guia` | `--estela-doc-guia` | Chile 52 · Perú 9, 31 |
+| Exportación | `doc-type-exportacion` | `--estela-doc-exportacion` | Chile 110, 111, 112 |
+| Sin familia | — | `outline` / `on-surface-variant` | lo demás |
+
+La familia de cada código la decide el producto consumidor (el DS no conoce los catálogos de
+cada país). Se implementa solo con tokens del chip (`--mat-chip-outline-color`,
+`--mat-chip-label-text-color`): no usar `!important` ni pisar clases internas.
+
+---
+
 ## Desplegables — fondo blanco
 
 Regla de Estela: **todo desplegable va con fondo blanco** (la superficie), nunca gris. M3 pinta

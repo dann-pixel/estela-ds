@@ -14,6 +14,7 @@
   @include base-styles();
   @include form-field-sm();
   @include status-chips();
+  @include doc-type-chips();
   @include alerts();
   @include tables();
 }
@@ -114,6 +115,30 @@
       color: var(--estela-chip-on-warning-container) !important;
       .mdc-evolution-chip__text-label { color: var(--estela-chip-on-warning-container) !important; }
     }
+  }
+}
+
+@mixin doc-type-chips() {
+  // ── Document Type Chips ────────────────────────────────────────
+  // Chip de tipo de documento tributario: muestra solo el código y va
+  // contorneado con el color de su familia. El nombre del tipo va en un
+  // `matTooltip` (regla de Estela Suite Chile).
+  // Uso: <mat-chip class="doc-type-chip doc-type-factura" disableRipple matTooltip="Factura Electrónica">33</mat-chip>
+  // Familias: factura, boleta, nota, guia, exportacion. Sin familia → contorno neutro.
+  // Solo tokens oficiales del chip (sin !important): el color se fija por
+  // familia en `--_doc-type-color` y el chip lo toma para borde y texto.
+  .doc-type-chip {
+    --mat-chip-outline-color: var(--_doc-type-color, var(--mat-sys-outline));
+    --mat-chip-label-text-color: var(--_doc-type-color, var(--mat-sys-on-surface-variant));
+    --mat-chip-label-text-weight: 500;
+    --mat-chip-container-height: 28px;
+    cursor: default;
+
+    &.doc-type-factura     { --_doc-type-color: var(--estela-doc-factura); }
+    &.doc-type-boleta      { --_doc-type-color: var(--estela-doc-boleta); }
+    &.doc-type-nota        { --_doc-type-color: var(--estela-doc-nota); }
+    &.doc-type-guia        { --_doc-type-color: var(--estela-doc-guia); }
+    &.doc-type-exportacion { --_doc-type-color: var(--estela-doc-exportacion); }
   }
 }
 

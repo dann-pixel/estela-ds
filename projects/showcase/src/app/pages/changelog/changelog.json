@@ -1,5 +1,16 @@
 [
   {
+    "version": "1.2.0",
+    "date": "2026-10-14",
+    "title": "Chip de tipo de documento",
+    "summary": "Nuevo chip para el tipo de documento tributario, con un color por familia (factura, boleta, nota, guía, exportación).",
+    "changes": [
+      { "type": "added", "text": "Clase `.doc-type-chip` (mixin `doc-type-chips()`, incluido en `global-styles()`) con modificadores `doc-type-factura`, `doc-type-boleta`, `doc-type-nota`, `doc-type-guia` y `doc-type-exportacion`. Chip contorneado con el color de la familia en borde y texto; sin modificador queda neutro. Muestra solo el código y el nombre va en `matTooltip`." },
+      { "type": "added", "text": "Tokens `--estela-doc-factura`, `--estela-doc-boleta`, `--estela-doc-nota`, `--estela-doc-guia` y `--estela-doc-exportacion`, con variante dark. Los tonos light son los que ya usa Estela Suite Chile en su bandeja de documentos emitidos." },
+      { "type": "added", "text": "Demo \"Document Type\" en la sección Chips de `Navigation` del showcase." }
+    ]
+  },
+  {
     "version": "1.1.2",
     "date": "2026-10-14",
     "title": "Desplegables en blanco",

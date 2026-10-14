@@ -271,6 +271,13 @@
     --estela-chip-on-error-container:      #{palette.$chip-on-error-container};
     --estela-chip-warning-container:       #{palette.$chip-warning-container};
     --estela-chip-on-warning-container:    #{palette.$chip-on-warning-container};
+    // ── Tipos de documento (chip de tipo) ──
+    // Uso: <mat-chip class="doc-type-chip doc-type-factura">33</mat-chip>
+    --estela-doc-factura:                  #{palette.$doc-factura};
+    --estela-doc-boleta:                   #{palette.$doc-boleta};
+    --estela-doc-nota:                     #{palette.$doc-nota};
+    --estela-doc-guia:                     #{palette.$doc-guia};
+    --estela-doc-exportacion:              #{palette.$doc-exportacion};
   } @else {
     // ── Semantic colors dark ──
     --estela-warning:              #{palette.$warning-dark};
@@ -296,6 +303,12 @@
     --estela-chip-on-error-container:      #{palette.$chip-on-error-container-dark};
     --estela-chip-warning-container:       #{palette.$chip-warning-container-dark};
     --estela-chip-on-warning-container:    #{palette.$chip-on-warning-container-dark};
+    // ── Tipos de documento dark ──
+    --estela-doc-factura:                  #{palette.$doc-factura-dark};
+    --estela-doc-boleta:                   #{palette.$doc-boleta-dark};
+    --estela-doc-nota:                     #{palette.$doc-nota-dark};
+    --estela-doc-guia:                     #{palette.$doc-guia-dark};
+    --estela-doc-exportacion:              #{palette.$doc-exportacion-dark};
   }
 }
 
